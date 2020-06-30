@@ -11,6 +11,8 @@ export default function Home() {
       <main>
         <h1 className="title">
           Se agradece<a href="https://nextjs.org">Next.js!</a>
+          Estoy en Development. Welcome to{" "}
+          <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
         <p className="description">
