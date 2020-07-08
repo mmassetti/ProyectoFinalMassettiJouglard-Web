@@ -7,7 +7,7 @@ const About = () => {
   return (
     <>
       <Header />
-      <p>about page</p>
+      <p>About page</p>
       <Footer />
     </>
   );
