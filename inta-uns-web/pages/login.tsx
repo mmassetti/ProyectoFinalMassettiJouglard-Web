@@ -49,7 +49,7 @@ function Login() {
     <>
       <form onSubmit={handleSubmit}>
         <p>
-          <label htmlFor="email">email: </label>
+          <label htmlFor="email">correo electronico: </label>
           <input
             type="email"
             id="email"
