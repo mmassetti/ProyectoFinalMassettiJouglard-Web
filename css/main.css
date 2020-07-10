@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-  @apply ml-4 mt-2;
+    background-color: gray;
 }
