@@ -9,10 +9,11 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import Head from "next/head";
 import Navbar from "../components/navbar";
+import Sidebar from "../components/sidebar";
 
 const Index = (props: any) => {
   return (
-    <div className="divide-y divide-gray-200">
+    <div>
       <Head>
         <meta
           name="twitter:description"
@@ -30,6 +31,7 @@ const Index = (props: any) => {
         <title>Blog – Tailwind CSS</title>
       </Head>
       <Navbar />
+	<Sidebar/>
     </div>
   );
 };
