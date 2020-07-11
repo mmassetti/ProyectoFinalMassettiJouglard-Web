@@ -15,17 +15,11 @@ const Index = (props: any) => {
   return (
     <div>
       <Head>
-        <meta
-          name="twitter:description"
-          content="News content from the Tailwind CSS team."
-        />
-
-        <meta property="og:url" content="https://blog.tailwindcss.com" />
         <meta property="og:type" content="article" />
-        <meta property="og:title" content="Blog – Tailwind CSS" />
+        <meta property="og:title" content="IntaApp" />
         <meta
           property="og:description"
-          content="News content from the Tailwind CSS team."
+          content="IntaApp"
         />
 
         <title>Blog – Tailwind CSS</title>
