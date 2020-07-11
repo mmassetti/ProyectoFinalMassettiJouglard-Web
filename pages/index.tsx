@@ -9,6 +9,7 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import Head from "next/head";
 import Navbar from "../components/navbar";
+import Table from "../pages/table";
 
 const Index = (props: any) => {
   return (
@@ -30,6 +31,7 @@ const Index = (props: any) => {
         <title>Blog – Tailwind CSS</title>
       </Head>
       <Navbar />
+      <Table />
     </div>
   );
 };
