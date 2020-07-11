@@ -1,15 +1,16 @@
 import "../css/main.css";
+import IconButton from '@material-ui/core/IconButton';
 import React from "react";
 import PropTypes from "prop-types";
 import { get } from "lodash";
-import Link from "next/link";
-import withAuthUser from "../utils/pageWrappers/withAuthUser";
-import withAuthUserInfo from "../utils/pageWrappers/withAuthUserInfo";
-import Header from "../components/header";
-import Footer from "../components/footer";
 import Head from "next/head";
-import Navbar from "../components/navbar";
 import Table from "../pages/table";
+import Drawer from '@material-ui/core/Drawer';
+import Divider from '@material-ui/core/Divider';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ListIcon from '@material-ui/icons/List';
+
+
 
 const Index = (props: any) => {
   return (
@@ -24,8 +25,23 @@ const Index = (props: any) => {
 
         <title>Blog – Tailwind CSS</title>
       </Head>
-      <Navbar />
-      <Table />
+	 <Drawer
+        variant="permanent"
+        open={true}
+      >
+        <div >
+          <IconButton>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+        <Divider />
+          <IconButton>
+            <ListIcon />
+          </IconButton>
+	     <p>Hola</p>
+        <Divider />
+	     <p>Hola</p>
+      </Drawer>
     </div>
   );
 };
