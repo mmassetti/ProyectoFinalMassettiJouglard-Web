@@ -15,7 +15,7 @@ import routes from "routes.js";
 
 import styles from "assets/jss/nextjs-material-dashboard/layouts/adminStyle.js";
 
-import bgImage from "assets/img/sidebar-2.jpg";
+import bgImage from "assets/img/sidebar-1.jpg";
 import logo from "assets/img/reactlogo.png";
 
 let ps;
@@ -23,8 +23,6 @@ let ps;
 const useStyles = makeStyles(styles);
 
 export default function Admin({ children, ...rest }) {
-  // used for checking current route
-  const router = useRouter();
   // styles
   const classes = useStyles();
   // ref to help us initialize PerfectScrollbar on windows devices
@@ -49,9 +47,6 @@ export default function Admin({ children, ...rest }) {
   };
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
-  };
-  const getRoute = () => {
-    return router.pathname !== "/admin/maps";
   };
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
@@ -80,7 +75,7 @@ export default function Admin({ children, ...rest }) {
     <div className={classes.wrapper}>
       <Sidebar
         routes={routes}
-        logoText={"Creative Tim"}
+        logoText={"Inta App"}
         logo={logo}
         image={image}
         handleDrawerToggle={handleDrawerToggle}
@@ -94,15 +89,10 @@ export default function Admin({ children, ...rest }) {
           handleDrawerToggle={handleDrawerToggle}
           {...rest}
         />
-        {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
-        {getRoute() ? (
-          <div className={classes.content}>
-            <div className={classes.container}>{children}</div>
-          </div>
-        ) : (
-          <div className={classes.map}>{children}</div>
-        )}
-        {getRoute() ? <Footer /> : null}
+        <div className={classes.content}>
+          <div className={classes.container}>{children}</div>
+        </div>
+        <Footer />
         <FixedPlugin
           handleImageClick={handleImageClick}
           handleColorClick={handleColorClick}

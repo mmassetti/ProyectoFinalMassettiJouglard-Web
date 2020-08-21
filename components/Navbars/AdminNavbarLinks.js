@@ -57,9 +57,9 @@ export default function AdminNavbarLinks() {
             className: classes.margin + " " + classes.search,
           }}
           inputProps={{
-            placeholder: "Search",
+            placeholder: "Buscar sesiones...",
             inputProps: {
-              "aria-label": "Search",
+              "aria-label": "Buscar sesiones...",
             },
           }}
         />
@@ -67,18 +67,6 @@ export default function AdminNavbarLinks() {
           <Search />
         </Button>
       </div>
-      <Button
-        color={size.width > 959 ? "transparent" : "white"}
-        justIcon={size.width > 959}
-        simple={!(size.width > 959)}
-        aria-label="Dashboard"
-        className={classes.buttonLink}
-      >
-        <Dashboard className={classes.icons} />
-        <Hidden mdUp implementation="css">
-          <p className={classes.linkText}>Dashboard</p>
-        </Hidden>
-      </Button>
       <div className={classes.manager}>
         <Button
           color={size.width > 959 ? "transparent" : "white"}
@@ -90,10 +78,10 @@ export default function AdminNavbarLinks() {
           className={classes.buttonLink}
         >
           <Notifications className={classes.icons} />
-          <span className={classes.notifications}>5</span>
+          <span className={classes.notifications}>3</span>
           <Hidden mdUp implementation="css">
             <p onClick={handleCloseNotification} className={classes.linkText}>
-              Notification
+              Notificaciones
             </p>
           </Hidden>
         </Button>
@@ -124,31 +112,19 @@ export default function AdminNavbarLinks() {
                       onClick={handleCloseNotification}
                       className={classes.dropdownItem}
                     >
-                      Mike John responded to your email
+                      Juan creó una sesión hace 30 minutos
                     </MenuItem>
                     <MenuItem
                       onClick={handleCloseNotification}
                       className={classes.dropdownItem}
                     >
-                      You have 5 new tasks
+                      María eliminó una sesión hace 10 horas
                     </MenuItem>
                     <MenuItem
                       onClick={handleCloseNotification}
                       className={classes.dropdownItem}
                     >
-                      You{"'"}re now friend with Andrew
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseNotification}
-                      className={classes.dropdownItem}
-                    >
-                      Another Notification
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseNotification}
-                      className={classes.dropdownItem}
-                    >
-                      Another One
+                      María creó una sesión el 21/08/2020
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
@@ -169,7 +145,7 @@ export default function AdminNavbarLinks() {
         >
           <Person className={classes.icons} />
           <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Profile</p>
+            <p className={classes.linkText}>Perfil</p>
           </Hidden>
         </Button>
         <Poppers
@@ -199,20 +175,20 @@ export default function AdminNavbarLinks() {
                       onClick={handleCloseProfile}
                       className={classes.dropdownItem}
                     >
-                      Profile
+                      Perfil
                     </MenuItem>
                     <MenuItem
                       onClick={handleCloseProfile}
                       className={classes.dropdownItem}
                     >
-                      Settings
+                      Ajustes
                     </MenuItem>
                     <Divider light />
                     <MenuItem
                       onClick={handleCloseProfile}
                       className={classes.dropdownItem}
                     >
-                      Logout
+                      Cerrar sesión
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
