@@ -1,6 +1,0 @@
-{
-  "projects": {
-    "staging": "inta-uns-staging",
-    "production": "inta-uns-production"
-  }
-}
