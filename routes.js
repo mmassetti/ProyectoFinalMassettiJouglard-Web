@@ -28,14 +28,13 @@ import Language from "@material-ui/icons/Language";
 const dashboardRoutes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "Panel principal",
     icon: Dashboard,
-
     layout: "/admin",
   },
   {
     path: "/user-profile",
-    name: "User Profile",
+    name: "Otro menú",
     icon: Person,
     layout: "/admin",
   },

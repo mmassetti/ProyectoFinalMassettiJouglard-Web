@@ -501,15 +501,6 @@ footer ul li a:hover {
   transform: translateY(-13%);
   transform-origin: 0 0;
 }
-.fixed-plugin.rtl-fixed-plugin {
-  right: auto;
-  left: 0px;
-  border-radius: 0 8px 8px 0;
-}
-.fixed-plugin.rtl-fixed-plugin .dropdown-menu {
-  right: auto;
-  left: 80px;
-}
 * {
   letter-spacing: normal !important;
 }
@@ -541,7 +532,7 @@ footer ul li a:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  content: '';
+  content: "";
   display: block;
   z-index: 9999;
   position: absolute;
