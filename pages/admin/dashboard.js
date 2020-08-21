@@ -8,8 +8,6 @@ import GridContainer from "components/Grid/GridContainer.js";
 import Table from "components/Table/Table.js";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
 
-import styles from "assets/jss/nextjs-material-dashboard/views/dashboardStyle.js";
-
 function Dashboard() {
   return (
     <div>
