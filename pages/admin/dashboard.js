@@ -78,7 +78,8 @@ function getTableData(sessions) {
     tableData.push([
       i.toString(),
       session.description,
-      moment(session.date.toDate()).format("LL"),
+      "Fecha Random",
+      // moment(session.date.toDate()).format("LL"),
       session.user,
     ]);
     i++;
@@ -93,7 +94,7 @@ async function getSessions() {
   const firebase = await loadFirebase();
   const db = firebase.firestore();
   let result = await new Promise((resolve, reject) => {
-    db.collection("sessions")
+    db.collection("momos_nv")
       .orderBy("date", "desc")
       .get()
       .then((snapshot) => {
