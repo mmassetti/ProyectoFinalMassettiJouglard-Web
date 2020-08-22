@@ -1,5 +1,3 @@
-import React from "react";
-
 import BugReport from "@material-ui/icons/BugReport";
 import Code from "@material-ui/icons/Code";
 import Admin from "layouts/Admin.js";
@@ -7,8 +5,25 @@ import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import Table from "components/Table/Table.js";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
+import loadFirebase from "../../configuration/firebaseconfig";
+import moment from "moment";
+import "moment/locale/es";
 
-function Dashboard() {
+function Dashboard({ sessions }) {
+  //TODO: REFACTOR
+  let tableData = [];
+  let i = 1;
+
+  sessions.map((session) => {
+    tableData.push([
+      i.toString(),
+      session.description,
+      moment(session.date.toDate()).format("LL"),
+      session.user,
+    ]);
+    i++;
+  });
+
   return (
     <div>
       <GridContainer>
@@ -24,12 +39,7 @@ function Dashboard() {
                   <Table
                     tableHeaderColor="primary"
                     tableHead={["ID", "Descripción", "Fecha", "Usuario"]}
-                    tableData={[
-                      ["1", "Dakota Rice", "$36,738", "Niger"],
-                      ["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                      ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                      ["4", "Philip Chaney", "$38,735", "Korea, South"],
-                    ]}
+                    tableData={tableData}
                   />
                 ),
               },
@@ -40,12 +50,7 @@ function Dashboard() {
                   <Table
                     tableHeaderColor="primary"
                     tableHead={["ID", "Descripción", "Fecha", "Usuario"]}
-                    tableData={[
-                      ["1", "Dakota Rice", "$36,738", "Niger"],
-                      ["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                      ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                      ["4", "Philip Chaney", "$38,735", "Korea, South"],
-                    ]}
+                    tableData={tableData}
                   />
                 ),
               },
@@ -56,6 +61,34 @@ function Dashboard() {
     </div>
   );
 }
+
+//TODO: REFACTOR (shared/services/firebaseService)
+Dashboard.getInitialProps = async () => {
+  const firebase = await loadFirebase();
+  const db = firebase.firestore();
+  let result = await new Promise((resolve, reject) => {
+    db.collection("sessions")
+      .get()
+      .then((snapshot) => {
+        let data = [];
+        snapshot.forEach((doc) => {
+          data.push(
+            Object.assign(
+              {
+                id: doc.id,
+              },
+              doc.data()
+            )
+          );
+        });
+        resolve(data);
+      })
+      .catch((error) => {
+        reject([]);
+      });
+  });
+  return { sessions: Object.values(result) };
+};
 
 Dashboard.layout = Admin;
 
