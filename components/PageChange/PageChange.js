@@ -39,7 +39,7 @@ export default function PageChange(props) {
         <div className={classes.iconWrapper}>
           <CircularProgress className={classes.progress} />
         </div>
-        <h4 className={classes.title}>Cargando contenido para: {props.path}</h4>
+        {props.showText ? <h4 className={classes.title}>Cargando...</h4> : ""}
       </div>
     </div>
   );
