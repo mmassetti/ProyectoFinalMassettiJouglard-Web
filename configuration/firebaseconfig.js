@@ -12,7 +12,6 @@ const loadFirebase = () => {
       messagingSenderId: process.env.FIREBASE_SENDER_ID,
       appId: process.env.FIREBASE_APP_ID,
     };
-    console.log("loadFirebase -> config", config);
     firebase.initializeApp(config);
   } catch (error) {
     if (!/already exist/.test(error.message)) {
