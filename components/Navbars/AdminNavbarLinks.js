@@ -13,7 +13,6 @@ import Divider from "@material-ui/core/Divider";
 // @material-ui/icons
 import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
-import Dashboard from "@material-ui/icons/Dashboard";
 import Search from "@material-ui/icons/Search";
 // core components
 import CustomInput from "components/CustomInput/CustomInput.js";
@@ -59,7 +58,7 @@ export default function AdminNavbarLinks() {
           inputProps={{
             placeholder: "Buscar sesiones...",
             inputProps: {
-              "aria-label": "Buscar sesiones...",
+              "aria-label": "Buscar sesiones",
             },
           }}
         />
