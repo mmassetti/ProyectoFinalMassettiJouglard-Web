@@ -15,34 +15,13 @@ const useStyles = makeStyles(styles);
 
 export default function CustomTable(props) {
   const classes = useStyles();
-  const { tableHead, tableData, tableHeaderColor } = props;
-  console.log("CustomTable -> tableData", tableData);
+  const { tableHead, tableData } = props;
 
   const { useState } = React;
 
-  const [columns, setColumns] = useState([
-    { title: "Id", field: "id" },
-    { title: "Descripción", field: "description" },
-    { title: "Fecha", field: "date" },
-    { title: "Creador/a", field: "creator" },
-  ]);
+  const [columns, setColumns] = useState(tableHead);
 
-  // const [data, setData] = useState(tableData);
-
-  const [data, setData] = useState([
-    {
-      id: "1",
-      description: "Sesion 1",
-      date: "21/08/2019",
-      creator: "Usuario1",
-    },
-    {
-      id: "2",
-      description: "Sesion 2",
-      date: "02/02/2017",
-      creator: "Usuario2",
-    },
-  ]);
+  const [data, setData] = useState(tableData);
 
   return (
     <div className={classes.tableResponsive}>
@@ -154,20 +133,7 @@ export default function CustomTable(props) {
   );
 }
 
-CustomTable.defaultProps = {
-  tableHeaderColor: "gray",
-};
-
 CustomTable.propTypes = {
-  tableHeaderColor: PropTypes.oneOf([
-    "warning",
-    "primary",
-    "danger",
-    "success",
-    "info",
-    "rose",
-    "gray",
-  ]),
-  tableHead: PropTypes.arrayOf(PropTypes.string),
-  tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
+  tableHead: PropTypes.arrayOf(PropTypes.object),
+  tableData: PropTypes.arrayOf(PropTypes.object),
 };

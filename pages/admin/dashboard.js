@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
-import BugReport from "@material-ui/icons/BugReport";
-import Code from "@material-ui/icons/Code";
 import Admin from "layouts/Admin.js";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import Table from "components/Table/Table.js";
-import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import loadFirebase from "../../configuration/firebaseconfig";
 import moment from "moment";
 import "moment/locale/es";
@@ -83,7 +80,12 @@ function Dashboard({ fetchedSessions }) {
             <CardBody>
               <Table
                 tableHeaderColor="primary"
-                tableHead={["ID", "Descripción", "Fecha", "Usuario"]}
+                tableHead={[
+                  { title: "Id", field: "id" },
+                  { title: "Descripción", field: "description" },
+                  { title: "Fecha", field: "date" },
+                  { title: "Creador/a", field: "creator" },
+                ]}
                 tableData={tableData}
               />
             </CardBody>
@@ -100,13 +102,12 @@ function getTableData(sessions) {
   let i = 1;
 
   sessions.map((session) => {
-    tableData.push([
-      i.toString(),
-      session.description,
-      "Fecha Random",
-      // moment(session.date.toDate()).format("LL"),
-      session.user,
-    ]);
+    tableData.push({
+      id: i.toString(),
+      description: session.description,
+      date: "21/08/2019", // moment(session.date.toDate()).format("LL"),
+      creator: session.user,
+    });
     i++;
   });
 
