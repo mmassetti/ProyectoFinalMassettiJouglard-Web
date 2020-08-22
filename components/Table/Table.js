@@ -17,6 +17,10 @@ export default function CustomTable(props) {
 
   const [data, setData] = useState(tableData);
 
+  const goToSessionDetail = (rowData) => {
+    console.log("goToSessionDetail -> props", rowData);
+  };
+
   return (
     <div className={classes.tableResponsive}>
       <MaterialTable
@@ -24,6 +28,7 @@ export default function CustomTable(props) {
         data={data}
         options={optionsConfig}
         localization={localizationConfig}
+        onRowClick={(event, rowData) => goToSessionDetail(rowData)}
         editable={{
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
