@@ -94,6 +94,7 @@ async function getSessions() {
   const db = firebase.firestore();
   let result = await new Promise((resolve, reject) => {
     db.collection("sessions")
+      .orderBy("date", "desc")
       .get()
       .then((snapshot) => {
         let data = [];
