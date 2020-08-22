@@ -1,15 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-// @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-// core components
 import styles from "assets/jss/nextjs-material-dashboard/components/tableStyle.js";
 import MaterialTable from "material-table";
+import { optionsConfig, localizationConfig } from "./config/tableConfig";
 
 const useStyles = makeStyles(styles);
 
@@ -28,49 +22,8 @@ export default function CustomTable(props) {
       <MaterialTable
         columns={columns}
         data={data}
-        options={{
-          filtering: true,
-          showTitle: false,
-          draggable: false,
-        }}
-        const
-        localization={{
-          toolbar: {
-            searchPlaceholder: "Búsqueda...",
-            nRowsSelected: "{0} fila(s) seleccionadas",
-            searchTooltip: "Buscar",
-          },
-          body: {
-            deleteTooltip: "Eliminar",
-            editTooltip: "Editar",
-            emptyDataSourceMessage: "No hay ninguna sesión para mostrar",
-            filterRow: {
-              filterTooltip: "Filtrar",
-            },
-            saveTooltip: "Guardar",
-            editRow: {
-              deleteText: "Confirmá que querés eliminar la sesión",
-              saveTooltip: "Confirmar",
-              cancelTooltip: "Cancelar",
-            },
-          },
-          header: {
-            actions: "Acciones",
-          },
-          pagination: {
-            labelDisplayedRows: "{from}-{to} de {count}",
-            labelRowsSelect: "filas",
-            firstAriaLabel: "Primer página",
-            firstTooltip: "Primer página",
-            lastArialLabel: "Última página",
-            previousAriaLabel: "Página anterior",
-            previousTooltip: "Página anterior",
-            nextAriaLabel: "Página siguiente",
-            nextTooltip: "Página siguiente",
-            lastAriaLabel: "Última página",
-            lastTooltip: "Última página",
-          },
-        }}
+        options={optionsConfig}
+        localization={localizationConfig}
         editable={{
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
@@ -96,39 +49,6 @@ export default function CustomTable(props) {
             }),
         }}
       />
-      {/* <Table className={classes.table}>
-        {tableHead !== undefined ? (
-          <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
-            <TableRow className={classes.tableHeadRow}>
-              {tableHead.map((prop, key) => {
-                return (
-                  <TableCell
-                    className={classes.tableCell + " " + classes.tableHeadCell}
-                    key={key}
-                  >
-                    {prop}
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-          </TableHead>
-        ) : null}
-        <TableBody>
-          {tableData.map((prop, key) => {
-            return (
-              <TableRow key={key} className={classes.tableBodyRow}>
-                {prop.map((prop, key) => {
-                  return (
-                    <TableCell className={classes.tableCell} key={key}>
-                      {prop}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table> */}
     </div>
   );
 }
