@@ -50,22 +50,6 @@ export default function AdminNavbarLinks() {
   };
   return (
     <div>
-      <div className={classes.searchWrapper}>
-        <CustomInput
-          formControlProps={{
-            className: classes.margin + " " + classes.search,
-          }}
-          inputProps={{
-            placeholder: "Buscar sesiones...",
-            inputProps: {
-              "aria-label": "Buscar sesiones",
-            },
-          }}
-        />
-        <Button color="white" aria-label="edit" justIcon round>
-          <Search />
-        </Button>
-      </div>
       <div className={classes.manager}>
         <Button
           color={size.width > 959 ? "transparent" : "white"}
