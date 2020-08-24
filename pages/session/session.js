@@ -19,6 +19,7 @@ import Code from "@material-ui/icons/Code";
 import Cloud from "@material-ui/icons/Cloud";
 import { styles } from "./styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Button from "components/CustomButtons/Button.js";
 const useStyles = makeStyles(styles);
 
 function SessionDetail() {
@@ -63,7 +64,12 @@ function SessionDetail() {
                     tabIcon: Code,
                     tabContent: (
                       <GridItem xs={6} sm={6} md={6}>
-                        <Button onClick={handleClick}>Ver imágenes</Button>
+                        <CardFooter>
+                          <Button color="success" onClick={handleClick}>
+                            Ver imágenes
+                          </Button>
+                        </CardFooter>
+
                         <ImagesCarousel
                           isMobile={matches}
                           handleOpen={handleOpen}
