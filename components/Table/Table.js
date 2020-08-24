@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import styles from "assets/jss/nextjs-material-dashboard/components/tableStyle.js";
 import MaterialTable from "material-table";
 import { optionsConfig, localizationConfig } from "./config/tableConfig";
+import router from "next/router";
 
 const useStyles = makeStyles(styles);
 
@@ -18,7 +19,15 @@ export default function CustomTable(props) {
   const [data, setData] = useState(tableData);
 
   const goToSessionDetail = (rowData) => {
-    console.log("goToSessionDetail -> props", rowData);
+    router.push(
+      {
+        pathname: "/sessions/session",
+        // pathname: "/sessions" //TODO: Quiero hacer esto para usar la ruta dinamica [session] pero no me anda.
+        // query: { session: "1" },
+      },
+      undefined,
+      { shallow: true }
+    );
   };
 
   return (
