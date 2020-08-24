@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -11,17 +11,24 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
+import ImagesCarousel from "components/LoteTabs/ImagesCarousel";
 import AccessTime from "@material-ui/icons/AccessTime";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import BugReport from "@material-ui/icons/BugReport";
 import Code from "@material-ui/icons/Code";
 import Cloud from "@material-ui/icons/Cloud";
 import { styles } from "./styles";
-
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 const useStyles = makeStyles(styles);
 
 function SessionDetail() {
   const classes = useStyles();
+
+  const [handleOpen, setHandleOpen] = useState({ open: false });
+  const handleClick = () => {
+    setHandleOpen({ open: true });
+  };
+  const matches = useMediaQuery("(max-width:600px)");
 
   return (
     <div>
@@ -54,7 +61,16 @@ function SessionDetail() {
                   {
                     tabName: "Imágenes",
                     tabIcon: Code,
-                    tabContent: <p>Imágenes</p>,
+                    tabContent: (
+                      <GridItem xs={6} sm={6} md={6}>
+                        <Button onClick={handleClick}>Ver imágenes</Button>
+                        <ImagesCarousel
+                          isMobile={matches}
+                          handleOpen={handleOpen}
+                          setHandleOpen={setHandleOpen}
+                        />
+                      </GridItem>
+                    ),
                   },
                   {
                     tabName: "Notas",
