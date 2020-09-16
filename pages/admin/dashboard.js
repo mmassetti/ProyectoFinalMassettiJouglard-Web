@@ -45,7 +45,6 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 function Dashboard({ fetchedSessions }) {
-  //TODO: REFACTOR: Esta un poco feito desde la linea 16 a la 32, ver de usar lo mismo que en la app en RN
   const [sessions, setSessions] = useState(fetchedSessions);
   const classes = useStyles();
 

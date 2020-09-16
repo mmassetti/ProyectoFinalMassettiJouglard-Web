@@ -19,15 +19,9 @@ export default function CustomTable(props) {
   const [data, setData] = useState(tableData);
 
   const goToSessionDetail = (rowData) => {
-    router.push(
-      {
-        pathname: "/session/session",
-        // pathname: "/session" //TODO: Quiero hacer esto para usar la ruta dinamica [session] pero no me anda.
-        // query: { session: "1" },
-      },
-      undefined,
-      { shallow: true }
-    );
+    router.push("/session/[session]", `/session/${rowData.id}`, {
+      shallow: true,
+    });
   };
 
   return (
