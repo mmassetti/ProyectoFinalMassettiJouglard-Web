@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 
 import Button from "components/CustomButtons/Button.js";
+import { FeedbackFish } from "@feedback-fish/react";
 
 export default function FixedPlugin(props) {
   const [classes, setClasses] = React.useState("dropdown show");
@@ -22,7 +23,6 @@ export default function FixedPlugin(props) {
         </div>
         <ul className="dropdown-menu">
           <li className="header-title">Ayuda</li>
-
           <li className="button-container">
             <div className="button-container">
               <Button
@@ -37,10 +37,13 @@ export default function FixedPlugin(props) {
           </li>
           <li className="button-container">
             <div className="button-container">
+              <FeedbackFish projectId="af88f33ebb78ee" />
+
               <Button
+                data-feedback-fish
                 color="warning"
-                href="https://www.creative-tim.com/product/nextjs-material-dashboard-pro?ref=njsmd-fixed-plugin"
-                target="_blank"
+                // href="https://www.creative-tim.com/product/nextjs-material-dashboard-pro?ref=njsmd-fixed-plugin"
+                // target="_blank"
                 fullWidth
               >
                 Dar feedback
@@ -57,7 +60,9 @@ export default function FixedPlugin(props) {
               Ver Demo Youtube
             </Button>
           </li>
+          {/* <FeedbackFish projectId="af88f33ebb78ee" /> */}
 
+          {/* <Button data-feedback-fish>Feedback</Button> */}
           <li className="adjustments-line" />
         </ul>
       </div>
