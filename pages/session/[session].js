@@ -16,10 +16,29 @@ import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import BugReport from "@material-ui/icons/BugReport";
 import Code from "@material-ui/icons/Code";
 import Cloud from "@material-ui/icons/Cloud";
-import { styles } from "./styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Button from "components/CustomButtons/Button.js";
 import { useRouter } from "next/router";
+
+const styles = {
+  cardCategoryWhite: {
+    color: "rgba(255,255,255,.62)",
+    margin: "0",
+    fontSize: "14px",
+    marginTop: "0",
+    marginBottom: "0",
+  },
+  cardTitleWhite: {
+    color: "#FFFFFF",
+    marginTop: "0px",
+    minHeight: "auto",
+    fontWeight: "300",
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    marginBottom: "3px",
+    textDecoration: "none",
+  },
+};
+
 const useStyles = makeStyles(styles);
 
 function SessionDetail() {
