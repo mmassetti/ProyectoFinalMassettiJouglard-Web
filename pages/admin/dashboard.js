@@ -83,7 +83,7 @@ function Dashboard({ fetchedSessions }) {
                   { title: "Id", field: "id" },
                   { title: "Descripción", field: "description" },
                   { title: "Fecha", field: "date" },
-                  { title: "Creador/a", field: "creator" },
+                  { title: "Creada por", field: "creator" },
                 ]}
                 tableData={tableData}
               />
