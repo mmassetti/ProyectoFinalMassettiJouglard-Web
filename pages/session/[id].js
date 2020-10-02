@@ -19,13 +19,6 @@ import Button from "components/CustomButtons/Button.js";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 
-const fetcher = async (...args) => {
-  console.log("entro al fetcher");
-  const res = await fetch(...args);
-
-  return res.json();
-};
-
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -51,11 +44,13 @@ function SessionDetail() {
   const classes = useStyles();
   const router = useRouter();
   const { id } = router.query;
-  const { data } = useSWR(`/api/session/${id}`, fetcher);
+  const fetcher = async (...args) => {
+    const res = await fetch(...args);
 
-  if (!data) {
-    return "Loading...";
-  }
+    return res.json();
+  };
+
+  const { data, error } = useSWR(`/api/session/${id}`, fetcher);
 
   const [handleOpen, setHandleOpen] = useState({ open: false });
   const handleClick = () => {
@@ -63,14 +58,18 @@ function SessionDetail() {
   };
   const matches = useMediaQuery("(max-width:600px)");
 
+  if (error) return <div>Error al cargar...</div>;
+  if (!data) {
+    return "Cargando...";
+  }
+
   function goToDashboard(e) {
     router.push("/admin/dashboard");
   }
 
   return (
     <div>
-      <p>Description de la session: {data.description}</p>
-      {/* <GridItem xs={12} sm={4} md={3}>
+      <GridItem xs={12} sm={4} md={3}>
         <Button
           simple
           size="lg"
@@ -91,7 +90,7 @@ function SessionDetail() {
                 Sesión {router.query.session}
               </h4>
               <p className={classes.cardCategoryWhite}>
-                Creada el 21/02/2019 por Usuario1
+                Creada el VER QUE ONDA LA FECHA por {data.user}
               </p>
             </CardHeader>
           </Card>
@@ -145,7 +144,7 @@ function SessionDetail() {
             </CardFooter>
           </Card>
         </GridItem>
-      </GridContainer> */}
+      </GridContainer>
     </div>
   );
 }
