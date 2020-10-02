@@ -1,19 +1,12 @@
-import { useEffect, useState } from "react";
 import Admin from "layouts/Admin.js";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import Table from "components/Table/Table.js";
-import loadFirebase from "../../configuration/firebaseconfig";
-import moment from "moment";
-import "moment/locale/es";
-import PageChange from "../../components/PageChange/PageChange";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import { makeStyles } from "@material-ui/core/styles";
-import BugReport from "@material-ui/icons/BugReport";
 import useSWR from "swr";
-import Link from "next/link";
 
 const styles = {
   cardCategoryWhite: {
@@ -48,7 +41,6 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 function Dashboard({ fetchedSessions }) {
-  const [sessions, setSessions] = useState(fetchedSessions);
   const classes = useStyles();
   const fetcher = async (...args) => {
     const res = await fetch(...args);
@@ -58,26 +50,10 @@ function Dashboard({ fetchedSessions }) {
 
   const { data, error } = useSWR(`/api/sessions/`, fetcher);
 
-  if (error) return <div>Error al cargar...</div>;
+  if (error) return <h3>Error al cargar...</h3>;
   if (!data) {
-    return "Cargando...";
+    return <h3>Cargando..</h3>;
   }
-
-  // useEffect(() => {
-  //   async function loadData() {
-  //     const result = await getSessions();
-  //     setSessions(result);
-  //     // setSessions(Object.values(result));
-  //   }
-
-  //   if (fetchedSessions.length == 0) {
-  //     loadData();
-  //   }
-  // }, []);
-
-  // if (!sessions[0]) {
-  //   return <PageChange showText={false} />;
-  // }
 
   let tableData = getTableData(data);
 
