@@ -1,4 +1,4 @@
-import firebase from "../../configuration/firebase";
+import firebase from "../../../configuration/firebase";
 
 export default async (req, res) => {
   let data = [];

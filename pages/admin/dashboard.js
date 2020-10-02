@@ -48,7 +48,7 @@ function Dashboard({ fetchedSessions }) {
     return res.json();
   };
 
-  const { data, error } = useSWR(`/api/sessions/`, fetcher);
+  const { data, error } = useSWR(`/api/sessions`, fetcher);
 
   if (error) return <h3>Error al cargar...</h3>;
   if (!data) {

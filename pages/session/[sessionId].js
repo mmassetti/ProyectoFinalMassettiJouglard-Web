@@ -43,14 +43,14 @@ const useStyles = makeStyles(styles);
 function SessionDetail() {
   const classes = useStyles();
   const router = useRouter();
-  const { id } = router.query;
+  const { sessionId } = router.query;
   const fetcher = async (...args) => {
     const res = await fetch(...args);
 
     return res.json();
   };
 
-  const { data, error } = useSWR(`/api/session/${id}`, fetcher);
+  const { data, error } = useSWR(`/api/sessions/${sessionId}`, fetcher);
 
   const [handleOpen, setHandleOpen] = useState({ open: false });
   const handleClick = () => {
