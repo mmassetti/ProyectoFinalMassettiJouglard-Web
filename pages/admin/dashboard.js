@@ -13,6 +13,7 @@ import CardBody from "components/Card/CardBody.js";
 import { makeStyles } from "@material-ui/core/styles";
 import BugReport from "@material-ui/icons/BugReport";
 import useSWR from "swr";
+import Link from "next/link";
 
 const styles = {
   cardCategoryWhite: {
@@ -84,7 +85,6 @@ function Dashboard({ fetchedSessions }) {
     <div>
       {tableData && tableData.length > 0 ? (
         <>
-          <p>Hay {tableData.length} sesiones</p>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <Card>
@@ -111,7 +111,25 @@ function Dashboard({ fetchedSessions }) {
           </GridContainer>
         </>
       ) : (
-        <p>No hay sesiones creadas</p>
+        <>
+          <h1 style={{ fontWeight: "bold" }}>
+            {" "}
+            Todavía no hay sesiones creadas
+          </h1>
+          <h3>
+            {" "}
+            ¡Bajá la{" "}
+            <a
+              //TODO: Poner link a a la app en el href
+              href=""
+              target="_blank"
+            >
+              app
+            </a>{" "}
+            y comenzá a crearlas!
+          </h3>
+          {/* <h3>¡Bajá la app y comenzá a crearlas!</h3> */}
+        </>
       )}
     </div>
   );
