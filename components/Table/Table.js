@@ -19,7 +19,7 @@ export default function CustomTable(props) {
   const [data, setData] = useState(tableData);
 
   const goToSessionDetail = (rowData) => {
-    router.push("/session/[session]", `/session/${rowData.id}`, {
+    router.push("/session/[id]", `/session/${rowData.id}`, {
       shallow: true,
     });
   };

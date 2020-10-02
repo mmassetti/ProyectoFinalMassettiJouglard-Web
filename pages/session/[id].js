@@ -15,7 +15,16 @@ import Code from "@material-ui/icons/Code";
 import Cloud from "@material-ui/icons/Cloud";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Button from "components/CustomButtons/Button.js";
+
 import { useRouter } from "next/router";
+import useSWR from "swr";
+
+const fetcher = async (...args) => {
+  console.log("entro al fetcher");
+  const res = await fetch(...args);
+
+  return res.json();
+};
 
 const styles = {
   cardCategoryWhite: {
@@ -41,6 +50,12 @@ const useStyles = makeStyles(styles);
 function SessionDetail() {
   const classes = useStyles();
   const router = useRouter();
+  const { id } = router.query;
+  const { data } = useSWR(`/api/session/${id}`, fetcher);
+
+  if (!data) {
+    return "Loading...";
+  }
 
   const [handleOpen, setHandleOpen] = useState({ open: false });
   const handleClick = () => {
@@ -54,7 +69,8 @@ function SessionDetail() {
 
   return (
     <div>
-      <GridItem xs={12} sm={4} md={3}>
+      <p>Description de la session: {data.description}</p>
+      {/* <GridItem xs={12} sm={4} md={3}>
         <Button
           simple
           size="lg"
@@ -129,7 +145,7 @@ function SessionDetail() {
             </CardFooter>
           </Card>
         </GridItem>
-      </GridContainer>
+      </GridContainer> */}
     </div>
   );
 }

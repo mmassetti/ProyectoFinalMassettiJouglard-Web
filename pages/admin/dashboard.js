@@ -103,7 +103,8 @@ function getTableData(sessions) {
 
   sessions.map((session) => {
     tableData.push({
-      id: i.toString(),
+      // id: i.toString(),
+      id: session.id,
       description: session.description,
       date: "21/08/2019", // moment(session.date.toDate()).format("LL"),
       creator: session.user,

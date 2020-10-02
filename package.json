@@ -18,6 +18,7 @@
     "chartist": "0.10.1",
     "classnames": "2.2.6",
     "firebase": "^7.19.0",
+    "firebase-admin": "^9.2.0",
     "history": "5.0.0",
     "material-auto-rotating-carousel": "^3.0.2",
     "material-table": "^1.68.1",
@@ -33,6 +34,7 @@
     "react-dom": "16.13.1",
     "react-google-maps": "9.4.5",
     "react-swipeable-views": "^0.13.9",
+    "swr": "^0.3.5",
     "webpack": "4.44.1"
   },
   "eslintConfig": {
