@@ -21,7 +21,7 @@ import useSWR from "swr";
 
 const styles = {
   cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
+    color: "rgb(239,219,46)",
     margin: "0",
     fontSize: "14px",
     marginTop: "0",
@@ -87,14 +87,21 @@ function SessionDetail() {
           <Card plain>
             <CardHeader plain color="dark">
               <h4 className={classes.cardTitleWhite}>
-                Sesión {router.query.session}
+                Sesión creada el VER QUE ONDA LA FECHA
               </h4>
-              <p className={classes.cardCategoryWhite}>
-                Creada el VER QUE ONDA LA FECHA por {data.user}
+              <p
+                className={classes.cardCategoryWhite}
+                style={{ fontWeight: "bold" }}
+              >
+                Creada por {data.user}
               </p>
             </CardHeader>
           </Card>
+          <p>
+            <strong>Descripción: </strong> {data.description}
+          </p>
         </GridItem>
+
         <GridItem xs={12} sm={12} md={6}>
           <Card chart>
             <CardHeader color="primary">
