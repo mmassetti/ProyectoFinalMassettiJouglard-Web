@@ -11,6 +11,7 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import { makeStyles } from "@material-ui/core/styles";
+import BugReport from "@material-ui/icons/BugReport";
 
 const styles = {
   cardCategoryWhite: {

@@ -48,8 +48,25 @@ function SessionDetail() {
   };
   const matches = useMediaQuery("(max-width:600px)");
 
+  function goToDashboard(e) {
+    router.push("/admin/dashboard");
+  }
+
   return (
     <div>
+      <GridItem xs={12} sm={4} md={3}>
+        <Button
+          simple
+          size="lg"
+          color="primary"
+          onClick={goToDashboard}
+          style={{ paddingLeft: "initial" }}
+        >
+          <i className="material-icons">chevron_left</i> Volver a lista de
+          sesiones
+        </Button>
+      </GridItem>
+
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card plain>
