@@ -104,14 +104,12 @@ function Dashboard({ fetchedSessions }) {
             </a>{" "}
             y comenzá a crearlas!
           </h3>
-          {/* <h3>¡Bajá la app y comenzá a crearlas!</h3> */}
         </>
       )}
     </div>
   );
 }
 
-//TODO: REFACTOR: Move to its own service
 function getTableData(data) {
   let tableData = [];
   let i = 1;
@@ -132,44 +130,6 @@ function getTableData(data) {
 
   return tableData;
 }
-
-//TODO: REFACTOR Move to (shared/services/firebaseService) ?
-
-async function getSessions() {
-  // const firebase = await loadFirebase();
-  // const db = firebase.firestore();
-  // let result = await new Promise((resolve, reject) => {
-  //   db.collection("sessions")
-  //     .orderBy("date", "desc")
-  //     .get()
-  //     .then((snapshot) => {
-  //       let data = [];
-  //       snapshot.forEach((doc) => {
-  //         data.push(
-  //           Object.assign(
-  //             {
-  //               id: doc.id,
-  //             },
-  //             doc.data()
-  //           )
-  //         );
-  //       });
-  //       resolve(data);
-  //     })
-  //     .catch((error) => {
-  //       reject([]);
-  //     });
-  // });
-  // return result;
-}
-
-// Dashboard.getInitialProps = async (ctx) => {
-//   if (!ctx.req) {
-//     return { fetchedSessions: [] };
-//   }
-//   const result = await getSessions();
-//   return { fetchedSessions: Object.values(result) };
-// };
 
 Dashboard.layout = Admin;
 
