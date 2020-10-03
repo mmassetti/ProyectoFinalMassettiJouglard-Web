@@ -65,16 +65,25 @@ function Dashboard({ fetchedSessions }) {
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="dark">
-                  <h4 className={classes.cardTitleWhite}>Sesiones</h4>
-                  <p className={classes.cardCategoryWhite}>
+                  <h4 className={classes.cardTitleWhite}>
+                    {" "}
                     Lista de sesiones creadas en la aplicación móvil.
-                  </p>
+                  </h4>
+
+                  {tableData.length == 1 ? (
+                    <p className={classes.cardCategoryWhite}>
+                      Hay 1 sesión creada.
+                    </p>
+                  ) : (
+                    <p className={classes.cardCategoryWhite}>
+                      Hay {tableData.length} sesiones creadas.
+                    </p>
+                  )}
                 </CardHeader>
                 <CardBody>
                   <Table
                     tableHeaderColor="primary"
                     tableHead={[
-                      { title: "Id", field: "id" },
                       { title: "Descripción", field: "description" },
                       { title: "Fecha", field: "date" },
                       { title: "Creada por", field: "creator" },
@@ -112,19 +121,17 @@ function Dashboard({ fetchedSessions }) {
 
 function getTableData(data) {
   let tableData = [];
-  let i = 1;
   let sessionsArray = Object.values(data);
 
   if (data && sessionsArray) {
     sessionsArray.map((session) => {
       tableData.push({
         // id: i.toString(),
-        id: session.id,
         description: session.description,
         date: "21/08/2019", // moment(session.date.toDate()).format("LL"),
         creator: session.user,
+        id: session.id,
       });
-      i++;
     });
   }
 
