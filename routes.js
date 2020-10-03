@@ -22,7 +22,7 @@ import Person from "@material-ui/icons/Person";
 const dashboardRoutes = [
   {
     path: "/dashboard",
-    name: "Panel principal",
+    name: "Sesiones",
     icon: Dashboard,
     layout: "/admin",
   },
