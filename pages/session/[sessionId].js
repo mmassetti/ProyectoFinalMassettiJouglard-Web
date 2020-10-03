@@ -102,7 +102,7 @@ function SessionDetail() {
           </p>
         </GridItem>
 
-        <GridItem xs={12} sm={12} md={6}>
+        <GridItem xs={12} sm={12} md={12}>
           <Card chart>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Lote 1</h4>
