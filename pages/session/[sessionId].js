@@ -1,23 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Admin from "layouts/Admin.js";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-import ImagesCarousel from "components/LoteTabs/ImagesCarousel";
-import AccessTime from "@material-ui/icons/AccessTime";
-import CustomTabs from "components/CustomTabs/CustomTabs.js";
-import BugReport from "@material-ui/icons/BugReport";
-import Code from "@material-ui/icons/Code";
-import Cloud from "@material-ui/icons/Cloud";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Button from "components/CustomButtons/Button.js";
 
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import LoteInfo from "../../components/LoteInfo/LoteInfo";
 
 const styles = {
   cardCategoryWhite: {
@@ -52,12 +44,6 @@ function SessionDetail() {
 
   const { data, error } = useSWR(`/api/sessions/${sessionId}`, fetcher);
 
-  const [handleOpen, setHandleOpen] = useState({ open: false });
-  const handleClick = () => {
-    setHandleOpen({ open: true });
-  };
-  const matches = useMediaQuery("(max-width:600px)");
-
   if (error) return <div>Error al cargar...</div>;
   if (!data) {
     return "Cargando...";
@@ -67,7 +53,22 @@ function SessionDetail() {
     router.push("/admin/dashboard");
   }
 
+  const lotesInfo = () => {
+    return (
+      <>
+        {/* <p>{data.lotes.length}</p> */}
+        {data.lotes.map((lote) => (
+          <LoteInfo key={lote.id} descriptionLote={lote.description} />
+
+          // <div key={lote.id}>{lote.description}</div>
+        ))}
+      </>
+    );
+  };
+
   return (
+    // <p>{data.lotes.length}</p>
+
     <div>
       <GridItem xs={12} sm={4} md={3}>
         <Button
@@ -102,7 +103,9 @@ function SessionDetail() {
           </p>
         </GridItem>
 
-        <GridItem xs={12} sm={12} md={12}>
+        {lotesInfo()}
+        {/* 
+        <GridItem xs={12} sm={12} md={6}>
           <Card chart>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Lote 1</h4>
@@ -150,7 +153,7 @@ function SessionDetail() {
               </div>
             </CardFooter>
           </Card>
-        </GridItem>
+        </GridItem>*/}
       </GridContainer>
     </div>
   );

@@ -1,14 +1,23 @@
 import firebase from "../../../configuration/firebase";
 
 export default (req, res) => {
-  firebase
-    .collection("sessions")
-    .doc(req.query.sessionId)
+  let sessionsDetailsRef = firebase.collection("sessionsDetails");
+  let query = sessionsDetailsRef
+    .where("id", "==", req.query.sessionId)
     .get()
-    .then((doc) => {
-      res.json(doc.data());
+    .then((snapshot) => {
+      if (snapshot.empty) {
+        console.log("No matching documents.");
+        return res.json([]);
+      }
+      let infoArray = [];
+
+      snapshot.forEach((doc) => {
+        infoArray.push(doc.data());
+      });
+      return res.json(infoArray[0]);
     })
-    .catch((error) => {
-      res.json({ error });
+    .catch((err) => {
+      console.log("Error getting documents", err);
     });
 };
