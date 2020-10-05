@@ -56,19 +56,14 @@ function SessionDetail() {
   const lotesInfo = () => {
     return (
       <>
-        {/* <p>{data.lotes.length}</p> */}
         {data.lotes.map((lote) => (
           <LoteInfo key={lote.id} descriptionLote={lote.description} />
-
-          // <div key={lote.id}>{lote.description}</div>
         ))}
       </>
     );
   };
 
   return (
-    // <p>{data.lotes.length}</p>
-
     <div>
       <GridItem xs={12} sm={4} md={3}>
         <Button
@@ -104,56 +99,6 @@ function SessionDetail() {
         </GridItem>
 
         {lotesInfo()}
-        {/* 
-        <GridItem xs={12} sm={12} md={6}>
-          <Card chart>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Lote 1</h4>
-            </CardHeader>
-            <CardBody>
-              <CustomTabs
-                title="Ver:"
-                headerColor="dark"
-                tabs={[
-                  {
-                    tabName: "Cubrimiento",
-                    tabIcon: BugReport,
-                    tabContent: <p>Cubrimiento</p>,
-                  },
-                  {
-                    tabName: "Imágenes",
-                    tabIcon: Code,
-                    tabContent: (
-                      <GridItem xs={6} sm={6} md={6}>
-                        <CardFooter>
-                          <Button color="success" onClick={handleClick}>
-                            Ver imágenes
-                          </Button>
-                        </CardFooter>
-
-                        <ImagesCarousel
-                          isMobile={matches}
-                          handleOpen={handleOpen}
-                          setHandleOpen={setHandleOpen}
-                        />
-                      </GridItem>
-                    ),
-                  },
-                  {
-                    tabName: "Notas",
-                    tabIcon: Cloud,
-                    tabContent: <p>Notas</p>,
-                  },
-                ]}
-              />
-            </CardBody>
-            <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime /> Actualizado por última vez el 21/08/2020
-              </div>
-            </CardFooter>
-          </Card>
-        </GridItem>*/}
       </GridContainer>
     </div>
   );
