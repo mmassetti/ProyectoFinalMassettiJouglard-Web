@@ -120,9 +120,10 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
 // This function gets called at build time
 export async function getStaticPaths() {
   // const res = await fetch(`http://localhost:3000/api/sessions`);
-  const res = await fetch(
-    `https://inta-app-web-r0e2azq1j.vercel.app/api/sessions`
-  );
+  let prodURL = process.env.FIREBASE_DATABASE_URL;
+  console.log("getStaticPaths -> prodURL", prodURL);
+
+  const res = await fetch(prodURL + `/api/sessions`);
   const sessions = await res.json();
 
   //Get the paths we want to pre-render based on sessionsIds
