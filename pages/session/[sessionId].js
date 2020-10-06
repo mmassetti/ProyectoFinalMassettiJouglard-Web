@@ -32,40 +32,51 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-function SessionDetail() {
+function SessionDetail({ sessionId }) {
+  console.log("SessionDetail -> sessionId", sessionId);
   const classes = useStyles();
   const router = useRouter();
-  const { sessionId } = router.query;
+  // const { sessionId } = router.query;
   const fetcher = async (...args) => {
     const res = await fetch(...args);
 
     return res.json();
   };
 
-  const { data, error } = useSWR(`/api/sessions/${sessionId}`, fetcher);
+  // const { data: dataSession, error: errorSession } = useSWR(
+  //   `/api/sessions/${sessionId}`,
+  //   fetcher
+  // );
 
-  if (error) return <div>Error al cargar...</div>;
-  if (!data) {
-    return "Cargando...";
-  }
+  // const { data: dataLotes, error: errorLotes } = useSWR(
+  //   `/api/lotes/${sessionId}`,
+  //   fetcher
+  // );
+
+  // if (errorSession) return <div>Error al cargar...</div>;
+  // if (!dataSession) {
+  //   return "Cargando...";
+  // }
 
   function goToDashboard(e) {
     router.push("/admin/dashboard");
   }
 
-  const lotesInfo = () => {
-    return (
-      <>
-        {data.lotes.map((lote) => (
-          <LoteInfo key={lote.id} descriptionLote={lote.description} />
-        ))}
-      </>
-    );
-  };
+  // const lotesInfo = () => {
+  //   return (
+  //     <>
+  //       {dataSession.lotes.map((lote) => (
+  //         <LoteInfo key={lote.id} descriptionLote={lote.description} />
+  //       ))}
+  //     </>
+  //   );
+  // };
 
   return (
     <div>
-      <GridItem xs={12} sm={4} md={3}>
+      <p> test </p>
+      {/* <p>{dataLotes.length}</p> */}
+      {/* <GridItem xs={12} sm={4} md={3}>
         <Button
           simple
           size="lg"
@@ -89,19 +100,57 @@ function SessionDetail() {
                 className={classes.cardCategoryWhite}
                 style={{ fontWeight: "bold" }}
               >
-                Creada por {data.user}
+                Creada por {dataSession.user}
               </p>
             </CardHeader>
           </Card>
           <p>
-            <strong>Descripción: </strong> {data.description}
+            <strong>Descripción: </strong> {dataSession.description}
           </p>
         </GridItem>
 
-        {lotesInfo()}
-      </GridContainer>
+        {lotesInfo()} 
+      </GridContainer> */}
     </div>
   );
+}
+// This function gets called at build time
+export async function getStaticPaths() {
+  const res = await fetch(`http://localhost:3000/api/sessions`);
+  const sessions = await res.json();
+  console.log("getStaticPaths -> sessionDetailsData", sessions);
+
+  //Get the paths we want to pre-render based on posts
+  const paths = sessions.map((session) => ({
+    params: { sessionId: session.id },
+  }));
+
+  // We'll pre-render only these paths at build time.
+  //{ fallback: false } means other routes should 404.
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps(context) {
+  const { params } = context;
+  const { sessionId } = params;
+
+  const res = await fetch(
+    `http://localhost:3000/api/sessionsDetails/${sessionId}`
+  );
+  const sessionDetails = await res.json();
+
+  let lotesIds = [];
+  if (sessionDetails) {
+    sessionDetails.data.lotes.map((lote) => {
+      console.log("LoteId: ", lote.id);
+    });
+  }
+
+  console.log("getStaticProps -> sessionDetails", sessionDetails);
+
+  return {
+    props: { sessionId }, // will be passed to the page component as props
+  };
 }
 
 SessionDetail.layout = Admin;

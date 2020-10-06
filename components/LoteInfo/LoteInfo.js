@@ -50,7 +50,7 @@ export default function LoteInfo(props) {
         <CardHeader color="primary">
           <h4 className={classes.cardTitleWhite}>{props.descriptionLote} </h4>
         </CardHeader>
-        <GridItem xs={12} sm={12} md={6}>
+        <GridItem xs={12} sm={12} md={12}>
           <h5>
             <strong>10 imágenes</strong> y <strong> 2 pasturas</strong>{" "}
             asociadas
