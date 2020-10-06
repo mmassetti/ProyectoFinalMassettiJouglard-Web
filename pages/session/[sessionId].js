@@ -69,10 +69,10 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
       //La sesión no tiene lotes
       return (
         <GridItem xs={12} sm={12} md={12}>
-          <h5>
+          <h7>
             Esta sesión todavía <strong>no tiene ningún lote</strong> cargado.
             ¡Comenza a crearlos desde la aplicación móvil!
-          </h5>
+          </h7>
         </GridItem>
       );
     }
