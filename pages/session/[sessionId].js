@@ -41,14 +41,16 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
     return res.json();
   };
 
-  const { data: dataLotes, error: errorLotes } = useSWR(
-    "/api/lotesDetails" + lotesUrl,
-    fetcher
-  );
+  if (lotesUrl != "") {
+    const { data: dataLotes, error: errorLotes } = useSWR(
+      "/api/lotesDetails" + lotesUrl,
+      fetcher
+    );
 
-  if (errorLotes) return <div>Error al cargar...</div>;
-  if (!dataLotes) {
-    return "Cargando...";
+    if (errorLotes) return <div>Error al cargar...</div>;
+    if (!dataLotes) {
+      return "Cargando...";
+    }
   }
 
   function goToDashboard(e) {
@@ -56,13 +58,24 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
   }
 
   const lotesInfo = () => {
-    return (
-      <>
-        {dataLotes.map((lote) => (
-          <LoteInfo {...lote} key={lote.data.id} />
-        ))}
-      </>
-    );
+    if (lotesUrl != "") {
+      return (
+        <>
+          {dataLotes.map((lote) => (
+            <LoteInfo {...lote} key={lote.data.id} />
+          ))}
+        </>
+      );
+    } else {
+      return (
+        <GridItem xs={12} sm={12} md={12}>
+          <h5>
+            Esta sesión todavía no tiene ningún lote cargado. ¡Comenza a
+            crearlos desde la aplicación móvil!
+          </h5>
+        </GridItem>
+      );
+    }
   };
 
   return (
