@@ -41,37 +41,37 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
     return res.json();
   };
 
-  if (lotesUrl != "") {
-    const { data: dataLotes, error: errorLotes } = useSWR(
-      "/api/lotesDetails" + lotesUrl,
-      fetcher
-    );
-
-    if (errorLotes) return <div>Error al cargar...</div>;
-    if (!dataLotes) {
-      return "Cargando...";
-    }
-  }
+  const { data: dataLotes, error: errorLotes } = useSWR(
+    "/api/lotesDetails" + lotesUrl,
+    fetcher
+  );
 
   function goToDashboard(e) {
     router.push("/admin/dashboard");
   }
 
   const lotesInfo = () => {
-    if (lotesUrl != "") {
-      return (
-        <>
-          {dataLotes.map((lote) => (
-            <LoteInfo {...lote} key={lote.data.id} />
-          ))}
-        </>
-      );
+    if (dataLotes) {
+      if (dataLotes.data) {
+        //La sesion tiene un solo lote (viene un objeto) //todo: refactor api
+        return <LoteInfo {...dataLotes} key={dataLotes.data.id} />;
+      } else if (dataLotes.length > 0) {
+        //La sesion tiene mas de un lote (viene un arreglo)
+        return (
+          <>
+            {dataLotes.map((lote) => (
+              <LoteInfo {...lote} key={lote.data.id} />
+            ))}
+          </>
+        );
+      }
     } else {
+      //La sesión no tiene lotes
       return (
         <GridItem xs={12} sm={12} md={12}>
           <h5>
-            Esta sesión todavía no tiene ningún lote cargado. ¡Comenza a
-            crearlos desde la aplicación móvil!
+            Esta sesión todavía <strong>no tiene ningún lote</strong> cargado.
+            ¡Comenza a crearlos desde la aplicación móvil!
           </h5>
         </GridItem>
       );
