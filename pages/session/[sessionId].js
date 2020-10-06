@@ -32,8 +32,9 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-function SessionDetail({ sessionId }) {
-  console.log("SessionDetail -> sessionId", sessionId);
+function SessionDetail({ sessionDetails, lotesInfos }) {
+  console.log("SessionDetail -> lotesInfos", lotesInfos);
+  console.log("SessionDetail -> sessionDetails", sessionDetails);
   const classes = useStyles();
   const router = useRouter();
   // const { sessionId } = router.query;
@@ -118,7 +119,7 @@ function SessionDetail({ sessionId }) {
 export async function getStaticPaths() {
   const res = await fetch(`http://localhost:3000/api/sessions`);
   const sessions = await res.json();
-  console.log("getStaticPaths -> sessionDetailsData", sessions);
+  // console.log("getStaticPaths -> sessionDetailsData", sessions);
 
   //Get the paths we want to pre-render based on posts
   const paths = sessions.map((session) => ({
@@ -139,17 +140,20 @@ export async function getStaticProps(context) {
   );
   const sessionDetails = await res.json();
 
-  let lotesIds = [];
+  let lotesInfos = [];
   if (sessionDetails) {
-    sessionDetails.data.lotes.map((lote) => {
-      console.log("LoteId: ", lote.id);
+    sessionDetails.data.lotes.map(async (lote) => {
+      let resLotesDetails = await fetch(
+        `http://localhost:3000/api/lotesDetails/${lote.id}`
+      );
+      lotesInfos.push(await resLotesDetails.json());
     });
   }
 
-  console.log("getStaticProps -> sessionDetails", sessionDetails);
+  // console.log("getStaticProps -> sessionDetails", sessionDetails);
 
   return {
-    props: { sessionId }, // will be passed to the page component as props
+    props: { sessionDetails, lotesInfos }, // will be passed to the page component as props
   };
 }
 

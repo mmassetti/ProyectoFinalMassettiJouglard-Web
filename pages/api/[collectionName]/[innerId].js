@@ -1,7 +1,7 @@
 import firebase from "../../../configuration/firebase";
 
 export default async (req, res) => {
-  console.log("req", req.query);
+  // console.log("req", req.query);
   const {
     docs: [doc],
   } = await firebase
