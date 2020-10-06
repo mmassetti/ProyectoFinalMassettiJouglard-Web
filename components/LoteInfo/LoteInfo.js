@@ -36,6 +36,8 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function LoteInfo(props) {
+  const { data } = props;
+
   const classes = useStyles();
 
   const [handleOpen, setHandleOpen] = useState({ open: false });
@@ -48,12 +50,12 @@ export default function LoteInfo(props) {
     <GridItem xs={12} sm={12} md={6}>
       <Card chart>
         <CardHeader color="primary">
-          <h4 className={classes.cardTitleWhite}>{props.descriptionLote} </h4>
+          <h4 className={classes.cardTitleWhite}>{data.description} </h4>
         </CardHeader>
         <GridItem xs={12} sm={12} md={12}>
           <h5>
-            <strong>10 imágenes</strong> y <strong> 2 pasturas</strong>{" "}
-            asociadas
+            <strong>{data.images.length} imágenes</strong> y{" "}
+            <strong>{data.pasturas.length} pasturas</strong> asociadas
           </h5>
         </GridItem>
 
