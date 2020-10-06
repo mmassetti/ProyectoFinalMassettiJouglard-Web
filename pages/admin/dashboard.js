@@ -52,7 +52,7 @@ function Dashboard({ fetchedSessions }) {
 
   if (error) return <h3>Error al cargar...</h3>;
   if (!data) {
-    return <h3>Cargando..</h3>;
+    return <h3>Cargando..</h3>; //todo: Poner spinner
   }
 
   let tableData = getTableData(data);
