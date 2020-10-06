@@ -119,7 +119,8 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
 }
 // This function gets called at build time
 export async function getStaticPaths() {
-  const res = await fetch(`http://localhost:3000/api/sessions`);
+  // const res = await fetch(`http://localhost:3000/api/sessions`);
+  const res = await fetch(`inta-app-web-r0e2azq1j.vercel.app/api/sessions`);
   const sessions = await res.json();
 
   //Get the paths we want to pre-render based on sessionsIds
@@ -136,9 +137,13 @@ export async function getStaticProps(context) {
   const { params } = context;
   const { sessionId } = params;
 
+  // const res = await fetch(
+  //   `http://localhost:3000/api/sessionsDetails/${sessionId}`
+  // );
   const res = await fetch(
-    `http://localhost:3000/api/sessionsDetails/${sessionId}`
+    `inta-app-web-r0e2azq1j.vercel.app/api/sessionsDetails/${sessionId}`
   );
+  inta - app - web - r0e2azq1j.vercel.app;
   const sessionDetails = await res.json();
 
   let lotesUrl = "";
