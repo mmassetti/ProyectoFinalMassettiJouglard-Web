@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
@@ -10,7 +10,7 @@ import BugReport from "@material-ui/icons/BugReport";
 import Code from "@material-ui/icons/Code";
 import Cloud from "@material-ui/icons/Cloud";
 import { makeStyles } from "@material-ui/core/styles";
-import Gallery from "react-grid-gallery";
+import LoteImages from "../LoteImages/LoteImages";
 
 const styles = {
   cardCategoryWhite: {
@@ -31,33 +31,6 @@ const styles = {
   },
 };
 
-const IMAGES = [
-  {
-    src: "https://c3.staticflickr.com/9/8583/28354353794_9f2d08d8c0_b.jpg",
-    thumbnail:
-      "https://c3.staticflickr.com/9/8583/28354353794_9f2d08d8c0_n.jpg",
-    thumbnailWidth: 243,
-    thumbnailHeight: 190,
-    caption: "286H (gratisography.com)",
-  },
-  {
-    src: "https://c6.staticflickr.com/9/8342/28897193381_800db6419e_b.jpg",
-    thumbnail:
-      "https://c6.staticflickr.com/9/8342/28897193381_800db6419e_n.jpg",
-    thumbnailWidth: 243,
-    thumbnailHeight: 190,
-    caption: "201H (gratisography.com)",
-  },
-  {
-    src: "https://c2.staticflickr.com/9/8239/28897202241_1497bec71a_b.jpg",
-    thumbnail:
-      "https://c2.staticflickr.com/9/8239/28897202241_1497bec71a_n.jpg",
-    thumbnailWidth: 244,
-    thumbnailHeight: 190,
-    caption: "Big Ben (Tom Eversley - isorepublic.com)",
-  },
-];
-
 const useStyles = makeStyles(styles);
 
 export default function LoteInfo(props) {
@@ -66,7 +39,7 @@ export default function LoteInfo(props) {
   const classes = useStyles();
 
   const showImageInfo = (index) => {
-    console.log("show image info for index: ", index);
+    console.log("CHE show image info for index: ", index);
   };
 
   return (
@@ -89,33 +62,19 @@ export default function LoteInfo(props) {
               headerColor="dark"
               tabs={[
                 {
-                  tabName: "Cubrimiento",
-                  tabIcon: BugReport,
-                  tabContent: <p>Cubrimiento</p>,
-                },
-                {
                   tabName: "Imágenes",
                   tabIcon: Code,
                   tabContent: (
-                    <div
-                      style={{
-                        display: "block",
-                        minHeight: "1px",
-                        width: "100%",
-                        border: "1px solid #ddd",
-                        overflow: "auto",
-                      }}
-                    >
-                      <Gallery
-                        images={IMAGES}
-                        enableImageSelection={false}
-                        enableLightbox={false}
-                        onClickThumbnail={(index) => {
-                          showImageInfo(index);
-                        }}
-                      />
-                    </div>
+                    <LoteImages
+                      images={data.images}
+                      onImageSelected={showImageInfo}
+                    />
                   ),
+                },
+                {
+                  tabName: "Pasturas",
+                  tabIcon: BugReport,
+                  tabContent: <p>Pasturas</p>,
                 },
                 {
                   tabName: "Notas",
@@ -134,7 +93,8 @@ export default function LoteInfo(props) {
       </GridItem>
       <GridItem xs={12} sm={12} md={6}>
         <h5>
-          <strong>Seleccióna una imágen</strong> para mostrar su información
+          <strong>{data.description} </strong> - Seleccioná una imágen para
+          mostrar su información
         </h5>
       </GridItem>
     </>
