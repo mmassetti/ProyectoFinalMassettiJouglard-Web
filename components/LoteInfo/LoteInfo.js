@@ -39,6 +39,7 @@ export default function LoteInfo(props) {
   const [showSideImageInfo, setShowSideImageInfo] = useState(false);
   const [imageData, setImageData] = useState("");
   const [imageNumber, setImageNumber] = useState("");
+  const [showHelp, setShowHelp] = useState(true);
 
   const classes = useStyles();
 
@@ -46,6 +47,7 @@ export default function LoteInfo(props) {
     setImageData(imageData);
     setImageNumber(imageNumber);
     setShowSideImageInfo(true);
+    setShowHelp(false);
   };
 
   return (
@@ -98,14 +100,19 @@ export default function LoteInfo(props) {
         </Card>
       </GridItem>
       <GridItem xs={12} sm={12} md={6}>
-        <h5>
-          <strong>{data.description} </strong> - Seleccioná una imágen para
-          mostrar su información
-        </h5>
+        {showHelp ? (
+          <h5>
+            <strong>{data.description} </strong> - Seleccioná una imágen para
+            mostrar su información
+          </h5>
+        ) : (
+          ""
+        )}
+
         {showSideImageInfo ? (
           <SideImageInfo imageNumber={imageNumber} imageData={imageData} />
         ) : (
-          <p>No mostrar nada</p>
+          ""
         )}
       </GridItem>
     </>
