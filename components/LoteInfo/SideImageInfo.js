@@ -32,17 +32,20 @@ export default function SideImageInfo(props) {
       thumbnail: imageData.before.uri,
       thumbnailWidth: 243,
       thumbnailHeight: 190,
-      caption: "Imágen antes",
-      tags: [{ value: "Antes", title: "Antes" }],
+      caption: imageData.after
+        ? "Imágen " + imageNumber + " - Antes"
+        : "Imágen " + imageNumber,
     });
 
     if (imageData.after) {
+      imagesForGallery[0].tags = [{ value: "Antes", title: "Antes" }];
+
       imagesForGallery.push({
         src: imageData.after.uri,
         thumbnail: imageData.after.uri,
         thumbnailWidth: 243,
         thumbnailHeight: 190,
-        caption: "Imágen después",
+        caption: "Imágen " + imageNumber + " - Después",
         tags: [{ value: "Después", title: "Después" }],
       });
     }
