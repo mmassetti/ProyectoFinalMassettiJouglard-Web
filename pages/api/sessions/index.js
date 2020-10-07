@@ -5,6 +5,7 @@ export default async (req, res) => {
 
   await firebase
     .collection("sessions")
+    .orderBy("date", "desc")
     .get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {

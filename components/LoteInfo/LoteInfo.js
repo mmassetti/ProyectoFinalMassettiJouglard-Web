@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
@@ -11,6 +11,7 @@ import Code from "@material-ui/icons/Code";
 import Cloud from "@material-ui/icons/Cloud";
 import { makeStyles } from "@material-ui/core/styles";
 import LoteImages from "../LoteImages/LoteImages";
+import SideImageInfo from "./SideImageInfo";
 
 const styles = {
   cardCategoryWhite: {
@@ -35,11 +36,16 @@ const useStyles = makeStyles(styles);
 
 export default function LoteInfo(props) {
   const { data } = props;
+  const [showSideImageInfo, setShowSideImageInfo] = useState(false);
+  const [imageData, setImageData] = useState("");
+  const [imageNumber, setImageNumber] = useState("");
 
   const classes = useStyles();
 
-  const showImageInfo = (index) => {
-    console.log("CHE show image info for index: ", index);
+  const showImageInfo = (imageNumber, imageData) => {
+    setImageData(imageData);
+    setImageNumber(imageNumber);
+    setShowSideImageInfo(true);
   };
 
   return (
@@ -96,6 +102,11 @@ export default function LoteInfo(props) {
           <strong>{data.description} </strong> - Seleccioná una imágen para
           mostrar su información
         </h5>
+        {showSideImageInfo ? (
+          <SideImageInfo imageNumber={imageNumber} imageData={imageData} />
+        ) : (
+          <p>No mostrar nada</p>
+        )}
       </GridItem>
     </>
   );

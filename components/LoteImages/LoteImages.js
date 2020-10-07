@@ -4,7 +4,7 @@ import Gallery from "react-grid-gallery";
 export default function LoteImages(props) {
   const { images } = props;
 
-  const loteGallery = (imagesForGallery) => {
+  const loteGallery = (imagesForGallery, imagesData) => {
     return (
       <div
         style={{
@@ -20,16 +20,18 @@ export default function LoteImages(props) {
           enableImageSelection={false}
           enableLightbox={false}
           onClickThumbnail={(index) => {
-            props.onImageSelected(index);
+            props.onImageSelected(index + 1, imagesData[index]);
           }}
         />
       </div>
     );
   };
+
   const lotesImages = () => {
     if (images && images.length) {
       let imagesForGallery = [];
       let imageCount = 1;
+      let imagesData = [];
       images.map((image) => {
         imagesForGallery.push({
           src: image.before.uri,
@@ -38,10 +40,11 @@ export default function LoteImages(props) {
           thumbnailHeight: 190,
           caption: "Imagen " + imageCount + "- Click para ver más info",
         });
+        imagesData.push(image);
         imageCount++;
       });
 
-      return loteGallery(imagesForGallery);
+      return loteGallery(imagesForGallery, imagesData);
     } else {
       return <h5>El lote no tiene imágenes sueltas. ¡Revisá las pasturas!</h5>;
     }
