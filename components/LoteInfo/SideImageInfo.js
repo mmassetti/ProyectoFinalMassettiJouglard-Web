@@ -18,10 +18,7 @@ export default function SideImageInfo(props) {
         <Gallery
           images={imagesForGallery}
           enableImageSelection={false}
-          enableLightbox={false}
-          //   onClickThumbnail={(index) => {
-          //     props.onImageSelected(index + 1, imagesForGallery[index].src);
-          //   }}
+          backdropClosesModal={true}
         />
       </div>
     );
@@ -36,6 +33,7 @@ export default function SideImageInfo(props) {
       thumbnailWidth: 243,
       thumbnailHeight: 190,
       caption: "Imágen antes",
+      tags: [{ value: "Antes", title: "Antes" }],
     });
 
     if (imageData.after) {
@@ -45,10 +43,19 @@ export default function SideImageInfo(props) {
         thumbnailWidth: 243,
         thumbnailHeight: 190,
         caption: "Imágen después",
+        tags: [{ value: "Después", title: "Después" }],
       });
     }
 
     return loteGallery(imagesForGallery);
+  };
+
+  const imagesCover = () => {
+    return (
+      <div style={{ marginTop: 20 }}>
+        <h4>Cubrimiento</h4>
+      </div>
+    );
   };
 
   return (
@@ -57,6 +64,7 @@ export default function SideImageInfo(props) {
         <strong>Imágen {imageNumber}</strong>
       </h6>
       {relatedImages()}
+      {imagesCover()}
     </>
   );
 }
