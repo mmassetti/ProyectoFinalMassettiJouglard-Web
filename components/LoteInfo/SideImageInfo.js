@@ -1,8 +1,10 @@
 import React from "react";
 import Gallery from "react-grid-gallery";
+import Percentages from "./Percentages";
 
 export default function SideImageInfo(props) {
   const { imageNumber, imageData } = props;
+  console.log("SideImageInfo -> imageData", imageData);
 
   const loteGallery = (imagesForGallery) => {
     return (
@@ -55,9 +57,9 @@ export default function SideImageInfo(props) {
 
   const imagesCover = () => {
     return (
-      <div style={{ marginTop: 20 }}>
-        <h4>Cubrimiento</h4>
-      </div>
+      //   <div style={{ marginTop: 20 }}>
+      <Percentages imageData={imageData} />
+      //   </div>
     );
   };
 
