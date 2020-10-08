@@ -4,7 +4,6 @@ import Percentages from "./Percentages";
 
 export default function SideImageInfo(props) {
   const { imageNumber, imageData } = props;
-  console.log("SideImageInfo -> imageData", imageData);
 
   const loteGallery = (imagesForGallery) => {
     return (
@@ -56,17 +55,13 @@ export default function SideImageInfo(props) {
   };
 
   const imagesCover = () => {
-    return (
-      //   <div style={{ marginTop: 20 }}>
-      <Percentages imageData={imageData} />
-      //   </div>
-    );
+    return <Percentages imageData={imageData} />;
   };
 
   return (
     <>
       <h6>
-        <strong>Imágen {imageNumber}</strong>
+        <strong>Imágen {imageNumber} - Detalles</strong>
       </h6>
       {relatedImages()}
       {imagesCover()}
