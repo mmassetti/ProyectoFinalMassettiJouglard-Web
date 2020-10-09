@@ -17,7 +17,7 @@ export default function Percentages(props) {
             <GridItem xs={12} sm={12} md={6}>
               <PercentagesCard
                 percentages={imageData.before.percentages}
-                title="Antes"
+                title={imageData.after ? "- Antes" : ""}
               />
             </GridItem>
 
@@ -25,7 +25,7 @@ export default function Percentages(props) {
               <GridItem xs={12} sm={12} md={6}>
                 <PercentagesCard
                   percentages={imageData.after.percentages}
-                  title="Después"
+                  title="- Después"
                 />
               </GridItem>
             ) : (

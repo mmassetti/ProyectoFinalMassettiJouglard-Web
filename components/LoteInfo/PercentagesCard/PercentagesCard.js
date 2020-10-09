@@ -20,7 +20,7 @@ export default function PercentagesCard(props) {
         }}
       >
         <h4 style={{ color: "white" }}>
-          <strong>Porcentajes de cobertura</strong> - {title}
+          <strong>Porcentajes de cobertura</strong> {title}
         </h4>
       </div>
 
