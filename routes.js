@@ -18,6 +18,8 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
+import Help from "@material-ui/icons/Help";
+import HelpOutline from "@material-ui/icons/HelpOutline";
 
 const dashboardRoutes = [
   {
@@ -27,9 +29,9 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/user-profile",
-    name: "Otro menú",
-    icon: Person,
+    path: "/help",
+    name: "Ayuda",
+    icon: Help,
     layout: "/admin",
   },
 ];

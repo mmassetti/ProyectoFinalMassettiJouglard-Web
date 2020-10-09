@@ -20,8 +20,8 @@ export default function Footer(props) {
               </Link>
             </ListItem>
             <ListItem className={classes.inlineBlock}>
-              <Link href="/admin/user-profile">
-                <a>Otro menú</a>
+              <Link href="/admin/ayuda">
+                <a>Ayuda</a>
               </Link>
             </ListItem>
           </List>

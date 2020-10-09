@@ -39,8 +39,7 @@ export default function PageChange(props) {
         <div className={classes.iconWrapper}>
           <CircularProgress className={classes.progress} />
         </div>
-        {props.showText ? <h4 className={classes.title}>Cargando...</h4> : ""}{" "}
-        //todo: Poner spinner
+        {props.showText ? <h4 className={classes.title}>Cargando...</h4> : ""}
       </div>
     </div>
   );
