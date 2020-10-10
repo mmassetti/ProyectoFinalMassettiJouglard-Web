@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
@@ -12,6 +12,8 @@ import Cloud from "@material-ui/icons/Cloud";
 import { makeStyles } from "@material-ui/core/styles";
 import LoteImages from "../LoteImages/LoteImages";
 import SideImageInfo from "./SideImageInfo";
+import LotePasturas from "../LotePasturas/LotePasturas";
+import useSWR from "swr";
 
 const styles = {
   cardCategoryWhite: {
@@ -40,6 +42,7 @@ export default function LoteInfo(props) {
   const [imageData, setImageData] = useState("");
   const [imageNumber, setImageNumber] = useState("");
   const [showHelp, setShowHelp] = useState(true);
+  const [pasturasDetails, setPasturasDetails] = useState([]);
 
   const classes = useStyles();
 
@@ -49,6 +52,29 @@ export default function LoteInfo(props) {
     setShowSideImageInfo(true);
     setShowHelp(false);
   };
+
+  useEffect(() => {
+    let pasturasUrl = "";
+    if (data.pasturas && data.pasturas.length > 0) {
+      data.pasturas.map((pastura) => {
+        pasturasUrl = pasturasUrl + "/" + pastura.id;
+      });
+    }
+
+    console.log("LoteInfo -> pasturasUrl", pasturasUrl);
+
+    async function getPasturasDetails() {
+      let res = await fetch(
+        `http://localhost:3000/api/pasturasDetails` + pasturasUrl
+      );
+
+      let pasturasDetails = await res.json();
+
+      setPasturasDetails(pasturasDetails);
+    }
+
+    const res = getPasturasDetails();
+  }, []);
 
   return (
     <>
@@ -82,7 +108,12 @@ export default function LoteInfo(props) {
                 {
                   tabName: "Pasturas",
                   tabIcon: BugReport,
-                  tabContent: <p>Pasturas</p>,
+                  tabContent: (
+                    <LotePasturas
+                      pasturas={data.pasturas}
+                      pasturasDetails={pasturasDetails}
+                    />
+                  ),
                 },
                 {
                   tabName: "Notas",

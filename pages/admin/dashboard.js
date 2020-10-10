@@ -87,6 +87,9 @@ function Dashboard({ fetchedSessions }) {
                       { title: "Descripción", field: "description" },
                       { title: "Fecha", field: "date" },
                       { title: "Creada por", field: "creator" },
+                      { title: "Cantidad de lotes", field: "lotes" },
+                      { title: "Cantidad de pasturas", field: "pasturas" },
+                      { title: "Total de imágenes", field: "totalImages" },
                     ]}
                     tableData={tableData}
                   />

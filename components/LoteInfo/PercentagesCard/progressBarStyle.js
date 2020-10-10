@@ -31,7 +31,6 @@ function progressBarStyle(color) {
       fill: color,
       // Text size
       fontSize: "22px",
-      fontWeight:
     },
   };
 }
