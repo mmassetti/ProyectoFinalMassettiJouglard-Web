@@ -30,7 +30,6 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function PasturaInfo(props) {
-  console.log("PasturaInfo -> props", props);
   const {
     averagePaster,
     averageBefore,
@@ -63,11 +62,11 @@ export default function PasturaInfo(props) {
             onImageSelected={onPasturaImageSelected}
           />
         </CardBody>
-        <CardFooter chart>
+        {/* <CardFooter chart>
           <div className={classes.stats}>
             <AccessTime /> Actualizada por última vez el 21/08/2020
           </div>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </GridItem>
   );

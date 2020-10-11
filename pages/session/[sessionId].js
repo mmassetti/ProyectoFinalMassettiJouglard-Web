@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Admin from "layouts/Admin.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -10,6 +10,11 @@ import Button from "components/CustomButtons/Button.js";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import LoteInfo from "../../components/LoteInfo/LoteInfo";
+import DescriptionIcon from "@material-ui/icons/Description";
+import EventIcon from "@material-ui/icons/Event";
+import PersonIcon from "@material-ui/icons/Person";
+import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
+import InfoModal from "../../components/Modal/InfoModal";
 
 const styles = {
   cardCategoryWhite: {
@@ -28,6 +33,12 @@ const styles = {
     marginBottom: "3px",
     textDecoration: "none",
   },
+  rows: {
+    display: "inline-block",
+  },
+  row: {
+    display: "inline-block",
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -35,6 +46,7 @@ const useStyles = makeStyles(styles);
 function SessionDetail({ sessionDetails, lotesUrl }) {
   const classes = useStyles();
   const router = useRouter();
+  const [showNotes, setShowNotes] = useState(false);
   const fetcher = async (...args) => {
     const res = await fetch(...args);
 
@@ -97,24 +109,40 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
         </Button>
       </GridItem>
       <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
+        <GridItem xs={12} sm={12} md={12} style={{ marginBottom: 20 }}>
           <Card plain>
             <CardHeader plain color="dark">
               <h4 className={classes.cardTitleWhite}>
-                Sesión creada el VER QUE ONDA LA FECHA
+                <EventIcon style={{ marginBottom: -5 }} /> Sesión creada el VER
+                QUE ONDA LA FECHA
               </h4>
               <p
                 className={classes.cardCategoryWhite}
                 style={{ fontWeight: "bold" }}
               >
-                Creada por {sessionDetails.data.user}
+                <PersonIcon style={{ marginBottom: -4 }} /> Creada por{" "}
+                {sessionDetails.data.user}
               </p>
             </CardHeader>
           </Card>
-          <p>
-            <strong>Descripción: </strong> {sessionDetails.data.description}
-          </p>
+
+          {/* Session Description and Notes */}
+          <div className={classes.rows}>
+            <div className={classes.row} style={{ marginBottom: 2 }}>
+              <DescriptionIcon style={{ marginBottom: -2 }} />{" "}
+              <strong>Descripción: </strong>
+              {sessionDetails.data.description}
+            </div>
+            <div className="row">
+              <SpeakerNotesIcon style={{ marginBottom: -2 }} />{" "}
+              <a href="" onClick={() => setShowNotes(true)}>
+                Ver notas
+              </a>
+            </div>
+          </div>
         </GridItem>
+
+        {showNotes ? <InfoModal /> : ""}
 
         {lotesInfo()}
       </GridContainer>

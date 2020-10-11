@@ -40,7 +40,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-function Dashboard({ fetchedSessions }) {
+function Dashboard() {
   const classes = useStyles();
   const fetcher = async (...args) => {
     const res = await fetch(...args);
