@@ -1,42 +1,41 @@
 import React, { useState } from "react";
-import { Overlay } from "react-portal-overlay";
+import "react-responsive-modal/styles.css";
+import { Modal } from "react-responsive-modal";
 
-export default function InfoModal() {
-  const [isOpen, setIsOpen] = useState(true);
+const styles = {
+  fontFamily: "sans-serif",
+  textAlign: "center",
+};
+
+export default function InfoModal(props) {
+  const [open, setOpen] = React.useState(true);
+
+  const onCloseModal = () => {
+    setOpen(false);
+    props.onCloseModal();
+  };
+
+  const showNotes = () => {
+    if (props.notes && props.notes.length > 0) {
+      return props.notes.map((note, index) => {
+        return (
+          <p key={index}>
+            {index + 1} - {note}
+          </p>
+        );
+      });
+    } else {
+      //TODO: Agregar un if para ver si hay alguna nota a nivel IMAGEN y mostrarlas aca haciendo referencia a que lote/pastura y numero de imagen corresponde. En caso de que no haya si mostrar que no hay ninguna
+      return <p> La sesión no tiene ninguna nota.</p>;
+    }
+  };
 
   return (
-    <>
-      <h2>HOLAAA</h2>
-      {/* <button onClick={() => setIsOpen(true)}>Open Modal</button>
-      <Overlay
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        closeOnClick
-        // css={css`
-        //   background: rgba(0, 0, 0, 0.3);
-        //   display: flex;
-        //   align-items: center;
-        //   justify-content: center;
-        // `}
-      >
-        <div
-        //   css={css`
-        //     width: 80%;
-        //     background: white;
-        //     padding: 3rem;
-        //     border-radius: 5px;
-        //   `}
-        >
-          <h1>Modal</h1>
-          <p>
-            Nisi vitae commodo curae in amet nec tortor sodales varius iaculis
-            nam duis cursus ullamcorper orci consequat maecenas a sagittis
-            ultrices bibendum facilisis aliquet ad arcu laoreet natoque eget per
-            mus aptent nisl posuere nibh dictum porta torquent molestie donec
-            cras risus quis dui massa etiam turpis pharetra ultricies aliquam
-          </p>
-        </div>
-      </Overlay> */}
-    </>
+    <div style={styles}>
+      <Modal open={open} onClose={() => onCloseModal()} center>
+        <h3>{props.title}</h3>
+        {showNotes()}
+      </Modal>
+    </div>
   );
 }

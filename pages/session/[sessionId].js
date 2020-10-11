@@ -133,16 +133,26 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
               <strong>Descripción: </strong>
               {sessionDetails.data.description}
             </div>
-            <div className="row">
+            <div className="row" onClick={() => setShowNotes(true)}>
               <SpeakerNotesIcon style={{ marginBottom: -2 }} />{" "}
-              <a href="" onClick={() => setShowNotes(true)}>
-                Ver notas
+              <a href="#" style={{ color: "black" }}>
+                Ver{" "}
+                <strong style={{ textDecoration: "underline" }}>notas</strong>{" "}
+                de la sesión
               </a>
             </div>
           </div>
         </GridItem>
 
-        {showNotes ? <InfoModal /> : ""}
+        {showNotes ? (
+          <InfoModal
+            onCloseModal={() => setShowNotes(false)}
+            title="Notas de la sesión"
+            notes={sessionDetails.data.notes}
+          />
+        ) : (
+          ""
+        )}
 
         {lotesInfo()}
       </GridContainer>
