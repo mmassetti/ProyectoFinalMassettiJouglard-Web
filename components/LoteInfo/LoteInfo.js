@@ -58,19 +58,19 @@ export default function LoteInfo(props) {
       data.pasturas.map((pastura) => {
         pasturasUrl = pasturasUrl + "/" + pastura.id;
       });
+
+      async function getPasturasDetails() {
+        let res = await fetch(
+          `http://localhost:3000/api/pasturasDetails` + pasturasUrl
+        );
+
+        let pasturasDetails = await res.json();
+
+        setPasturasDetails(pasturasDetails);
+      }
+
+      getPasturasDetails();
     }
-
-    async function getPasturasDetails() {
-      let res = await fetch(
-        `http://localhost:3000/api/pasturasDetails` + pasturasUrl
-      );
-
-      let pasturasDetails = await res.json();
-
-      setPasturasDetails(pasturasDetails);
-    }
-
-    getPasturasDetails();
   }, []);
 
   return (
@@ -133,7 +133,11 @@ export default function LoteInfo(props) {
         )}
 
         {showSideImageInfo ? (
-          <SideImageInfo imageNumber={imageNumber} imageData={imageData} />
+          <SideImageInfo
+            imageNumber={imageNumber}
+            imageData={imageData}
+            loteDescription={data.description}
+          />
         ) : (
           ""
         )}
