@@ -1,12 +1,10 @@
 import React from "react";
 import Card from "../../../components/Card/Card.js";
 import CardBody from "../../../components/Card/CardBody.js";
-import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import SingleProgressBar from "./SingleProgressBar.js";
 
 export default function PercentagesCard(props) {
   const { percentages, title } = props;
-  console.log("PercentagesCard -> percentages", percentages);
 
   return (
     // <Card chart style={{ backgroundColor: "rgba(31, 47, 51, 1)" }}> //dark color de la app mobile por si el negro no convence

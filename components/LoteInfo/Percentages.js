@@ -2,8 +2,6 @@ import React from "react";
 import "react-circular-progressbar/dist/styles.css";
 import GridContainer from "../../components/Grid/GridContainer";
 import GridItem from "../../components/Grid/GridItem.js";
-import { makeStyles } from "@material-ui/core/styles";
-import styles from "../../assets/jss/nextjs-material-dashboard/views/dashboardStyle.js";
 import PercentagesCard from "./PercentagesCard/PercentagesCard";
 
 export default function Percentages(props) {

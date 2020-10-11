@@ -45,11 +45,20 @@ export default function LoteInfo(props) {
 
   const classes = useStyles();
 
-  const showLoteImageInfo = (imageNumber, imageData) => {
+  function showSideInfo(imageNumber, imageData) {
     setImageData(imageData);
     setImageNumber(imageNumber);
     setShowSideImageInfo(true);
     setShowHelp(false);
+  }
+
+  const showLoteImageInfo = (imageNumber, imageData) => {
+    showSideInfo(imageNumber, imageData);
+  };
+
+  const showPasturaImageInfo = (imageNumber, imageData) => {
+    //The code is the same that for a lote but I need to know the difference of the method's name for other components (smell code maybe)
+    showSideInfo(imageNumber, imageData);
   };
 
   useEffect(() => {
@@ -105,7 +114,12 @@ export default function LoteInfo(props) {
                 {
                   tabName: "Pasturas",
                   tabIcon: BugReport,
-                  tabContent: <LotePasturas pasturas={pasturasDetails} />,
+                  tabContent: (
+                    <LotePasturas
+                      pasturas={pasturasDetails}
+                      onPasturaImageSelected={showPasturaImageInfo}
+                    />
+                  ),
                 },
                 {
                   tabName: "Notas",
@@ -133,11 +147,7 @@ export default function LoteInfo(props) {
         )}
 
         {showSideImageInfo ? (
-          <SideImageInfo
-            imageNumber={imageNumber}
-            imageData={imageData}
-            loteDescription={data.description}
-          />
+          <SideImageInfo imageNumber={imageNumber} imageData={imageData} />
         ) : (
           ""
         )}

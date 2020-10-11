@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
@@ -40,22 +40,10 @@ export default function PasturaInfo(props) {
     images,
     totalImagesAfter,
     totalImagesBefore,
+    onPasturaImageSelected,
   } = props;
 
   const classes = useStyles();
-
-  const [showSideImageInfo, setShowSideImageInfo] = useState(false);
-  const [imageData, setImageData] = useState("");
-  const [imageNumber, setImageNumber] = useState("");
-  const [showHelp, setShowHelp] = useState(true);
-
-  const showPasturaImageInfo = (imageNumber, imageData) => {
-    console.log("MOSTRAR INFO DE LA PASTURA A LA DERCHA");
-    setImageData(imageData);
-    setImageNumber(imageNumber);
-    setShowSideImageInfo(true);
-    setShowHelp(false);
-  };
 
   return (
     <GridItem xs={12} sm={12} md={12}>
@@ -70,7 +58,10 @@ export default function PasturaInfo(props) {
         </GridItem>
 
         <CardBody>
-          <LoteImages images={images} onImageSelected={showPasturaImageInfo} />
+          <LoteImages
+            images={images}
+            onImageSelected={onPasturaImageSelected}
+          />
         </CardBody>
         <CardFooter chart>
           <div className={classes.stats}>

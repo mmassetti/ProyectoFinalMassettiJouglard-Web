@@ -3,7 +3,7 @@ import Gallery from "react-grid-gallery";
 import Percentages from "./Percentages";
 
 export default function SideImageInfo(props) {
-  const { imageNumber, imageData } = props;
+  const { imageNumber, imageData, pasturaDescription } = props;
 
   const loteGallery = (imagesForGallery) => {
     return (
