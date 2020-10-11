@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
@@ -6,6 +6,7 @@ import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import AccessTime from "@material-ui/icons/AccessTime";
 import { makeStyles } from "@material-ui/core/styles";
+import LoteImages from "../LoteImages/LoteImages";
 
 const styles = {
   cardCategoryWhite: {
@@ -29,17 +30,32 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function PasturaInfo(props) {
+  console.log("PasturaInfo -> props", props);
   const {
     averagePaster,
     averageBefore,
     creationDate,
     description,
     id,
+    images,
     totalImagesAfter,
     totalImagesBefore,
   } = props;
 
   const classes = useStyles();
+
+  const [showSideImageInfo, setShowSideImageInfo] = useState(false);
+  const [imageData, setImageData] = useState("");
+  const [imageNumber, setImageNumber] = useState("");
+  const [showHelp, setShowHelp] = useState(true);
+
+  const showPasturaImageInfo = (imageNumber, imageData) => {
+    console.log("MOSTRAR INFO DE LA PASTURA A LA DERCHA");
+    setImageData(imageData);
+    setImageNumber(imageNumber);
+    setShowSideImageInfo(true);
+    setShowHelp(false);
+  };
 
   return (
     <GridItem xs={12} sm={12} md={12}>
@@ -49,12 +65,13 @@ export default function PasturaInfo(props) {
         </CardHeader>
         <GridItem xs={12} sm={12} md={12}>
           <h5>
-            {/* <strong>{data.images.length} imágenes</strong> y{" "}
-            <strong>{data.pasturas.length} pasturas</strong> asociadas */}
+            Esta pastura tiene <strong>{images.length} imágenes</strong>
           </h5>
         </GridItem>
 
-        <CardBody></CardBody>
+        <CardBody>
+          <LoteImages images={images} onImageSelected={showPasturaImageInfo} />
+        </CardBody>
         <CardFooter chart>
           <div className={classes.stats}>
             <AccessTime /> Actualizada por última vez el 21/08/2020

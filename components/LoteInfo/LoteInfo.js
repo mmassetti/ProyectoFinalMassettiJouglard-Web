@@ -13,7 +13,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import LoteImages from "../LoteImages/LoteImages";
 import SideImageInfo from "./SideImageInfo";
 import LotePasturas from "../LotePasturas/LotePasturas";
-import useSWR from "swr";
 
 const styles = {
   cardCategoryWhite: {
@@ -46,7 +45,7 @@ export default function LoteInfo(props) {
 
   const classes = useStyles();
 
-  const showImageInfo = (imageNumber, imageData) => {
+  const showLoteImageInfo = (imageNumber, imageData) => {
     setImageData(imageData);
     setImageNumber(imageNumber);
     setShowSideImageInfo(true);
@@ -61,8 +60,6 @@ export default function LoteInfo(props) {
       });
     }
 
-    console.log("LoteInfo -> pasturasUrl", pasturasUrl);
-
     async function getPasturasDetails() {
       let res = await fetch(
         `http://localhost:3000/api/pasturasDetails` + pasturasUrl
@@ -73,7 +70,7 @@ export default function LoteInfo(props) {
       setPasturasDetails(pasturasDetails);
     }
 
-    const res = getPasturasDetails();
+    getPasturasDetails();
   }, []);
 
   return (
@@ -101,19 +98,14 @@ export default function LoteInfo(props) {
                   tabContent: (
                     <LoteImages
                       images={data.images}
-                      onImageSelected={showImageInfo}
+                      onImageSelected={showLoteImageInfo}
                     />
                   ),
                 },
                 {
                   tabName: "Pasturas",
                   tabIcon: BugReport,
-                  tabContent: (
-                    <LotePasturas
-                      pasturas={data.pasturas}
-                      pasturasDetails={pasturasDetails}
-                    />
-                  ),
+                  tabContent: <LotePasturas pasturas={pasturasDetails} />,
                 },
                 {
                   tabName: "Notas",
