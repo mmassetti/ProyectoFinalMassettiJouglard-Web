@@ -13,6 +13,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import LoteImages from "../LoteImages/LoteImages";
 import SideImageInfo from "./SideImageInfo";
 import LotePasturas from "../LotePasturas/LotePasturas";
+import moment from "moment";
+import "moment/locale/es";
 
 const styles = {
   cardCategoryWhite: {
@@ -37,6 +39,7 @@ const useStyles = makeStyles(styles);
 
 export default function LoteInfo(props) {
   const { data } = props;
+  console.log("LoteInfo -> data ", data);
   const [showSideImageInfo, setShowSideImageInfo] = useState(false);
   const [imageData, setImageData] = useState("");
   const [imageNumber, setImageNumber] = useState("");
@@ -87,7 +90,14 @@ export default function LoteInfo(props) {
       <GridItem xs={12} sm={12} md={6}>
         <Card chart>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>{data.description} </h4>
+            <h4 className={classes.cardTitleWhite}>
+              {data.description} - Creado a las{" "}
+              {moment(
+                new Date(data.creationDate._seconds * 1000),
+                "dd/mm/yyyy"
+              ).format("HH:mm")}{" "}
+              hs{" "}
+            </h4>
           </CardHeader>
           <GridItem xs={12} sm={12} md={12}>
             <h5>
