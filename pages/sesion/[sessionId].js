@@ -63,7 +63,7 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
   }
 
   function goToDashboard(e) {
-    router.push("/admin/dashboard");
+    router.push("/admin/sesiones");
   }
 
   const lotesInfo = () => {

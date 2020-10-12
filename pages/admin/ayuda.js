@@ -35,7 +35,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-function Help() {
+function Ayuda() {
   const classes = useStyles();
   return (
     <div>
@@ -155,6 +155,6 @@ function Help() {
   );
 }
 
-Help.layout = Admin;
+Ayuda.layout = Admin;
 
-export default Help;
+export default Ayuda;

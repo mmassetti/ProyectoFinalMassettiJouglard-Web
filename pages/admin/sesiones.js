@@ -40,7 +40,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-function Dashboard() {
+function Sesiones() {
   const classes = useStyles();
   const fetcher = async (...args) => {
     const res = await fetch(...args);
@@ -141,6 +141,6 @@ function getTableData(data) {
   return tableData;
 }
 
-Dashboard.layout = Admin;
+Sesiones.layout = Admin;
 
-export default Dashboard;
+export default Sesiones;

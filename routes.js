@@ -15,21 +15,18 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-// @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
-import Person from "@material-ui/icons/Person";
 import Help from "@material-ui/icons/Help";
-import HelpOutline from "@material-ui/icons/HelpOutline";
 
 const dashboardRoutes = [
   {
-    path: "/dashboard",
+    path: "/sesiones",
     name: "Sesiones",
     icon: Dashboard,
     layout: "/admin",
   },
   {
-    path: "/help",
+    path: "/ayuda",
     name: "Ayuda",
     icon: Help,
     layout: "/admin",
