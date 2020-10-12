@@ -15,6 +15,8 @@ import EventIcon from "@material-ui/icons/Event";
 import PersonIcon from "@material-ui/icons/Person";
 import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
 import InfoModal from "../../components/Modal/InfoModal";
+import moment from "moment";
+import "moment/locale/es";
 
 const styles = {
   cardCategoryWhite: {
@@ -113,15 +115,22 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
           <Card plain>
             <CardHeader plain color="dark">
               <h4 className={classes.cardTitleWhite}>
-                <EventIcon style={{ marginBottom: -5 }} /> Sesión creada el VER
-                QUE ONDA LA FECHA
+                <EventIcon style={{ marginBottom: -5 }} /> Sesión creada el{" "}
+                <strong>
+                  {moment(
+                    new Date(sessionDetails.data.date._seconds * 1000)
+                  ).format("L")}
+                </strong>{" "}
+                a las{" "}
+                {moment(
+                  new Date(sessionDetails.data.date._seconds * 1000),
+                  "dd/mm/yyyy"
+                ).format("HH:mm")}{" "}
+                hs
               </h4>
-              <p
-                className={classes.cardCategoryWhite}
-                style={{ fontWeight: "bold" }}
-              >
+              <p className={classes.cardCategoryWhite}>
                 <PersonIcon style={{ marginBottom: -4 }} /> Creada por{" "}
-                {sessionDetails.data.user}
+                <strong>{sessionDetails.data.user}</strong>
               </p>
             </CardHeader>
           </Card>

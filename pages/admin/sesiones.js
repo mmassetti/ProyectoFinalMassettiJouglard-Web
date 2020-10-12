@@ -7,6 +7,8 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import { makeStyles } from "@material-ui/core/styles";
 import useSWR from "swr";
+import moment from "moment";
+import "moment/locale/es";
 
 const styles = {
   cardCategoryWhite: {
@@ -129,11 +131,10 @@ function getTableData(data) {
   if (data && sessionsArray) {
     sessionsArray.map((session) => {
       tableData.push({
-        // id: i.toString(),
-        description: session.description,
-        date: "21/08/2019", // moment(session.date.toDate()).format("LL"),
-        creator: session.user,
         id: session.id,
+        description: session.description,
+        date: moment(new Date(session.date._seconds * 1000)).format("L"),
+        creator: session.user,
       });
     });
   }
