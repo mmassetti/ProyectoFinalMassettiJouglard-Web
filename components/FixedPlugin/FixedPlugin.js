@@ -1,17 +1,12 @@
 /*eslint-disable*/
-import React, { Component } from "react";
-// nodejs library to set properties for components
+import React from "react";
 import PropTypes from "prop-types";
-// nodejs library that concatenates classes
 import classnames from "classnames";
 
 import Button from "components/CustomButtons/Button.js";
 import { FeedbackFish } from "@feedback-fish/react";
 
 export default function FixedPlugin(props) {
-  const [classes, setClasses] = React.useState("dropdown show");
-  const [bg_checked, setBg_checked] = React.useState(true);
-  const [bgImage, setBgImage] = React.useState(props.bgImage);
   const handleClick = () => {
     props.handleFixedClick();
   };
@@ -22,7 +17,7 @@ export default function FixedPlugin(props) {
           <i className="fa fa-cog fa-2x" />
         </div>
         <ul className="dropdown-menu">
-          <li className="header-title">Ayuda</li>
+          <li className="header-title">Otras opciones</li>
           <li className="button-container">
             <div className="button-container">
               <Button
@@ -39,13 +34,7 @@ export default function FixedPlugin(props) {
             <div className="button-container">
               <FeedbackFish projectId="af88f33ebb78ee" />
 
-              <Button
-                data-feedback-fish
-                color="warning"
-                // href="https://www.creative-tim.com/product/nextjs-material-dashboard-pro?ref=njsmd-fixed-plugin"
-                // target="_blank"
-                fullWidth
-              >
+              <Button data-feedback-fish color="warning" fullWidth>
                 Dar feedback
               </Button>
             </div>
@@ -60,9 +49,7 @@ export default function FixedPlugin(props) {
               Ver Demo Youtube
             </Button>
           </li>
-          {/* <FeedbackFish projectId="af88f33ebb78ee" /> */}
 
-          {/* <Button data-feedback-fish>Feedback</Button> */}
           <li className="adjustments-line" />
         </ul>
       </div>
