@@ -3,10 +3,10 @@ import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-import AccessTime from "@material-ui/icons/AccessTime";
 import { makeStyles } from "@material-ui/core/styles";
 import LoteImages from "../LoteImages/LoteImages";
+import moment from "moment";
+import "moment/locale/es";
 
 const styles = {
   cardCategoryWhite: {
@@ -48,12 +48,29 @@ export default function PasturaInfo(props) {
     <GridItem xs={12} sm={12} md={12}>
       <Card chart>
         <CardHeader color="primary">
-          <h4 className={classes.cardTitleWhite}>{description} </h4>
+          <h4 className={classes.cardTitleWhite}>
+            {description} - Creada a las{" "}
+            {moment(
+              new Date(creationDate._seconds * 1000),
+              "dd/mm/yyyy"
+            ).format("HH:mm")}{" "}
+            hs{" "}
+          </h4>
         </CardHeader>
         <GridItem xs={12} sm={12} md={12}>
-          <h5>
-            Esta pastura tiene <strong>{images.length} imágenes</strong>
-          </h5>
+          {images.length > 1 ? (
+            <h5>
+              Esta pastura tiene <strong>{images.length} imágenes</strong>
+            </h5>
+          ) : images.length === 1 ? (
+            <h5>
+              Esta pastura tiene <strong> 1 imágen </strong>
+            </h5>
+          ) : (
+            <h5>
+              Esta pastura todavía <strong> no tiene imágenes</strong>
+            </h5>
+          )}
         </GridItem>
 
         <CardBody>
@@ -62,11 +79,6 @@ export default function PasturaInfo(props) {
             onImageSelected={onPasturaImageSelected}
           />
         </CardBody>
-        {/* <CardFooter chart>
-          <div className={classes.stats}>
-            <AccessTime /> Actualizada por última vez el 21/08/2020
-          </div>
-        </CardFooter> */}
       </Card>
     </GridItem>
   );

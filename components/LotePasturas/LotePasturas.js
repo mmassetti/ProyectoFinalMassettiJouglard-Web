@@ -16,7 +16,7 @@ export default function LotePasturas({ pasturas, onPasturaImageSelected }) {
         </>
       );
     } else {
-      return <h5>El lote no tiene ninguna pastura</h5>;
+      return <h5>El lote no tiene ninguna pastura.</h5>;
     }
   };
 
