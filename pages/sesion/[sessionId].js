@@ -8,7 +8,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import Button from "components/CustomButtons/Button.js";
 
 import { useRouter } from "next/router";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import LoteInfo from "../../components/LoteInfo/LoteInfo";
 import DescriptionIcon from "@material-ui/icons/Description";
 import EventIcon from "@material-ui/icons/Event";
@@ -49,9 +49,9 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
   const classes = useStyles();
   const router = useRouter();
   const [showNotes, setShowNotes] = useState(false);
+
   const fetcher = async (...args) => {
     const res = await fetch(...args);
-
     return res.json();
   };
 
@@ -155,7 +155,9 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
 
         {showNotes ? (
           <InfoModal
-            onCloseModal={() => setShowNotes(false)}
+            onCloseModal={async () => {
+              setShowNotes(false);
+            }}
             title="Notas de la sesión"
             notes={sessionDetails.data.notes}
             sessionDetailsId={sessionDetails.data.id}
@@ -208,6 +210,7 @@ export async function getStaticProps(context) {
 
   return {
     props: { sessionDetails, lotesUrl }, // will be passed to the page component as props
+    // revalidate: 1, // In seconds
   };
 }
 

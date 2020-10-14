@@ -3,6 +3,8 @@ import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import DeleteIcon from "@material-ui/icons/Delete";
 import firebase from "../../configuration/firebaseClientApp";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 const styles = {
   fontFamily: "sans-serif",
@@ -30,11 +32,11 @@ export default function InfoModal(props) {
       if (!querySnapshot.empty) {
         const snapshot = querySnapshot.docs[0];
         const documentRef = snapshot.ref;
-        console.log("InfoModal -> documentRef", documentRef);
         const oldArray = snapshot.data()[attribute];
         const newArray = oldArray.filter(
           (item) => item !== descriptionToRemove
         );
+
         return documentRef.update({
           [attribute]: newArray,
         });
@@ -52,16 +54,36 @@ export default function InfoModal(props) {
     //     .removeItemFromArrayByDescription(docRef, 'notes', nota)
     //     .then(refresh);
     // });
+    onCloseModal();
 
-    await removeItemFromArrayByDescription("notes", note);
+    return confirmAlert({
+      title: "Eliminar nota",
+      message: "¡Atención! Se eliminará esta nota.",
+      buttons: [
+        {
+          label: "Ok, eliminar",
+          onClick: async () =>
+            await removeItemFromArrayByDescription("notes", note),
+        },
+        {
+          label: "No eliminar",
+          onClick: () => {},
+        },
+      ],
+    });
+
+    // await removeItemFromArrayByDescription("notes", note);
   }
 
   const showNotes = () => {
     if (props.notes && props.notes.length > 0) {
       return props.notes.map((note, index) => {
         return (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <p key={index}>
+          <div
+            key={index}
+            style={{ display: "flex", justifyContent: "space-between" }}
+          >
+            <p>
               {index + 1} - {note}
             </p>
 

@@ -32,6 +32,7 @@
     "react": "16.13.1",
     "react-chartist": "0.14.3",
     "react-circular-progressbar": "^2.0.3",
+    "react-confirm-alert": "^2.6.2",
     "react-dom": "16.13.1",
     "react-google-maps": "9.4.5",
     "react-grid-gallery": "^0.5.5",
