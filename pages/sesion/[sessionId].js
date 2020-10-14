@@ -180,7 +180,11 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
 }
 // This function gets called at build time
 export async function getStaticPaths() {
-  const res = await fetch(`http://localhost:3000/api/sessions`);
+  // const res = await fetch(`http://localhost:3000/api/sessions`);
+  const res = await fetch(
+    `http://inta-app-web-b3srghwiu.vercel.app/api/sessions`
+  );
+
   // let prodURL = process.env.FIREBASE_DATABASE_URL;
   // const res = await fetch(prodURL + `/api/sessions`);
   const sessions = await res.json();
@@ -199,12 +203,12 @@ export async function getStaticProps(context) {
   const { params } = context;
   const { sessionId } = params;
 
-  const res = await fetch(
-    `http://localhost:3000/api/sessionsDetails/${sessionId}`
-  );
   // const res = await fetch(
-  //   `https://inta-app-web-r0e2azq1j.vercel.app/api/sessionsDetails/${sessionId}`
+  //   `http://localhost:3000/api/sessionsDetails/${sessionId}`
   // );
+  const res = await fetch(
+    `http://inta-app-web-b3srghwiu.vercel.app/api/sessionsDetails/${sessionId}`
+  );
   const sessionDetails = await res.json();
 
   let lotesUrl = "";
