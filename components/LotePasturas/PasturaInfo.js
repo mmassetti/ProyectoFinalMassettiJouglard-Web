@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import { makeStyles } from "@material-ui/core/styles";
 import LoteImages from "../LoteImages/LoteImages";
+import MinimizeIcon from "@material-ui/icons/Minimize";
+import AddIcon from "@material-ui/icons/Add";
 import moment from "moment";
 import "moment/locale/es";
 
@@ -42,12 +44,14 @@ export default function PasturaInfo(props) {
     onPasturaImageSelected,
   } = props;
 
+  const [isMinimized, setIsMinimized] = useState(false);
+
   const classes = useStyles();
 
-  return (
-    <GridItem xs={12} sm={12} md={12}>
-      <Card chart>
-        <CardHeader color="primary">
+  const cardHeader = () => {
+    return (
+      <CardHeader color="primary">
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h4 className={classes.cardTitleWhite}>
             {description} - Creada a las{" "}
             {moment(
@@ -56,30 +60,73 @@ export default function PasturaInfo(props) {
             ).format("HH:mm")}{" "}
             hs{" "}
           </h4>
-        </CardHeader>
-        <GridItem xs={12} sm={12} md={12}>
-          {images.length > 1 ? (
-            <h5>
-              Esta pastura tiene <strong>{images.length} imágenes</strong>
-            </h5>
-          ) : images.length === 1 ? (
-            <h5>
-              Esta pastura tiene <strong> 1 imágen </strong>
-            </h5>
+          {isMinimized ? (
+            <AddIcon onClick={() => setIsMinimized(false)} />
           ) : (
-            <h5>
-              Esta pastura todavía <strong> no tiene imágenes</strong>
-            </h5>
+            <MinimizeIcon
+              onClick={() => {
+                setIsMinimized(true);
+              }}
+            />
           )}
-        </GridItem>
+        </div>
+      </CardHeader>
+    );
+  };
 
-        <CardBody>
-          <LoteImages
-            images={images}
-            onImageSelected={onPasturaImageSelected}
-          />
-        </CardBody>
-      </Card>
-    </GridItem>
-  );
+  const showTextNumberImages = () => {
+    if (images.length > 1) {
+      return (
+        <h5>
+          Esta pastura tiene <strong>{images.length} imágenes</strong>
+        </h5>
+      );
+    } else if (images.length === 1) {
+      return (
+        <h5>
+          Esta pastura tiene <strong> 1 imágen </strong>
+        </h5>
+      );
+    } else {
+      return (
+        <h5>
+          Esta pastura todavía <strong> no tiene imágenes</strong>
+        </h5>
+      );
+    }
+  };
+
+  const showContent = () => {
+    if (isMinimized) {
+      return (
+        <GridItem xs={12} sm={12} md={12}>
+          <Card chart>
+            <GridItem xs={12} sm={12} md={12}>
+              {cardHeader()}
+            </GridItem>
+          </Card>
+        </GridItem>
+      );
+    } else {
+      return (
+        <GridItem xs={12} sm={12} md={12}>
+          <Card chart>
+            <GridItem xs={12} sm={12} md={12}>
+              {cardHeader()}
+              {showTextNumberImages()}
+            </GridItem>
+
+            <CardBody>
+              <LoteImages
+                images={images}
+                onImageSelected={onPasturaImageSelected}
+              />
+            </CardBody>
+          </Card>
+        </GridItem>
+      );
+    }
+  };
+
+  return showContent();
 }
