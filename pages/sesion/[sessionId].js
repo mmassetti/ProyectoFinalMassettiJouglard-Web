@@ -158,6 +158,7 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
             onCloseModal={() => setShowNotes(false)}
             title="Notas de la sesión"
             notes={sessionDetails.data.notes}
+            sessionDetailsId={sessionDetails.data.id}
           />
         ) : (
           ""
