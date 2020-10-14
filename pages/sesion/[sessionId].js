@@ -75,6 +75,13 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
         return <LoteInfo {...dataLotes} key={dataLotes.data.id} />;
       } else if (dataLotes.length > 0) {
         //La sesion tiene mas de un lote (viene un arreglo)
+        //ordeno de lote mas nuevo a lote mas viejo
+        dataLotes.sort(
+          (a, b) =>
+            new Date(b.data.creationDate._seconds * 1000).getTime() -
+            new Date(a.data.creationDate._seconds * 1000).getTime()
+        );
+
         return (
           <>
             {dataLotes.map((lote) => (
