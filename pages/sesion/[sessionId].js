@@ -46,6 +46,42 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
+// This function gets called at build time
+export async function getStaticPaths() {
+  const sessions = await getAllSessions();
+
+  //Get the paths we want to pre-render based on sessionsIds
+  const paths = sessions.map((session) => ({
+    params: { sessionId: session.id },
+  }));
+
+  // We'll pre-render only these paths at build time.
+  //{ fallback: false } means other routes should 404.
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps(context) {
+  const { params } = context;
+  const { sessionId } = params;
+
+  let sessionDetails = await getSessionDetails(sessionId);
+
+  let lotesUrl = "";
+
+  if (sessionDetails) {
+    sessionDetails.data.lotes.map((lote) => {
+      lotesUrl = lotesUrl + "/" + lote.id;
+    });
+  }
+
+  sessionDetails = JSON.stringify(sessionDetails);
+
+  return {
+    props: { sessionDetails, lotesUrl }, // will be passed to the page component as props
+    revalidate: 1, // In seconds
+  };
+}
+
 function SessionDetail({ sessionDetails, lotesUrl }) {
   let sessionDetailsJSON = JSON.parse(sessionDetails);
 
@@ -71,11 +107,32 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
     router.push("/admin/sesiones");
   }
 
+  function getPasturasUrl() {
+    let pasturasUrl = "borrar";
+
+    if (
+      dataLotes.data &&
+      dataLotes.data.pasturas &&
+      dataLotes.data.pasturas.length > 0
+    ) {
+      dataLotes.data.pasturas.map((pastura) => {
+        pasturasUrl = pasturasUrl + "/" + pastura.id;
+      });
+    }
+    return pasturasUrl;
+  }
+
   const lotesInfo = () => {
     if (dataLotes) {
       if (dataLotes.data) {
         //La sesion tiene un solo lote (viene un objeto) //todo: refactor api
-        return <LoteInfo {...dataLotes} key={dataLotes.data.id} />;
+        return (
+          <LoteInfo
+            {...dataLotes}
+            key={dataLotes.data.id}
+            pasturasUrL={getPasturasUrl()}
+          />
+        );
       } else if (dataLotes.length > 0) {
         //La sesion tiene mas de un lote (viene un arreglo)
         //ordeno de lote mas nuevo a lote mas viejo
@@ -88,7 +145,11 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
         return (
           <>
             {dataLotes.map((lote) => (
-              <LoteInfo {...lote} key={lote.data.id} />
+              <LoteInfo
+                {...lote}
+                key={lote.data.id}
+                pasturasUrl={getPasturasUrl()}
+              />
             ))}
           </>
         );
@@ -180,41 +241,6 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
       </GridContainer>
     </div>
   );
-}
-// This function gets called at build time
-export async function getStaticPaths() {
-  const sessions = await getAllSessions();
-
-  //Get the paths we want to pre-render based on sessionsIds
-  const paths = sessions.map((session) => ({
-    params: { sessionId: session.id },
-  }));
-
-  // We'll pre-render only these paths at build time.
-  //{ fallback: false } means other routes should 404.
-  return { paths, fallback: false };
-}
-
-export async function getStaticProps(context) {
-  const { params } = context;
-  const { sessionId } = params;
-
-  let sessionDetails = await getSessionDetails(sessionId);
-
-  let lotesUrl = "";
-
-  if (sessionDetails) {
-    sessionDetails.data.lotes.map((lote) => {
-      lotesUrl = lotesUrl + "/" + lote.id;
-    });
-  }
-
-  sessionDetails = JSON.stringify(sessionDetails);
-
-  return {
-    props: { sessionDetails, lotesUrl }, // will be passed to the page component as props
-    revalidate: 1, // In seconds
-  };
 }
 
 SessionDetail.layout = Admin;
