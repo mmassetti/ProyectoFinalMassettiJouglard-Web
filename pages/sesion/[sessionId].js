@@ -217,7 +217,9 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
               <SpeakerNotesIcon style={{ marginBottom: -2 }} />{" "}
               <a href="#" style={{ color: "black" }}>
                 Ver{" "}
-                <strong style={{ textDecoration: "underline" }}>notas</strong>{" "}
+                <strong style={{ textDecoration: "underline" }}>
+                  notas ({sessionDetailsJSON.data.notes.length})
+                </strong>{" "}
                 de la sesión
               </a>
             </div>
