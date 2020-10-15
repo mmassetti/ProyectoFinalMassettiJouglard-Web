@@ -17,6 +17,7 @@ import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
 import InfoModal from "../../components/Modal/InfoModal";
 import moment from "moment";
 import "moment/locale/es";
+import { getAllSessions, getSessionDetails } from "../../lib/db-admin";
 
 const styles = {
   cardCategoryWhite: {
@@ -46,6 +47,8 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 function SessionDetail({ sessionDetails, lotesUrl }) {
+  let sessionDetailsJSON = JSON.parse(sessionDetails);
+
   const classes = useStyles();
   const router = useRouter();
   const [showNotes, setShowNotes] = useState(false);
@@ -125,19 +128,19 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
                 <EventIcon style={{ marginBottom: -5 }} /> Sesión creada el{" "}
                 <strong>
                   {moment(
-                    new Date(sessionDetails.data.date._seconds * 1000)
+                    new Date(sessionDetailsJSON.data.date._seconds * 1000)
                   ).format("L")}
                 </strong>{" "}
                 a las{" "}
                 {moment(
-                  new Date(sessionDetails.data.date._seconds * 1000),
+                  new Date(sessionDetailsJSON.data.date._seconds * 1000),
                   "dd/mm/yyyy"
                 ).format("HH:mm")}{" "}
                 hs
               </h4>
               <p className={classes.cardCategoryWhite}>
                 <PersonIcon style={{ marginBottom: -4 }} /> Creada por{" "}
-                <strong>{sessionDetails.data.user}</strong>
+                <strong>{sessionDetailsJSON.data.user}</strong>
               </p>
             </CardHeader>
           </Card>
@@ -147,7 +150,7 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
             <div className={classes.row} style={{ marginBottom: 2 }}>
               <DescriptionIcon style={{ marginBottom: -2 }} />{" "}
               <strong>Descripción: </strong>
-              {sessionDetails.data.description}
+              {sessionDetailsJSON.data.description}
             </div>
             <div className="row" onClick={() => setShowNotes(true)}>
               <SpeakerNotesIcon style={{ marginBottom: -2 }} />{" "}
@@ -166,8 +169,8 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
               setShowNotes(false);
             }}
             title="Notas de la sesión"
-            notes={sessionDetails.data.notes}
-            sessionDetailsId={sessionDetails.data.id}
+            notes={sessionDetailsJSON.data.notes}
+            sessionDetailsId={sessionDetailsJSON.data.id}
           />
         ) : (
           ""
@@ -180,14 +183,7 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
 }
 // This function gets called at build time
 export async function getStaticPaths() {
-  // const res = await fetch(`http://localhost:3000/api/sessions`);
-  const res = await fetch(
-    `http://inta-app-web-b3srghwiu.vercel.app/api/sessions`
-  );
-
-  // let prodURL = process.env.FIREBASE_DATABASE_URL;
-  // const res = await fetch(prodURL + `/api/sessions`);
-  const sessions = await res.json();
+  const sessions = await getAllSessions();
 
   //Get the paths we want to pre-render based on sessionsIds
   const paths = sessions.map((session) => ({
@@ -203,13 +199,7 @@ export async function getStaticProps(context) {
   const { params } = context;
   const { sessionId } = params;
 
-  // const res = await fetch(
-  //   `http://localhost:3000/api/sessionsDetails/${sessionId}`
-  // );
-  const res = await fetch(
-    `http://inta-app-web-b3srghwiu.vercel.app/api/sessionsDetails/${sessionId}`
-  );
-  const sessionDetails = await res.json();
+  let sessionDetails = await getSessionDetails(sessionId);
 
   let lotesUrl = "";
 
@@ -219,9 +209,11 @@ export async function getStaticProps(context) {
     });
   }
 
+  sessionDetails = JSON.stringify(sessionDetails);
+
   return {
     props: { sessionDetails, lotesUrl }, // will be passed to the page component as props
-    // revalidate: 1, // In seconds
+    revalidate: 1, // In seconds
   };
 }
 
