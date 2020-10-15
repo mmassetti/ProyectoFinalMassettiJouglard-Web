@@ -73,15 +73,8 @@ export default function LoteInfo(props) {
       });
 
       async function getPasturasDetails() {
-        // let res = await fetch(
-        //   `http://inta-app-web-b3srghwiu.vercel.app/` + pasturasUrl
-        // );
-        let res = await fetch(
-          `http://localhost:3000/api/pasturasDetails` + pasturasUrl
-        );
-
+        let res = await fetch(`/api/pasturasDetails` + pasturasUrl);
         let pasturasDetails = await res.json();
-
         setPasturasDetails(pasturasDetails);
       }
 

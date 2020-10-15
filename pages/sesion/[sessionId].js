@@ -108,7 +108,7 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
   }
 
   function getPasturasUrl() {
-    let pasturasUrl = "borrar";
+    let pasturasUrl = "";
 
     if (
       dataLotes.data &&
