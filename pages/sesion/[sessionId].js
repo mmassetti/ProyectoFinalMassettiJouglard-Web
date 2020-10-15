@@ -57,7 +57,8 @@ export async function getStaticPaths() {
 
   // We'll pre-render only these paths at build time.
   //{ fallback: false } means other routes should 404.
-  return { paths, fallback: false };
+  // fallback: true will generate that path for next time
+  return { paths, fallback: true };
 }
 
 export async function getStaticProps(context) {
@@ -83,7 +84,10 @@ export async function getStaticProps(context) {
 }
 
 function SessionDetail({ sessionDetails, lotesUrl }) {
-  let sessionDetailsJSON = JSON.parse(sessionDetails);
+  let sessionDetailsJSON =
+    sessionDetails && sessionDetails != undefined
+      ? JSON.parse(sessionDetails)
+      : null;
 
   const classes = useStyles();
   const router = useRouter();

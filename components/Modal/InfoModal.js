@@ -47,13 +47,6 @@ export default function InfoModal(props) {
   };
 
   async function deleteNote(note) {
-    // alertService
-    // .showConfirmDialog('¡Atención! Se eliminará esta nota. ')
-    // .then(() => {
-    //   firebaseService
-    //     .removeItemFromArrayByDescription(docRef, 'notes', nota)
-    //     .then(refresh);
-    // });
     onCloseModal();
 
     return confirmAlert({
@@ -71,8 +64,6 @@ export default function InfoModal(props) {
         },
       ],
     });
-
-    // await removeItemFromArrayByDescription("notes", note);
   }
 
   const showNotes = () => {
