@@ -91,14 +91,8 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
   const classes = useStyles();
   const [showNotes, setShowNotes] = useState(false);
 
-  const fetcher = async (...args) => {
-    const res = await fetch(...args);
-    return res.json();
-  };
-
   const { data: dataLotes, error: errorLotes } = useSWR(
-    "/api/lotesDetails" + lotesUrl,
-    fetcher
+    "/api/lotesDetails" + lotesUrl
   );
 
   if (!dataLotes && lotesUrl != "") {

@@ -44,13 +44,8 @@ const useStyles = makeStyles(styles);
 
 function Sesiones() {
   const classes = useStyles();
-  const fetcher = async (...args) => {
-    const res = await fetch(...args);
 
-    return res.json();
-  };
-
-  const { data, error } = useSWR(`/api/sessionsDetails`, fetcher);
+  const { data, error } = useSWR(`/api/sessionsDetails`);
 
   if (error) return <h3>Error al cargar...</h3>;
   if (!data) {

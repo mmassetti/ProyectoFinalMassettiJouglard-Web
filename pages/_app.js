@@ -24,6 +24,7 @@ import Router from "next/router";
 import PageChange from "components/PageChange/PageChange.js";
 
 import "assets/css/nextjs-material-dashboard.css?v=1.0.0";
+import { SWRConfig } from "swr";
 
 Router.events.on("routeChangeStart", (url) => {
   document.body.classList.add("body-page-transition");
@@ -65,9 +66,18 @@ export default class MyApp extends App {
           />
           <title>IntaApp - Cubrimiento de vegetación</title>
         </Head>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <SWRConfig
+          value={{
+            fetcher: async (...args) => {
+              const res = await fetch(...args);
+              return res.json();
+            },
+          }}
+        >
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </SWRConfig>
       </React.Fragment>
     );
   }
