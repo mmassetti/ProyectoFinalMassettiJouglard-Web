@@ -4,7 +4,7 @@ export default async (req, res) => {
   let data = [];
 
   await firebase
-    .collection("sessions")
+    .collection("sessionsDetails")
     .orderBy("date", "desc")
     .get()
     .then((snapshot) => {

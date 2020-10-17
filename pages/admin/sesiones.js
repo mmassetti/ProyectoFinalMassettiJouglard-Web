@@ -50,11 +50,11 @@ function Sesiones() {
     return res.json();
   };
 
-  const { data, error } = useSWR(`/api/sessions`, fetcher);
+  const { data, error } = useSWR(`/api/sessionsDetails`, fetcher);
 
   if (error) return <h3>Error al cargar...</h3>;
   if (!data) {
-    return <h3>Cargando..</h3>; //todo: Poner spinner
+    return <h3>Cargando..</h3>; //todo: Poner spinner?
   }
 
   let tableData = getTableData(data);
@@ -89,7 +89,7 @@ function Sesiones() {
                       { title: "Descripción", field: "description" },
                       { title: "Fecha", field: "date" },
                       { title: "Creada por", field: "creator" },
-                      { title: "Cantidad de lotes", field: "lotes" },
+                      { title: "Cantidad de lotes", field: "numberOfLotes" },
                       { title: "Cantidad de pasturas", field: "pasturas" },
                       { title: "Total de imágenes", field: "totalImages" },
                     ]}
@@ -135,6 +135,7 @@ function getTableData(data) {
         description: session.description,
         date: moment(new Date(session.date._seconds * 1000)).format("L"),
         creator: session.user,
+        numberOfLotes: session.lotes.length,
       });
     });
   }
