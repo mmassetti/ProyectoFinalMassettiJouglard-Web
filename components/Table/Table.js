@@ -5,6 +5,7 @@ import styles from "assets/jss/nextjs-material-dashboard/components/tableStyle.j
 import MaterialTable from "material-table";
 import { optionsConfig, localizationConfig } from "./config/tableConfig";
 import router from "next/router";
+import { deleteSession } from "../../lib/db-client";
 
 const useStyles = makeStyles(styles);
 
@@ -46,7 +47,11 @@ export default function CustomTable(props) {
             }),
           onRowDelete: (oldData) =>
             new Promise((resolve, reject) => {
-              setTimeout(() => {
+              setTimeout(async () => {
+                //Elimino de firebase
+                await deleteSession(oldData.id);
+
+                //Elimino de la tabla
                 const dataDelete = [...data];
                 const index = oldData.tableData.id;
                 dataDelete.splice(index, 1);
