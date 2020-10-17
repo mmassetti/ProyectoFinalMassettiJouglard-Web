@@ -6,6 +6,7 @@ import MaterialTable from "material-table";
 import { optionsConfig, localizationConfig } from "./config/tableConfig";
 import router from "next/router";
 import { deleteSession } from "../../lib/db-client";
+import { trigger } from "swr";
 
 const useStyles = makeStyles(styles);
 
@@ -50,6 +51,7 @@ export default function CustomTable(props) {
               setTimeout(async () => {
                 //Elimino de firebase
                 await deleteSession(oldData.id);
+                trigger("/api/sessionsDetails");
 
                 //Elimino de la tabla
                 const dataDelete = [...data];
