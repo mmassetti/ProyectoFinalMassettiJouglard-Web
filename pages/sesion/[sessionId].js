@@ -126,6 +126,7 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
           <LoteInfo
             {...dataLotes}
             key={dataLotes.data.id}
+            detailDocRef={JSON.parse(sessionDetails).docRef}
             pasturasUrL={getPasturasUrl()}
           />
         );
@@ -144,6 +145,7 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
               <LoteInfo
                 {...lote}
                 key={lote.data.id}
+                detailDocRef={JSON.parse(sessionDetails).docRef}
                 pasturasUrl={getPasturasUrl()}
               />
             ))}

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import DeleteIcon from "@material-ui/icons/Delete";
-import firebase from "../../configuration/firebaseClientApp";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import { removeItemFromArrayByDescription } from "../../lib/db-client";
 
 const styles = {
   fontFamily: "sans-serif",
@@ -19,33 +19,6 @@ export default function InfoModal(props) {
     props.onCloseModal();
   };
 
-  const removeItemFromArrayByDescription = async (
-    attribute,
-    descriptionToRemove
-  ) => {
-    let query = await firebase
-      .firestore()
-      .collection("sessionsDetails")
-      .where("id", "==", props.sessionDetailsId);
-
-    query.get().then((querySnapshot) => {
-      if (!querySnapshot.empty) {
-        const snapshot = querySnapshot.docs[0];
-        const documentRef = snapshot.ref;
-        const oldArray = snapshot.data()[attribute];
-        const newArray = oldArray.filter(
-          (item) => item !== descriptionToRemove
-        );
-
-        return documentRef.update({
-          [attribute]: newArray,
-        });
-      } else {
-        console.log("Lo sentimos. Hubo un error al eliminar la nota.");
-      }
-    });
-  };
-
   async function deleteNote(note) {
     onCloseModal();
 
@@ -56,7 +29,12 @@ export default function InfoModal(props) {
         {
           label: "Ok, eliminar",
           onClick: async () =>
-            await removeItemFromArrayByDescription("notes", note),
+            await removeItemFromArrayByDescription(
+              "notes",
+              "sessionsDetails",
+              props.sessionDetailsId,
+              note
+            ),
         },
         {
           label: "No eliminar",
@@ -82,6 +60,7 @@ export default function InfoModal(props) {
               onClick={() => {
                 deleteNote(note);
               }}
+              color="error"
             />
           </div>
         );

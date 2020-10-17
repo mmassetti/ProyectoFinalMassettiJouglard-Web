@@ -16,6 +16,10 @@ import ImageIcon from "@material-ui/icons/Image";
 import ArtTrackIcon from "@material-ui/icons/ArtTrack";
 import moment from "moment";
 import "moment/locale/es";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import { deleteLote } from "../../lib/db-client";
 
 const styles = {
   cardCategoryWhite: {
@@ -39,7 +43,7 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function LoteInfo(props) {
-  const { data } = props;
+  const { data, detailDocRef } = props;
   const [showSideImageInfo, setShowSideImageInfo] = useState(false);
   const [imageData, setImageData] = useState("");
   const [imageNumber, setImageNumber] = useState("");
@@ -48,6 +52,26 @@ export default function LoteInfo(props) {
   const [isMinimized, setIsMinimized] = useState(false);
 
   const classes = useStyles();
+
+  async function handleDeleteLote(loteId) {
+    return confirmAlert({
+      title: "Eliminar lote",
+      message:
+        "¡Atención! Se eliminará este lote junto a sus imágenes y pasturas asociadas, tanto aquí como en la aplicación móvil.",
+      buttons: [
+        {
+          label: "Si, eliminar lote",
+          onClick: async () => {
+            await deleteLote(detailDocRef, loteId, pasturasDetails);
+          },
+        },
+        {
+          label: "No eliminar",
+          onClick: () => {},
+        },
+      ],
+    });
+  }
 
   function showSideInfo(imageNumber, imageData) {
     setImageData(imageData);
@@ -108,12 +132,32 @@ export default function LoteInfo(props) {
     );
   };
 
+  const cardFooter = () => {
+    return (
+      <CardFooter chart>
+        <div>
+          <DeleteIcon
+            onClick={() => {
+              handleDeleteLote(data.id);
+            }}
+            color="error"
+            style={{ marginBottom: -2 }}
+          />{" "}
+          <strong>Eliminar lote</strong>
+        </div>
+      </CardFooter>
+    );
+  };
+
   const showContent = () => {
     if (isMinimized) {
       return (
         <>
           <GridItem xs={12} sm={12} md={6}>
-            <Card chart>{cardHeader()}</Card>
+            <Card chart>
+              {cardHeader()}
+              {cardFooter()}
+            </Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={6}></GridItem>
         </>
@@ -159,11 +203,7 @@ export default function LoteInfo(props) {
                   ]}
                 />
               </CardBody>
-              <CardFooter chart>
-                <div className={classes.stats}>
-                  <AccessTime /> Actualizado por última vez el 21/08/2020
-                </div>
-              </CardFooter>
+              {cardFooter()}
             </Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={6}>
