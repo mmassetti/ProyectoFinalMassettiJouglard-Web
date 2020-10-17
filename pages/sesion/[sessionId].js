@@ -84,13 +84,11 @@ export async function getStaticProps(context) {
 }
 
 function SessionDetail({ sessionDetails, lotesUrl }) {
-  let sessionDetailsJSON =
-    sessionDetails && sessionDetails != undefined
-      ? JSON.parse(sessionDetails)
-      : null;
+  const router = useRouter();
+  if (router.isFallback) return <h3> Cargando... </h3>;
+  let sessionDetailsJSON = JSON.parse(sessionDetails);
 
   const classes = useStyles();
-  const router = useRouter();
   const [showNotes, setShowNotes] = useState(false);
 
   const fetcher = async (...args) => {
