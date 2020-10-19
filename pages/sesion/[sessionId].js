@@ -8,7 +8,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import Button from "components/CustomButtons/Button.js";
 
 import { useRouter } from "next/router";
-import useSWR, { mutate } from "swr";
+import useSWR, { trigger } from "swr";
 import LoteInfo from "../../components/LoteInfo/LoteInfo";
 import DescriptionIcon from "@material-ui/icons/Description";
 import EventIcon from "@material-ui/icons/Event";
@@ -92,11 +92,16 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
   const [showNotes, setShowNotes] = useState(false);
 
   const { data: dataLotes, error: errorLotes } = useSWR(
-    "/api/lotesDetails" + lotesUrl
+    "/api/lotesDetails" + lotesUrl,
+    { refreshInterval: 1000 }
   );
 
   if (!dataLotes && lotesUrl != "") {
     return <h3>Cargando...</h3>; //todo: Poner spinner
+  }
+
+  function triggerSWR() {
+    trigger("/api/lotesDetails" + lotesUrl);
   }
 
   function goToDashboard(e) {
@@ -128,6 +133,7 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
             key={dataLotes.data.id}
             detailDocRef={JSON.parse(sessionDetails).docRef}
             pasturasUrL={getPasturasUrl()}
+            onLoteDeleted={() => triggerSWR()}
           />
         );
       } else if (dataLotes.length > 0) {
@@ -147,6 +153,7 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
                 key={lote.data.id}
                 detailDocRef={JSON.parse(sessionDetails).docRef}
                 pasturasUrl={getPasturasUrl()}
+                onLoteDeleted={() => triggerSWR()}
               />
             ))}
           </>
