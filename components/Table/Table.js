@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "assets/jss/nextjs-material-dashboard/components/tableStyle.js";
@@ -14,8 +14,6 @@ export default function CustomTable(props) {
   const classes = useStyles();
   const { tableHead, tableData } = props;
 
-  const { useState } = React;
-
   const [columns, setColumns] = useState(tableHead);
 
   const [data, setData] = useState(tableData);
@@ -30,7 +28,7 @@ export default function CustomTable(props) {
     <div className={classes.tableResponsive}>
       <MaterialTable
         columns={columns}
-        data={data}
+        data={props.tableData}
         options={optionsConfig}
         localization={localizationConfig}
         onRowClick={(event, rowData) => goToSessionDetail(rowData)}

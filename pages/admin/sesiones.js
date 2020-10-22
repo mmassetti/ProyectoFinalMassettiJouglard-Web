@@ -45,7 +45,9 @@ const useStyles = makeStyles(styles);
 function Sesiones() {
   const classes = useStyles();
 
-  const { data, error } = useSWR(`/api/sessionsDetails`);
+  const { data, error } = useSWR(`/api/sessionsDetails`, {
+    refreshInterval: 1000,
+  });
 
   if (error) return <h3>Error al cargar...</h3>;
   if (!data) {
