@@ -105,7 +105,7 @@ function SessionDetail({ sessionDetails }) {
   }
 
   function triggerSWR() {
-    trigger("/api/lotesDetails" + lotesUrl);
+    trigger("/api/lotesDetails" + lotesUrlFinal);
   }
 
   function goToDashboard(e) {
