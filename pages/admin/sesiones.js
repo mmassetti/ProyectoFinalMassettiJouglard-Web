@@ -45,7 +45,7 @@ const useStyles = makeStyles(styles);
 function Sesiones() {
   const classes = useStyles();
 
-  const { data, error } = useSWR(`/api/sessionsDetails`, {
+  const { data, error } = useSWR(`/api/sessions`, {
     refreshInterval: 1000,
   });
 
