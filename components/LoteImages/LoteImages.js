@@ -45,7 +45,7 @@ export default function LoteImages(props) {
       });
 
       return loteGallery(imagesForGallery, imagesData);
-    } else if (props.onImageSelected.name == "showLoteImageInfo") {
+    } else if (props.showNoImagesAlertIfEmpty) {
       return <h5>El lote no tiene imágenes sueltas. ¡Revisá las pasturas!</h5>;
     }
   };

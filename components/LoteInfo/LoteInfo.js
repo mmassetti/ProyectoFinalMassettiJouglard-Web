@@ -4,7 +4,6 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
-import AccessTime from "@material-ui/icons/AccessTime";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import { makeStyles } from "@material-ui/core/styles";
 import LoteImages from "../LoteImages/LoteImages";
@@ -188,6 +187,7 @@ export default function LoteInfo(props) {
                         <LoteImages
                           images={data.images}
                           onImageSelected={showLoteImageInfo}
+                          showNoImagesAlertIfEmpty={true}
                         />
                       ),
                     },
