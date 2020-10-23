@@ -67,23 +67,22 @@ export async function getStaticProps(context) {
 
   let sessionDetails = await getSessionDetails(sessionId);
 
-  let lotesUrl = "";
-
-  if (sessionDetails) {
-    sessionDetails.data.lotes.map((lote) => {
-      lotesUrl = lotesUrl + "/" + lote.id;
-    });
-  }
+  // let lotesUrl = "";
+  // if (sessionDetails) {
+  //   sessionDetails.data.lotes.map((lote) => {
+  //     lotesUrl = lotesUrl + "/" + lote.id;
+  //   });
+  // }
 
   sessionDetails = JSON.stringify(sessionDetails);
 
   return {
-    props: { sessionDetails, lotesUrl }, // will be passed to the page component as props
+    props: { sessionDetails }, // will be passed to the page component as props
     revalidate: 1, // In seconds
   };
 }
 
-function SessionDetail({ sessionDetails, lotesUrl }) {
+function SessionDetail({ sessionDetails }) {
   const router = useRouter();
   if (router.isFallback) return <h3> Cargando... </h3>;
   let sessionDetailsJSON = JSON.parse(sessionDetails);
@@ -91,12 +90,17 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
   const classes = useStyles();
   const [showNotes, setShowNotes] = useState(false);
 
-  const { data: dataLotes, error: errorLotes } = useSWR(
-    "/api/lotesDetails" + lotesUrl,
+  const { data: lotesUrlFinal } = useSWR(
+    router.query.sessionId ? "/api/lotesUrl/" + router.query.sessionId : null,
     { refreshInterval: 1000 }
   );
 
-  if (!dataLotes && lotesUrl != "") {
+  const { data: dataLotes, error: errorLotes } = useSWR(
+    lotesUrlFinal ? () => "/api/lotesDetails" + lotesUrlFinal : null,
+    { refreshInterval: 1000 }
+  );
+
+  if (!dataLotes && lotesUrlFinal && lotesUrlFinal !== "") {
     return <h3>Cargando...</h3>; //todo: Poner spinner
   }
 
