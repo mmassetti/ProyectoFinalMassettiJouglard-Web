@@ -90,6 +90,7 @@ export default function LoteInfo(props) {
   };
 
   useEffect(() => {
+    //TODO: Pasar a SWR en vez de UseEffect
     let pasturasUrl = "";
     if (data.pasturas && data.pasturas.length > 0) {
       data.pasturas.map((pastura) => {
@@ -104,7 +105,7 @@ export default function LoteInfo(props) {
 
       getPasturasDetails();
     }
-  }, []);
+  }, [pasturasDetails]);
 
   const cardHeader = () => {
     return (

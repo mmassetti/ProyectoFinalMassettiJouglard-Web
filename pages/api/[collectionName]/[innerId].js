@@ -1,6 +1,7 @@
 import firebase from "../../../configuration/firebase";
 
 export default async (req, res) => {
+  //TODO: Handle cuando no existe nada (por ej cuando elimino un lote viene a esta funcion una vez mas pero como el lote no existe tira error)
   const {
     docs: [doc],
   } = await firebase

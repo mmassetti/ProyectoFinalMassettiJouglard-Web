@@ -8,7 +8,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import Button from "components/CustomButtons/Button.js";
 
 import { useRouter } from "next/router";
-import useSWR, { trigger } from "swr";
+import useSWR from "swr";
 import LoteInfo from "../../components/LoteInfo/LoteInfo";
 import DescriptionIcon from "@material-ui/icons/Description";
 import EventIcon from "@material-ui/icons/Event";
@@ -66,14 +66,6 @@ export async function getStaticProps(context) {
   const { sessionId } = params;
 
   let sessionDetails = await getSessionDetails(sessionId);
-
-  // let lotesUrl = "";
-  // if (sessionDetails) {
-  //   sessionDetails.data.lotes.map((lote) => {
-  //     lotesUrl = lotesUrl + "/" + lote.id;
-  //   });
-  // }
-
   sessionDetails = JSON.stringify(sessionDetails);
 
   return {
@@ -83,12 +75,12 @@ export async function getStaticProps(context) {
 }
 
 function SessionDetail({ sessionDetails }) {
-  const router = useRouter();
-  if (router.isFallback) return <h3> Cargando... </h3>;
-  let sessionDetailsJSON = JSON.parse(sessionDetails);
-
   const classes = useStyles();
   const [showNotes, setShowNotes] = useState(false);
+  const router = useRouter();
+
+  if (router.isFallback) return <h3> Cargando... </h3>;
+  let sessionDetailsJSON = JSON.parse(sessionDetails);
 
   const { data: lotesUrlFinal } = useSWR(
     router.query.sessionId ? "/api/lotesUrl/" + router.query.sessionId : null,
@@ -101,11 +93,11 @@ function SessionDetail({ sessionDetails }) {
   );
 
   if (!dataLotes && lotesUrlFinal && lotesUrlFinal !== "") {
-    return <h3>Cargando...</h3>; //todo: Poner spinner
+    return <h3>Cargando...</h3>; //todo: Poner spinner?
   }
 
-  function triggerSWR() {
-    trigger("/api/lotesDetails" + lotesUrlFinal);
+  if (errorLotes) {
+    return <h3>Error al obtener la información de los lotes</h3>;
   }
 
   function goToDashboard(e) {
