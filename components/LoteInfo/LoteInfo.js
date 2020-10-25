@@ -61,7 +61,6 @@ export default function LoteInfo(props) {
         {
           label: "Si, eliminar lote",
           onClick: async () => {
-            props.onLoteDeleted();
             await deleteLote(detailDocRef, loteId, pasturasDetails);
           },
         },
@@ -199,6 +198,7 @@ export default function LoteInfo(props) {
                         <LotePasturas
                           pasturas={pasturasDetails}
                           onPasturaImageSelected={showPasturaImageInfo}
+                          loteInnerId={data.id}
                         />
                       ),
                     },

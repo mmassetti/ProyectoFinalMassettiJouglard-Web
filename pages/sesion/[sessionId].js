@@ -129,7 +129,6 @@ function SessionDetail({ sessionDetails }) {
             key={dataLotes.data.id}
             detailDocRef={JSON.parse(sessionDetails).docRef}
             pasturasUrL={getPasturasUrl()}
-            onLoteDeleted={() => triggerSWR()}
           />
         );
       } else if (dataLotes.length > 0) {
@@ -149,7 +148,6 @@ function SessionDetail({ sessionDetails }) {
                 key={lote.data.id}
                 detailDocRef={JSON.parse(sessionDetails).docRef}
                 pasturasUrl={getPasturasUrl()}
-                onLoteDeleted={() => triggerSWR()}
               />
             ))}
           </>

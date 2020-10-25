@@ -7,6 +7,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import LoteImages from "../LoteImages/LoteImages";
 import MinimizeIcon from "@material-ui/icons/Minimize";
 import AddIcon from "@material-ui/icons/Add";
+import CardFooter from "components/Card/CardFooter.js";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import { deletePastura } from "../../lib/db-client";
 import moment from "moment";
 import "moment/locale/es";
 
@@ -42,11 +47,32 @@ export default function PasturaInfo(props) {
     totalImagesAfter,
     totalImagesBefore,
     onPasturaImageSelected,
+    loteInnerId,
   } = props;
 
   const [isMinimized, setIsMinimized] = useState(false);
 
   const classes = useStyles();
+
+  async function handleDeletePastura(pasturaId) {
+    return confirmAlert({
+      title: "Eliminar pastura",
+      message:
+        "¡Atención! Se eliminará esta pastura y sus imágenes asociadas, tanto aquí como en la aplicación móvil.",
+      buttons: [
+        {
+          label: "Si, eliminar pastura",
+          onClick: async () => {
+            await deletePastura(loteInnerId, pasturaId);
+          },
+        },
+        {
+          label: "No eliminar",
+          onClick: () => {},
+        },
+      ],
+    });
+  }
 
   const cardHeader = () => {
     return (
@@ -71,6 +97,23 @@ export default function PasturaInfo(props) {
           )}
         </div>
       </CardHeader>
+    );
+  };
+
+  const cardFooter = () => {
+    return (
+      <CardFooter chart>
+        <div>
+          <DeleteIcon
+            onClick={() => {
+              handleDeletePastura(id);
+            }}
+            color="error"
+            style={{ marginBottom: -2 }}
+          />{" "}
+          <strong>Eliminar pastura</strong>
+        </div>
+      </CardFooter>
     );
   };
 
@@ -104,6 +147,7 @@ export default function PasturaInfo(props) {
             <GridItem xs={12} sm={12} md={12}>
               {cardHeader()}
             </GridItem>
+            {cardFooter()}
           </Card>
         </GridItem>
       );
@@ -113,6 +157,7 @@ export default function PasturaInfo(props) {
           <Card chart>
             <GridItem xs={12} sm={12} md={12}>
               {cardHeader()}
+
               {showTextNumberImages()}
             </GridItem>
 
@@ -122,6 +167,7 @@ export default function PasturaInfo(props) {
                 onImageSelected={onPasturaImageSelected}
               />
             </CardBody>
+            {cardFooter()}
           </Card>
         </GridItem>
       );

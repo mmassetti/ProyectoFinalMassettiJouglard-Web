@@ -1,7 +1,11 @@
 import React from "react";
 import PasturaInfo from "./PasturaInfo";
 
-export default function LotePasturas({ pasturas, onPasturaImageSelected }) {
+export default function LotePasturas({
+  pasturas,
+  onPasturaImageSelected,
+  loteInnerId,
+}) {
   const lotesInfo = () => {
     if (pasturas) {
       if (pasturas.data) {
@@ -11,6 +15,7 @@ export default function LotePasturas({ pasturas, onPasturaImageSelected }) {
             {...pasturas.data}
             key={pasturas.data.id}
             onPasturaImageSelected={onPasturaImageSelected}
+            loteInnerId={loteInnerId}
           />
         );
       } else if (pasturas.length > 0) {
@@ -28,6 +33,7 @@ export default function LotePasturas({ pasturas, onPasturaImageSelected }) {
                 {...pastura.data}
                 key={pastura.data.id}
                 onPasturaImageSelected={onPasturaImageSelected}
+                loteInnerId={loteInnerId}
               />
             ))}
           </>
