@@ -224,7 +224,11 @@ export default function LoteInfo(props) {
             )}
 
             {showSideImageInfo ? (
-              <SideImageInfo imageNumber={imageNumber} imageData={imageData} />
+              <SideImageInfo
+                imageNumber={imageNumber}
+                imageData={imageData}
+                loteInnerId={data.id}
+              />
             ) : (
               ""
             )}

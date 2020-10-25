@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Gallery from "react-grid-gallery";
 import Percentages from "./Percentages";
+import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
+import ImageNoteModal from "../Modal/ImageNoteModal";
 
 export default function SideImageInfo(props) {
-  const { imageNumber, imageData, pasturaDescription } = props;
+  const { imageNumber, imageData, loteInnerId } = props;
+
+  const [showNotes, setShowNotes] = useState(false);
+
+  let notes = transformImageNotes(imageData);
 
   const loteGallery = (imagesForGallery) => {
     return (
@@ -65,6 +71,78 @@ export default function SideImageInfo(props) {
       </h6>
       {relatedImages()}
       {imagesCover()}
+      <div className="row" onClick={() => setShowNotes(true)}>
+        <SpeakerNotesIcon style={{ marginBottom: -2 }} />{" "}
+        <a href="#" style={{ color: "black" }}>
+          Ver{" "}
+          <strong style={{ textDecoration: "underline" }}>
+            notas ({notes ? notes.length : 0})
+          </strong>{" "}
+          de la imágen
+        </a>
+      </div>
+      {showNotes ? (
+        <ImageNoteModal
+          onCloseModal={async () => {
+            setShowNotes(false);
+          }}
+          title="Notas de la imágen"
+          notes={notes}
+          loteInnerId={loteInnerId}
+          imageNumberInArray={imageNumber - 1}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
+}
+
+function transformImageNotes(imageData) {
+  let notesInfo = [];
+  if (imageData.before && imageData.after) {
+    if (imageData.before.note !== "" && imageData.after.note !== "") {
+      notesInfo = [
+        {
+          originalNote: imageData.before.note,
+          noteToDisplay: "Nota imágen antes: " + imageData.before.note,
+          imageId: imageData.before.id,
+        },
+        {
+          originalNote: imageData.after.note,
+          noteToDisplay: "Nota imágen después: " + imageData.after.note,
+          imageId: imageData.after.id,
+        },
+      ];
+    } else if (imageData.before.note !== "") {
+      notesInfo = [
+        {
+          originalNote: imageData.before.note,
+          noteToDisplay: "Nota imágen antes: " + imageData.before.note,
+          imageId: imageData.before.id,
+        },
+      ];
+    } else if (imageData.after.note !== "") {
+      notesInfo = [
+        {
+          originalNote: imageData.after.note,
+          noteToDisplay: "Nota imágen después: " + imageData.after.note,
+          imageId: imageData.after.id,
+        },
+      ];
+    }
+  } else {
+    //no tiene una imágen del "despues"
+    if (imageData.before.note !== "") {
+      notesInfo = [
+        {
+          originalNote: imageData.before.note,
+          noteToDisplay: imageData.before.note,
+          imageId: imageData.before.id,
+        },
+      ];
+    }
+  }
+
+  return notesInfo;
 }

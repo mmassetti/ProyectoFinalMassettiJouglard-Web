@@ -14,7 +14,7 @@ import DescriptionIcon from "@material-ui/icons/Description";
 import EventIcon from "@material-ui/icons/Event";
 import PersonIcon from "@material-ui/icons/Person";
 import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
-import InfoModal from "../../components/Modal/InfoModal";
+import SessionNoteModal from "../../components/Modal/SessionNoteModal";
 import moment from "moment";
 import "moment/locale/es";
 import { getAllSessions, getSessionDetails } from "../../lib/db-admin";
@@ -80,6 +80,8 @@ function SessionDetail({ sessionDetails }) {
   const router = useRouter();
 
   if (router.isFallback) return <h3> Cargando... </h3>;
+
+  //TODO: Poner esto en un use Effect?
   let sessionDetailsJSON = JSON.parse(sessionDetails);
 
   const { data: lotesUrlFinal } = useSWR(
@@ -226,7 +228,7 @@ function SessionDetail({ sessionDetails }) {
         </GridItem>
 
         {showNotes ? (
-          <InfoModal
+          <SessionNoteModal
             onCloseModal={async () => {
               setShowNotes(false);
             }}

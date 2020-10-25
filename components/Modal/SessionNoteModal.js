@@ -11,7 +11,7 @@ const styles = {
   textAlign: "center",
 };
 
-export default function InfoModal(props) {
+export default function SessionNoteModal(props) {
   const [open, setOpen] = React.useState(true);
 
   const onCloseModal = () => {
@@ -66,8 +66,7 @@ export default function InfoModal(props) {
         );
       });
     } else {
-      //TODO: Agregar un if para ver si hay alguna nota a nivel IMAGEN y mostrarlas aca haciendo referencia a que lote/pastura y numero de imagen corresponde. En caso de que no haya si mostrar que no hay ninguna
-      return <p> La sesión no tiene ninguna nota.</p>;
+      return <p> La sesión no tiene ninguna nota. </p>;
     }
   };
 
