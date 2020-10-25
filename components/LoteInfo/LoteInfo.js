@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
@@ -19,6 +19,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { deleteLote } from "../../lib/db-client";
+import useSWR from "swr";
 
 const styles = {
   cardCategoryWhite: {
@@ -47,7 +48,6 @@ export default function LoteInfo(props) {
   const [imageData, setImageData] = useState("");
   const [imageNumber, setImageNumber] = useState("");
   const [showHelp, setShowHelp] = useState(true);
-  const [pasturasDetails, setPasturasDetails] = useState([]);
   const [isMinimized, setIsMinimized] = useState(false);
 
   const classes = useStyles();
@@ -88,23 +88,28 @@ export default function LoteInfo(props) {
     showSideInfo(imageNumber, imageData);
   };
 
-  useEffect(() => {
-    //TODO: Pasar a SWR en vez de UseEffect
-    let pasturasUrl = "";
-    if (data.pasturas && data.pasturas.length > 0) {
-      data.pasturas.map((pastura) => {
-        pasturasUrl = pasturasUrl + "/" + pastura.id;
-      });
+  const { data: pasturasUrlFinal } = useSWR(
+    data.pasturas && data.pasturas.length > 0
+      ? "/api/pasturasUrl/" + data.id
+      : null,
+    { refreshInterval: 1000 }
+  );
 
-      async function getPasturasDetails() {
-        let res = await fetch(`/api/pasturasDetails` + pasturasUrl);
-        let pasturasDetails = await res.json();
-        setPasturasDetails(pasturasDetails);
-      }
+  const {
+    data: pasturasDetails,
+    error: errorPasturas,
+  } = useSWR(
+    pasturasUrlFinal ? () => "/api/pasturasDetails" + pasturasUrlFinal : null,
+    { refreshInterval: 1000 }
+  );
 
-      getPasturasDetails();
-    }
-  }, [pasturasDetails]);
+  if (!pasturasDetails && pasturasUrlFinal && pasturasUrlFinal !== "") {
+    return <h3>Cargando...</h3>;
+  }
+
+  if (errorPasturas) {
+    return <h3>Error al obtener la información de los lotes</h3>;
+  }
 
   const cardHeader = () => {
     return (
@@ -196,7 +201,7 @@ export default function LoteInfo(props) {
                       tabIcon: ArtTrackIcon,
                       tabContent: (
                         <LotePasturas
-                          pasturas={pasturasDetails}
+                          pasturas={pasturasDetails ? pasturasDetails : []}
                           onPasturaImageSelected={showPasturaImageInfo}
                           loteInnerId={data.id}
                         />
