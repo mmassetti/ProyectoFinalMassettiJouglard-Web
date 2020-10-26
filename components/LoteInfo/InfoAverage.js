@@ -22,7 +22,9 @@ export default function InfoAverage(props) {
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
-          <h3>{title}</h3>
+          <h3>
+            <strong>{title}</strong>
+          </h3>
         </GridItem>
         <GridItem xs={12} sm={12} md={6}>
           <PercentagesCard
