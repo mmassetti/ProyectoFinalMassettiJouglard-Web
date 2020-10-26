@@ -3,7 +3,7 @@ import progressBarStyle from "./progressBarStyle";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 
 export default function SingleProgressBar(props) {
-  const { percentage, color } = props;
+  const { percentage, color, isAverage } = props;
 
   return (
     <div
@@ -15,12 +15,16 @@ export default function SingleProgressBar(props) {
       }}
     >
       <CircularProgressbarWithChildren
-        // value={66}
         value={percentage}
-        // text={`${percentage}%`}
         styles={progressBarStyle(color)}
       >
-        <div style={{ fontSize: 22, marginTop: -5, color: `#${color}` }}>
+        <div
+          style={{
+            ...(isAverage ? { fontSize: 18 } : { fontSize: 22 }),
+            marginTop: -5,
+            color: `#${color}`,
+          }}
+        >
           <strong>{`${percentage}%`}</strong>
         </div>
       </CircularProgressbarWithChildren>

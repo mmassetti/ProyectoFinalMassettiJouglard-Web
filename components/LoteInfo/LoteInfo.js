@@ -13,6 +13,7 @@ import MinimizeIcon from "@material-ui/icons/Minimize";
 import AddIcon from "@material-ui/icons/Add";
 import ImageIcon from "@material-ui/icons/Image";
 import ArtTrackIcon from "@material-ui/icons/ArtTrack";
+import AssessmentIcon from "@material-ui/icons/Assessment";
 import moment from "moment";
 import "moment/locale/es";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -20,6 +21,7 @@ import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { deleteLote } from "../../lib/db-client";
 import useSWR from "swr";
+import LoteAverage from "./LoteAverage";
 
 const styles = {
   cardCategoryWhite: {
@@ -204,6 +206,18 @@ export default function LoteInfo(props) {
                           pasturas={pasturasDetails ? pasturasDetails : []}
                           onPasturaImageSelected={showPasturaImageInfo}
                           loteInnerId={data.id}
+                        />
+                      ),
+                    },
+                    {
+                      tabName: "Promedios",
+                      tabIcon: AssessmentIcon,
+                      tabContent: (
+                        <LoteAverage
+                          averageAfter={data.averageAfter}
+                          averageBefore={data.averageBefore}
+                          totalImagesAfter={data.totalImagesAfter}
+                          totalImagesBefore={data.totalImagesBefore}
                         />
                       ),
                     },
