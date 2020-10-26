@@ -1,10 +1,11 @@
 import React from "react";
-import PercentagesCard from "../../components/LoteInfo/PercentagesCard/PercentagesCard";
+import PercentagesCard from "./PercentagesCard/PercentagesCard";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem.js";
 
-export default function LoteAverage(props) {
+export default function InfoAverage(props) {
   const {
+    title,
     averageBefore,
     averageAfter,
     totalImagesBefore,
@@ -20,7 +21,9 @@ export default function LoteAverage(props) {
   return (
     <div>
       <GridContainer>
-        <h3>Promedio de cubrimiento del lote</h3>
+        <GridItem xs={12} sm={12} md={12}>
+          <h3>{title}</h3>
+        </GridItem>
         <GridItem xs={12} sm={12} md={6}>
           <PercentagesCard
             title={"Antes"}

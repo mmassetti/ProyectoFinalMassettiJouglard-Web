@@ -12,6 +12,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { deletePastura } from "../../lib/db-client";
+import AssessmentIcon from "@material-ui/icons/Assessment";
+import InfoAverage from "components/LoteInfo/InfoAverage";
 import moment from "moment";
 import "moment/locale/es";
 
@@ -38,7 +40,7 @@ const useStyles = makeStyles(styles);
 
 export default function PasturaInfo(props) {
   const {
-    averagePaster,
+    averageAfter,
     averageBefore,
     creationDate,
     description,
@@ -51,6 +53,7 @@ export default function PasturaInfo(props) {
   } = props;
 
   const [isMinimized, setIsMinimized] = useState(false);
+  const [showAverage, setShowAverage] = useState(false);
 
   const classes = useStyles();
 
@@ -139,6 +142,43 @@ export default function PasturaInfo(props) {
     }
   };
 
+  const showPasturaAverage = () => {
+    return (
+      <GridItem xs={12} sm={12} md={12} style={{ marginBottom: 5 }}>
+        {!showAverage ? (
+          <div className="row" onClick={() => setShowAverage(true)}>
+            <AssessmentIcon style={{ marginBottom: -2 }} />{" "}
+            <a href="#" style={{ color: "black" }}>
+              Ver{" "}
+              <strong style={{ textDecoration: "underline" }}>promedios</strong>{" "}
+              de la pastura
+            </a>
+          </div>
+        ) : (
+          <div className="row" onClick={() => setShowAverage(false)}>
+            <AssessmentIcon style={{ marginBottom: -2 }} />{" "}
+            <a href="#" style={{ color: "black" }}>
+              <strong style={{ textDecoration: "underline" }}>Esconder</strong>{" "}
+              promedios de la pastura
+            </a>
+          </div>
+        )}
+
+        {showAverage ? (
+          <InfoAverage
+            title={"Promedio de cubrimiento de la pastura"}
+            averageAfter={averageAfter}
+            averageBefore={averageBefore}
+            totalImagesAfter={totalImagesAfter}
+            totalImagesBefore={totalImagesBefore}
+          />
+        ) : (
+          ""
+        )}
+      </GridItem>
+    );
+  };
+
   const showContent = () => {
     if (isMinimized) {
       return (
@@ -167,6 +207,7 @@ export default function PasturaInfo(props) {
                 onImageSelected={onPasturaImageSelected}
               />
             </CardBody>
+            {showPasturaAverage()}
             {cardFooter()}
           </Card>
         </GridItem>

@@ -21,7 +21,7 @@ import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { deleteLote } from "../../lib/db-client";
 import useSWR from "swr";
-import LoteAverage from "./LoteAverage";
+import InfoAverage from "./InfoAverage";
 
 const styles = {
   cardCategoryWhite: {
@@ -210,10 +210,11 @@ export default function LoteInfo(props) {
                       ),
                     },
                     {
-                      tabName: "Promedios",
+                      tabName: "Promedios del lote",
                       tabIcon: AssessmentIcon,
                       tabContent: (
-                        <LoteAverage
+                        <InfoAverage
+                          title={"Promedio de cubrimiento del lote"}
                           averageAfter={data.averageAfter}
                           averageBefore={data.averageBefore}
                           totalImagesAfter={data.totalImagesAfter}
