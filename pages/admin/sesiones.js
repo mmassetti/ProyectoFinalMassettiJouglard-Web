@@ -84,11 +84,27 @@ function Sesiones() {
                     tableHeaderColor="primary"
                     tableHead={[
                       { title: "Descripción", field: "description" },
-                      { title: "Fecha", field: "date" },
-                      { title: "Creada por", field: "creator" },
-                      { title: "Cantidad de lotes", field: "numberOfLotes" },
-                      { title: "Cantidad de pasturas", field: "pasturas" },
-                      { title: "Total de imágenes", field: "totalImages" },
+                      { title: "Fecha", field: "date", editable: "never" },
+                      {
+                        title: "Creada por",
+                        field: "creator",
+                        editable: "never",
+                      },
+                      {
+                        title: "Cantidad de lotes",
+                        field: "numberOfLotes",
+                        editable: "never",
+                      },
+                      {
+                        title: "Cantidad de pasturas",
+                        field: "pasturas",
+                        editable: "never",
+                      },
+                      {
+                        title: "Total de imágenes",
+                        field: "totalImages",
+                        editable: "never",
+                      },
                     ]}
                     tableData={tableData}
                   />

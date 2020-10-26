@@ -5,8 +5,7 @@ import styles from "assets/jss/nextjs-material-dashboard/components/tableStyle.j
 import MaterialTable from "material-table";
 import { optionsConfig, localizationConfig } from "./config/tableConfig";
 import router from "next/router";
-import { deleteSession } from "../../lib/db-client";
-import { trigger } from "swr";
+import { deleteSession, updateSession } from "../../lib/db-client";
 
 const useStyles = makeStyles(styles);
 
@@ -35,7 +34,14 @@ export default function CustomTable(props) {
         editable={{
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
-              setTimeout(() => {
+              setTimeout(async () => {
+                //Actualizo en firebase
+                if (oldData.description !== newData.description) {
+                  //Only session description is editable
+                  await updateSession(oldData.id, newData.description);
+                }
+
+                //Actualizo la tabla
                 const dataUpdate = [...data];
                 const index = oldData.tableData.id;
                 dataUpdate[index] = newData;
@@ -49,7 +55,6 @@ export default function CustomTable(props) {
               setTimeout(async () => {
                 //Elimino de firebase
                 await deleteSession(oldData.id);
-                trigger("/api/sessionsDetails");
 
                 //Elimino de la tabla
                 const dataDelete = [...data];
