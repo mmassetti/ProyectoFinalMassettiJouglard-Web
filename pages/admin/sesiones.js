@@ -44,17 +44,14 @@ const useStyles = makeStyles(styles);
 
 function Sesiones() {
   const classes = useStyles();
-  const fetcher = async (...args) => {
-    const res = await fetch(...args);
 
-    return res.json();
-  };
-
-  const { data, error } = useSWR(`/api/sessions`, fetcher);
+  const { data, error } = useSWR(`/api/sessions`, {
+    refreshInterval: 1000,
+  });
 
   if (error) return <h3>Error al cargar...</h3>;
   if (!data) {
-    return <h3>Cargando..</h3>; //todo: Poner spinner
+    return <h3>Cargando..</h3>; //todo: Poner spinner?
   }
 
   let tableData = getTableData(data);
@@ -87,11 +84,27 @@ function Sesiones() {
                     tableHeaderColor="primary"
                     tableHead={[
                       { title: "Descripción", field: "description" },
-                      { title: "Fecha", field: "date" },
-                      { title: "Creada por", field: "creator" },
-                      { title: "Cantidad de lotes", field: "lotes" },
-                      { title: "Cantidad de pasturas", field: "pasturas" },
-                      { title: "Total de imágenes", field: "totalImages" },
+                      { title: "Fecha", field: "date", editable: "never" },
+                      {
+                        title: "Creada por",
+                        field: "creator",
+                        editable: "never",
+                      },
+                      {
+                        title: "Cantidad de lotes",
+                        field: "numberOfLotes",
+                        editable: "never",
+                      },
+                      {
+                        title: "Cantidad de pasturas",
+                        field: "pasturas",
+                        editable: "never",
+                      },
+                      {
+                        title: "Total de imágenes",
+                        field: "totalImages",
+                        editable: "never",
+                      },
                     ]}
                     tableData={tableData}
                   />
@@ -131,10 +144,12 @@ function getTableData(data) {
   if (data && sessionsArray) {
     sessionsArray.map((session) => {
       tableData.push({
-        id: session.id,
+        id: session.sessionDetailId,
+        sessionId: session.sessionId,
         description: session.description,
         date: moment(new Date(session.date._seconds * 1000)).format("L"),
         creator: session.user,
+        numberOfLotes: session.lotes.length,
       });
     });
   }

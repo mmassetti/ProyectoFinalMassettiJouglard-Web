@@ -12,7 +12,7 @@ export default function Percentages(props) {
       <>
         <div>
           <GridContainer>
-            <GridItem xs={12} sm={12} md={6}>
+            <GridItem xs={12} sm={6} md={6}>
               <PercentagesCard
                 percentages={imageData.before.percentages}
                 title={imageData.after ? "- Antes" : ""}
@@ -20,7 +20,7 @@ export default function Percentages(props) {
             </GridItem>
 
             {imageData.after ? (
-              <GridItem xs={12} sm={12} md={6}>
+              <GridItem xs={12} sm={6} md={6}>
                 <PercentagesCard
                   percentages={imageData.after.percentages}
                   title="- Después"

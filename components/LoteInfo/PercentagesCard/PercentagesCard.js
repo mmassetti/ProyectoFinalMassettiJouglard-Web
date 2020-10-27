@@ -18,7 +18,8 @@ export default function PercentagesCard(props) {
         }}
       >
         <h4 style={{ color: "white" }}>
-          <strong>Porcentajes de cobertura</strong> {title}
+          {!props.isAverage ? <strong>Porcentajes de cobertura</strong> : ""}{" "}
+          {title}
         </h4>
       </div>
 
@@ -31,15 +32,18 @@ export default function PercentagesCard(props) {
           }}
         >
           <SingleProgressBar
-            percentage={percentages.percentageGreen}
+            isAverage={props.isAverage}
+            percentage={Math.floor(percentages.percentageGreen)}
             color={"32CD32"}
           />
           <SingleProgressBar
-            percentage={percentages.percentageYellow}
+            isAverage={props.isAverage}
+            percentage={Math.floor(percentages.percentageYellow)}
             color={"fce303"}
           />
           <SingleProgressBar
-            percentage={percentages.percentageNaked}
+            isAverage={props.isAverage}
+            percentage={Math.floor(percentages.percentageNaked)}
             color={"f5f7f7"}
           />
         </div>

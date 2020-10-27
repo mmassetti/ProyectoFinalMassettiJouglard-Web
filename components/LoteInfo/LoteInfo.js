@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
-import AccessTime from "@material-ui/icons/AccessTime";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import { makeStyles } from "@material-ui/core/styles";
 import LoteImages from "../LoteImages/LoteImages";
@@ -14,8 +13,14 @@ import MinimizeIcon from "@material-ui/icons/Minimize";
 import AddIcon from "@material-ui/icons/Add";
 import ImageIcon from "@material-ui/icons/Image";
 import ArtTrackIcon from "@material-ui/icons/ArtTrack";
+import AssessmentIcon from "@material-ui/icons/Assessment";
 import moment from "moment";
 import "moment/locale/es";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import { deleteLote } from "../../lib/db-client";
+import InfoAverage from "./InfoAverage";
 
 const styles = {
   cardCategoryWhite: {
@@ -39,15 +44,34 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function LoteInfo(props) {
-  const { data } = props;
+  const { loteData, pasturasData } = props;
   const [showSideImageInfo, setShowSideImageInfo] = useState(false);
   const [imageData, setImageData] = useState("");
   const [imageNumber, setImageNumber] = useState("");
   const [showHelp, setShowHelp] = useState(true);
-  const [pasturasDetails, setPasturasDetails] = useState([]);
   const [isMinimized, setIsMinimized] = useState(false);
 
   const classes = useStyles();
+
+  async function handleDeleteLote(loteId) {
+    return confirmAlert({
+      title: "Eliminar lote",
+      message:
+        "¡Atención! Se eliminará este lote junto a sus imágenes y pasturas asociadas, tanto aquí como en la aplicación móvil.",
+      buttons: [
+        {
+          label: "Si, eliminar lote",
+          onClick: async () => {
+            await deleteLote(detailDocRef, loteId, pasturasDetails);
+          },
+        },
+        {
+          label: "No eliminar",
+          onClick: () => {},
+        },
+      ],
+    });
+  }
 
   function showSideInfo(imageNumber, imageData) {
     setImageData(imageData);
@@ -65,31 +89,14 @@ export default function LoteInfo(props) {
     showSideInfo(imageNumber, imageData);
   };
 
-  useEffect(() => {
-    let pasturasUrl = "";
-    if (data.pasturas && data.pasturas.length > 0) {
-      data.pasturas.map((pastura) => {
-        pasturasUrl = pasturasUrl + "/" + pastura.id;
-      });
-
-      async function getPasturasDetails() {
-        let res = await fetch(`/api/pasturasDetails` + pasturasUrl);
-        let pasturasDetails = await res.json();
-        setPasturasDetails(pasturasDetails);
-      }
-
-      getPasturasDetails();
-    }
-  }, []);
-
   const cardHeader = () => {
     return (
       <CardHeader color="primary">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h4 className={classes.cardTitleWhite}>
-            {data.description} - Creado a las{" "}
+            {loteData.description} - Creado a las{" "}
             {moment(
-              new Date(data.creationDate._seconds * 1000),
+              new Date(loteData.creationDate._seconds * 1000),
               "dd/mm/yyyy"
             ).format("HH:mm")}{" "}
             hs
@@ -108,12 +115,32 @@ export default function LoteInfo(props) {
     );
   };
 
+  const cardFooter = () => {
+    return (
+      <CardFooter chart>
+        <div>
+          <DeleteIcon
+            onClick={() => {
+              handleDeleteLote(data.id);
+            }}
+            color="error"
+            style={{ marginBottom: -2 }}
+          />{" "}
+          <strong>Eliminar lote</strong>
+        </div>
+      </CardFooter>
+    );
+  };
+
   const showContent = () => {
     if (isMinimized) {
       return (
         <>
           <GridItem xs={12} sm={12} md={6}>
-            <Card chart>{cardHeader()}</Card>
+            <Card chart>
+              {cardHeader()}
+              {cardFooter()}
+            </Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={6}></GridItem>
         </>
@@ -126,8 +153,8 @@ export default function LoteInfo(props) {
               {cardHeader()}
               <GridItem xs={12} sm={12} md={12}>
                 <h5>
-                  <strong>{data.images.length} imágenes</strong> y{" "}
-                  <strong>{data.pasturas.length} pasturas</strong> asociadas
+                  <strong>{loteData.images.length} imágenes</strong> y{" "}
+                  <strong>{loteData.pasturas.length} pasturas</strong> asociadas
                 </h5>
               </GridItem>
 
@@ -141,8 +168,9 @@ export default function LoteInfo(props) {
                       tabIcon: ImageIcon,
                       tabContent: (
                         <LoteImages
-                          images={data.images}
+                          images={loteData.images}
                           onImageSelected={showLoteImageInfo}
+                          showNoImagesAlertIfEmpty={true}
                         />
                       ),
                     },
@@ -151,25 +179,34 @@ export default function LoteInfo(props) {
                       tabIcon: ArtTrackIcon,
                       tabContent: (
                         <LotePasturas
-                          pasturas={pasturasDetails}
+                          pasturas={pasturasData}
                           onPasturaImageSelected={showPasturaImageInfo}
+                        />
+                      ),
+                    },
+                    {
+                      tabName: "Promedios del lote",
+                      tabIcon: AssessmentIcon,
+                      tabContent: (
+                        <InfoAverage
+                          title={"Promedio de cubrimiento del lote"}
+                          averageAfter={loteData.averageAfter}
+                          averageBefore={loteData.averageBefore}
+                          totalImagesAfter={loteData.totalImagesAfter}
+                          totalImagesBefore={loteData.totalImagesBefore}
                         />
                       ),
                     },
                   ]}
                 />
               </CardBody>
-              <CardFooter chart>
-                <div className={classes.stats}>
-                  <AccessTime /> Actualizado por última vez el 21/08/2020
-                </div>
-              </CardFooter>
+              {cardFooter()}
             </Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={6}>
             {showHelp ? (
               <h5>
-                <strong>{data.description} </strong> - Seleccioná una imágen
+                <strong>{loteData.description} </strong> - Seleccioná una imágen
                 para mostrar su información
               </h5>
             ) : (
@@ -177,7 +214,11 @@ export default function LoteInfo(props) {
             )}
 
             {showSideImageInfo ? (
-              <SideImageInfo imageNumber={imageNumber} imageData={imageData} />
+              <SideImageInfo
+                imageNumber={imageNumber}
+                imageData={imageData}
+                loteInnerId={loteData.id}
+              />
             ) : (
               ""
             )}

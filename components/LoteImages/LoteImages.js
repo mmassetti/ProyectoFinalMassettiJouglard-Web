@@ -33,9 +33,11 @@ export default function LoteImages(props) {
       let imageCount = 1;
       let imagesData = [];
       images.map((image) => {
+        let imagePath = image.before.uri ? image.before.uri : "noimage";
         imagesForGallery.push({
-          src: image.before.uri,
-          thumbnail: image.before.uri,
+          src: imagePath,
+          thumbnail: imagePath,
+          alt: ".Lo sentimos. No se pudo cargar esta imágen.",
           thumbnailWidth: 243,
           thumbnailHeight: 190,
           caption: "Imagen " + imageCount + "- Click para ver más info",
@@ -45,7 +47,7 @@ export default function LoteImages(props) {
       });
 
       return loteGallery(imagesForGallery, imagesData);
-    } else if (props.onImageSelected.name == "showLoteImageInfo") {
+    } else if (props.showNoImagesAlertIfEmpty) {
       return <h5>El lote no tiene imágenes sueltas. ¡Revisá las pasturas!</h5>;
     }
   };

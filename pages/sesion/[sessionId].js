@@ -8,13 +8,13 @@ import CardHeader from "components/Card/CardHeader.js";
 import Button from "components/CustomButtons/Button.js";
 
 import { useRouter } from "next/router";
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
 import LoteInfo from "../../components/LoteInfo/LoteInfo";
 import DescriptionIcon from "@material-ui/icons/Description";
 import EventIcon from "@material-ui/icons/Event";
 import PersonIcon from "@material-ui/icons/Person";
 import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
-import InfoModal from "../../components/Modal/InfoModal";
+import SessionNoteModal from "../../components/Modal/SessionNoteModal";
 import moment from "moment";
 import "moment/locale/es";
 import { getAllSessions, getSessionDetails } from "../../lib/db-admin";
@@ -52,12 +52,13 @@ export async function getStaticPaths() {
 
   //Get the paths we want to pre-render based on sessionsIds
   const paths = sessions.map((session) => ({
-    params: { sessionId: session.id },
+    params: { sessionId: session.sessionDetailId },
   }));
 
   // We'll pre-render only these paths at build time.
   //{ fallback: false } means other routes should 404.
-  return { paths, fallback: false };
+  // fallback: true will generate that path for next time
+  return { paths, fallback: true };
 }
 
 export async function getStaticProps(context) {
@@ -65,103 +66,65 @@ export async function getStaticProps(context) {
   const { sessionId } = params;
 
   let sessionDetails = await getSessionDetails(sessionId);
-
-  let lotesUrl = "";
-
-  if (sessionDetails) {
-    sessionDetails.data.lotes.map((lote) => {
-      lotesUrl = lotesUrl + "/" + lote.id;
-    });
-  }
-
   sessionDetails = JSON.stringify(sessionDetails);
 
   return {
-    props: { sessionDetails, lotesUrl }, // will be passed to the page component as props
+    props: { sessionDetails }, // will be passed to the page component as props
     revalidate: 1, // In seconds
   };
 }
 
-function SessionDetail({ sessionDetails, lotesUrl }) {
+function SessionDetail({ sessionDetails }) {
+  const classes = useStyles();
+  const [showNotes, setShowNotes] = useState(false);
+  const router = useRouter();
+
+  if (router.isFallback) return <h3> Cargando... </h3>;
+
+  //TODO: Poner esto en un use Effect?
   let sessionDetailsJSON = JSON.parse(sessionDetails);
 
-  const classes = useStyles();
-  const router = useRouter();
-  const [showNotes, setShowNotes] = useState(false);
-
-  const fetcher = async (...args) => {
-    const res = await fetch(...args);
-    return res.json();
-  };
-
+  //Only make request if sessionDetailsJson lotes length > 0 ?
   const { data: dataLotes, error: errorLotes } = useSWR(
-    "/api/lotesDetails" + lotesUrl,
-    fetcher
+    "/api/lotesDetails/" + router.query.sessionId,
+    { refreshInterval: 1000 }
   );
 
-  if (!dataLotes && lotesUrl != "") {
-    return <h3>Cargando...</h3>; //todo: Poner spinner
+  if (!dataLotes) {
+    return <h3>Cargando...</h3>;
+  }
+
+  if (errorLotes) {
+    return <h3>Error al obtener la información de los lotes</h3>;
   }
 
   function goToDashboard(e) {
     router.push("/admin/sesiones");
   }
 
-  function getPasturasUrl() {
-    let pasturasUrl = "";
-
-    if (
-      dataLotes.data &&
-      dataLotes.data.pasturas &&
-      dataLotes.data.pasturas.length > 0
-    ) {
-      dataLotes.data.pasturas.map((pastura) => {
-        pasturasUrl = pasturasUrl + "/" + pastura.id;
-      });
-    }
-    return pasturasUrl;
-  }
-
   const lotesInfo = () => {
-    if (dataLotes) {
-      if (dataLotes.data) {
-        //La sesion tiene un solo lote (viene un objeto) //todo: refactor api
-        return (
-          <LoteInfo
-            {...dataLotes}
-            key={dataLotes.data.id}
-            pasturasUrL={getPasturasUrl()}
-          />
-        );
-      } else if (dataLotes.length > 0) {
-        //La sesion tiene mas de un lote (viene un arreglo)
-        //ordeno de lote mas nuevo a lote mas viejo
-        dataLotes.sort(
-          (a, b) =>
-            new Date(b.data.creationDate._seconds * 1000).getTime() -
-            new Date(a.data.creationDate._seconds * 1000).getTime()
-        );
+    dataLotes.sort(
+      (a, b) =>
+        new Date(b.loteData.creationDate._seconds * 1000).getTime() -
+        new Date(a.loteData.creationDate._seconds * 1000).getTime()
+    );
 
-        return (
-          <>
-            {dataLotes.map((lote) => (
-              <LoteInfo
-                {...lote}
-                key={lote.data.id}
-                pasturasUrl={getPasturasUrl()}
-              />
-            ))}
-          </>
-        );
-      }
+    if (dataLotes.length > 0) {
+      return (
+        <>
+          {dataLotes.map((lote) => (
+            <LoteInfo {...lote} />
+          ))}
+        </>
+      );
     } else {
       //La sesión no tiene lotes
       return (
         <GridItem xs={12} sm={12} md={12}>
-          <h7>
+          <h4>
             Esta sesión todavía <strong>no tiene ningún lote</strong> cargado.
             ¡Comenza a crearlos desde la aplicación móvil!
-          </h7>
+          </h4>
         </GridItem>
       );
     }
@@ -189,19 +152,19 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
                 <EventIcon style={{ marginBottom: -5 }} /> Sesión creada el{" "}
                 <strong>
                   {moment(
-                    new Date(sessionDetailsJSON.data.date._seconds * 1000)
+                    new Date(sessionDetailsJSON.date._seconds * 1000)
                   ).format("L")}
                 </strong>{" "}
                 a las{" "}
                 {moment(
-                  new Date(sessionDetailsJSON.data.date._seconds * 1000),
+                  new Date(sessionDetailsJSON.date._seconds * 1000),
                   "dd/mm/yyyy"
                 ).format("HH:mm")}{" "}
                 hs
               </h4>
               <p className={classes.cardCategoryWhite}>
                 <PersonIcon style={{ marginBottom: -4 }} /> Creada por{" "}
-                <strong>{sessionDetailsJSON.data.user}</strong>
+                <strong>{sessionDetailsJSON.user}</strong>
               </p>
             </CardHeader>
           </Card>
@@ -211,14 +174,14 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
             <div className={classes.row} style={{ marginBottom: 2 }}>
               <DescriptionIcon style={{ marginBottom: -2 }} />{" "}
               <strong>Descripción: </strong>
-              {sessionDetailsJSON.data.description}
+              {sessionDetailsJSON.description}
             </div>
             <div className="row" onClick={() => setShowNotes(true)}>
               <SpeakerNotesIcon style={{ marginBottom: -2 }} />{" "}
               <a href="#" style={{ color: "black" }}>
                 Ver{" "}
                 <strong style={{ textDecoration: "underline" }}>
-                  notas ({sessionDetailsJSON.data.notes.length})
+                  notas ({sessionDetailsJSON.notes.length})
                 </strong>{" "}
                 de la sesión
               </a>
@@ -227,13 +190,13 @@ function SessionDetail({ sessionDetails, lotesUrl }) {
         </GridItem>
 
         {showNotes ? (
-          <InfoModal
+          <SessionNoteModal
             onCloseModal={async () => {
               setShowNotes(false);
             }}
             title="Notas de la sesión"
-            notes={sessionDetailsJSON.data.notes}
-            sessionDetailsId={sessionDetailsJSON.data.id}
+            notes={sessionDetailsJSON.notes}
+            sessionDetailsId={sessionDetailsJSON.id}
           />
         ) : (
           ""
