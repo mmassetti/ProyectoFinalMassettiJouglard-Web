@@ -20,7 +20,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { deleteLote } from "../../lib/db-client";
-import useSWR from "swr";
 import InfoAverage from "./InfoAverage";
 
 const styles = {
@@ -45,7 +44,7 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function LoteInfo(props) {
-  const { data, detailDocRef } = props;
+  const { loteData, pasturasData, detailDocRef } = props;
   const [showSideImageInfo, setShowSideImageInfo] = useState(false);
   const [imageData, setImageData] = useState("");
   const [imageNumber, setImageNumber] = useState("");
@@ -90,37 +89,14 @@ export default function LoteInfo(props) {
     showSideInfo(imageNumber, imageData);
   };
 
-  const { data: pasturasUrlFinal } = useSWR(
-    data.pasturas && data.pasturas.length > 0
-      ? "/api/pasturasUrl/" + data.id
-      : null,
-    { refreshInterval: 1000 }
-  );
-
-  const {
-    data: pasturasDetails,
-    error: errorPasturas,
-  } = useSWR(
-    pasturasUrlFinal ? () => "/api/pasturasDetails" + pasturasUrlFinal : null,
-    { refreshInterval: 1000 }
-  );
-
-  if (!pasturasDetails && pasturasUrlFinal && pasturasUrlFinal !== "") {
-    return <h3>Cargando...</h3>;
-  }
-
-  if (errorPasturas) {
-    return <h3>Error al obtener la información de los lotes</h3>;
-  }
-
   const cardHeader = () => {
     return (
       <CardHeader color="primary">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h4 className={classes.cardTitleWhite}>
-            {data.description} - Creado a las{" "}
+            {loteData.description} - Creado a las{" "}
             {moment(
-              new Date(data.creationDate._seconds * 1000),
+              new Date(loteData.creationDate._seconds * 1000),
               "dd/mm/yyyy"
             ).format("HH:mm")}{" "}
             hs
@@ -177,8 +153,8 @@ export default function LoteInfo(props) {
               {cardHeader()}
               <GridItem xs={12} sm={12} md={12}>
                 <h5>
-                  <strong>{data.images.length} imágenes</strong> y{" "}
-                  <strong>{data.pasturas.length} pasturas</strong> asociadas
+                  <strong>{loteData.images.length} imágenes</strong> y{" "}
+                  <strong>{loteData.pasturas.length} pasturas</strong> asociadas
                 </h5>
               </GridItem>
 
@@ -192,7 +168,7 @@ export default function LoteInfo(props) {
                       tabIcon: ImageIcon,
                       tabContent: (
                         <LoteImages
-                          images={data.images}
+                          images={loteData.images}
                           onImageSelected={showLoteImageInfo}
                           showNoImagesAlertIfEmpty={true}
                         />
@@ -203,9 +179,8 @@ export default function LoteInfo(props) {
                       tabIcon: ArtTrackIcon,
                       tabContent: (
                         <LotePasturas
-                          pasturas={pasturasDetails ? pasturasDetails : []}
+                          pasturas={pasturasData}
                           onPasturaImageSelected={showPasturaImageInfo}
-                          loteInnerId={data.id}
                         />
                       ),
                     },
@@ -215,10 +190,10 @@ export default function LoteInfo(props) {
                       tabContent: (
                         <InfoAverage
                           title={"Promedio de cubrimiento del lote"}
-                          averageAfter={data.averageAfter}
-                          averageBefore={data.averageBefore}
-                          totalImagesAfter={data.totalImagesAfter}
-                          totalImagesBefore={data.totalImagesBefore}
+                          averageAfter={loteData.averageAfter}
+                          averageBefore={loteData.averageBefore}
+                          totalImagesAfter={loteData.totalImagesAfter}
+                          totalImagesBefore={loteData.totalImagesBefore}
                         />
                       ),
                     },
@@ -231,7 +206,7 @@ export default function LoteInfo(props) {
           <GridItem xs={12} sm={12} md={6}>
             {showHelp ? (
               <h5>
-                <strong>{data.description} </strong> - Seleccioná una imágen
+                <strong>{loteData.description} </strong> - Seleccioná una imágen
                 para mostrar su información
               </h5>
             ) : (
@@ -242,7 +217,7 @@ export default function LoteInfo(props) {
               <SideImageInfo
                 imageNumber={imageNumber}
                 imageData={imageData}
-                loteInnerId={data.id}
+                loteInnerId={loteData.id}
               />
             ) : (
               ""

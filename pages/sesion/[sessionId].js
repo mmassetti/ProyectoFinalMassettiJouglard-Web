@@ -84,18 +84,14 @@ function SessionDetail({ sessionDetails }) {
   //TODO: Poner esto en un use Effect?
   let sessionDetailsJSON = JSON.parse(sessionDetails);
 
-  const { data: lotesUrlFinal } = useSWR(
-    router.query.sessionId ? "/api/lotesUrl/" + router.query.sessionId : null,
-    { refreshInterval: 1000 }
-  );
-
+  //Only make request if sessionDetailsJson lotes length > 0 ?
   const { data: dataLotes, error: errorLotes } = useSWR(
-    lotesUrlFinal ? () => "/api/lotesDetails" + lotesUrlFinal : null,
+    "/api/lotesDetails/" + router.query.sessionId,
     { refreshInterval: 1000 }
   );
 
-  if (!dataLotes && lotesUrlFinal && lotesUrlFinal !== "") {
-    return <h3>Cargando...</h3>; //todo: Poner spinner?
+  if (!dataLotes) {
+    return <h3>Cargando...</h3>;
   }
 
   if (errorLotes) {
@@ -106,55 +102,22 @@ function SessionDetail({ sessionDetails }) {
     router.push("/admin/sesiones");
   }
 
-  function getPasturasUrl() {
-    let pasturasUrl = "";
-
-    if (
-      dataLotes.data &&
-      dataLotes.data.pasturas &&
-      dataLotes.data.pasturas.length > 0
-    ) {
-      dataLotes.data.pasturas.map((pastura) => {
-        pasturasUrl = pasturasUrl + "/" + pastura.id;
-      });
-    }
-    return pasturasUrl;
-  }
-
   const lotesInfo = () => {
-    if (dataLotes) {
-      if (dataLotes.data) {
-        //La sesion tiene un solo lote (viene un objeto) //todo: refactor api
-        return (
-          <LoteInfo
-            {...dataLotes}
-            key={dataLotes.data.id}
-            detailDocRef={JSON.parse(sessionDetails).docRef}
-            pasturasUrL={getPasturasUrl()}
-          />
-        );
-      } else if (dataLotes.length > 0) {
-        //La sesion tiene mas de un lote (viene un arreglo)
-        //ordeno de lote mas nuevo a lote mas viejo
-        dataLotes.sort(
-          (a, b) =>
-            new Date(b.data.creationDate._seconds * 1000).getTime() -
-            new Date(a.data.creationDate._seconds * 1000).getTime()
-        );
+    dataLotes.sort(
+      (a, b) =>
+        new Date(b.loteData.creationDate._seconds * 1000).getTime() -
+        new Date(a.loteData.creationDate._seconds * 1000).getTime()
+    );
 
-        return (
-          <>
-            {dataLotes.map((lote) => (
-              <LoteInfo
-                {...lote}
-                key={lote.data.id}
-                detailDocRef={JSON.parse(sessionDetails).docRef}
-                pasturasUrl={getPasturasUrl()}
-              />
-            ))}
-          </>
-        );
-      }
+    if (dataLotes.length > 0) {
+      console.log("lotesInfo -> dataLotes", dataLotes);
+      return (
+        <>
+          {dataLotes.map((lote) => (
+            <LoteInfo {...lote} />
+          ))}
+        </>
+      );
     } else {
       //La sesión no tiene lotes
       return (
@@ -190,19 +153,19 @@ function SessionDetail({ sessionDetails }) {
                 <EventIcon style={{ marginBottom: -5 }} /> Sesión creada el{" "}
                 <strong>
                   {moment(
-                    new Date(sessionDetailsJSON.data.date._seconds * 1000)
+                    new Date(sessionDetailsJSON.date._seconds * 1000)
                   ).format("L")}
                 </strong>{" "}
                 a las{" "}
                 {moment(
-                  new Date(sessionDetailsJSON.data.date._seconds * 1000),
+                  new Date(sessionDetailsJSON.date._seconds * 1000),
                   "dd/mm/yyyy"
                 ).format("HH:mm")}{" "}
                 hs
               </h4>
               <p className={classes.cardCategoryWhite}>
                 <PersonIcon style={{ marginBottom: -4 }} /> Creada por{" "}
-                <strong>{sessionDetailsJSON.data.user}</strong>
+                <strong>{sessionDetailsJSON.user}</strong>
               </p>
             </CardHeader>
           </Card>
@@ -212,14 +175,14 @@ function SessionDetail({ sessionDetails }) {
             <div className={classes.row} style={{ marginBottom: 2 }}>
               <DescriptionIcon style={{ marginBottom: -2 }} />{" "}
               <strong>Descripción: </strong>
-              {sessionDetailsJSON.data.description}
+              {sessionDetailsJSON.description}
             </div>
             <div className="row" onClick={() => setShowNotes(true)}>
               <SpeakerNotesIcon style={{ marginBottom: -2 }} />{" "}
               <a href="#" style={{ color: "black" }}>
                 Ver{" "}
                 <strong style={{ textDecoration: "underline" }}>
-                  notas ({sessionDetailsJSON.data.notes.length})
+                  notas ({sessionDetailsJSON.notes.length})
                 </strong>{" "}
                 de la sesión
               </a>
@@ -233,8 +196,8 @@ function SessionDetail({ sessionDetails }) {
               setShowNotes(false);
             }}
             title="Notas de la sesión"
-            notes={sessionDetailsJSON.data.notes}
-            sessionDetailsId={sessionDetailsJSON.data.id}
+            notes={sessionDetailsJSON.notes}
+            sessionDetailsId={sessionDetailsJSON.id}
           />
         ) : (
           ""

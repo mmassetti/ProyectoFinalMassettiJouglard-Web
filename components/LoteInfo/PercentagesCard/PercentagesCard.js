@@ -33,17 +33,17 @@ export default function PercentagesCard(props) {
         >
           <SingleProgressBar
             isAverage={props.isAverage}
-            percentage={percentages.percentageGreen}
+            percentage={Math.floor(percentages.percentageGreen)}
             color={"32CD32"}
           />
           <SingleProgressBar
             isAverage={props.isAverage}
-            percentage={percentages.percentageYellow}
+            percentage={Math.floor(percentages.percentageYellow)}
             color={"fce303"}
           />
           <SingleProgressBar
             isAverage={props.isAverage}
-            percentage={percentages.percentageNaked}
+            percentage={Math.floor(percentages.percentageNaked)}
             color={"f5f7f7"}
           />
         </div>
