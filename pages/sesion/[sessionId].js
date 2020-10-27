@@ -110,7 +110,6 @@ function SessionDetail({ sessionDetails }) {
     );
 
     if (dataLotes.length > 0) {
-      console.log("lotesInfo -> dataLotes", dataLotes);
       return (
         <>
           {dataLotes.map((lote) => (
