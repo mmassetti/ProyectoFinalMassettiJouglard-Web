@@ -52,7 +52,7 @@ export async function getStaticPaths() {
 
   //Get the paths we want to pre-render based on sessionsIds
   const paths = sessions.map((session) => ({
-    params: { sessionId: session.id },
+    params: { sessionId: session.sessionDetailId },
   }));
 
   // We'll pre-render only these paths at build time.

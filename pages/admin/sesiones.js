@@ -144,9 +144,8 @@ function getTableData(data) {
   if (data && sessionsArray) {
     sessionsArray.map((session) => {
       tableData.push({
-        id: session.id,
-        sessionRef: session.sessionRef,
-        sessionDetailRef: session.sessionDetailRef,
+        id: session.sessionDetailId,
+        sessionId: session.sessionId,
         description: session.description,
         date: moment(new Date(session.date._seconds * 1000)).format("L"),
         creator: session.user,

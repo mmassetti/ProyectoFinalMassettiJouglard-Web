@@ -14,9 +14,8 @@ export default async (req, res) => {
     data.push(
       Object.assign(
         {
-          id: sessionDetail.id,
-          sessionDetailRef: sessionDetail.ref,
-          sessionRef: session.ref,
+          sessionId: session.id,
+          sessionDetailId: sessionDetail.id,
         },
         sessionDetail.data()
       )

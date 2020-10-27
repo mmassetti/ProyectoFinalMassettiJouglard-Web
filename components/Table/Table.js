@@ -38,7 +38,11 @@ export default function CustomTable(props) {
                 //Actualizo en firebase
                 if (oldData.description !== newData.description) {
                   //Only session description is editable
-                  await updateSession(oldData.id, newData.description);
+                  await updateSession(
+                    oldData.sessionId,
+                    oldData.id,
+                    newData.description
+                  );
                 }
 
                 //Actualizo la tabla

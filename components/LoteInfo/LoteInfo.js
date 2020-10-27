@@ -44,7 +44,7 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function LoteInfo(props) {
-  const { loteData, pasturasData, detailDocRef } = props;
+  const { loteData, pasturasData } = props;
   const [showSideImageInfo, setShowSideImageInfo] = useState(false);
   const [imageData, setImageData] = useState("");
   const [imageNumber, setImageNumber] = useState("");
