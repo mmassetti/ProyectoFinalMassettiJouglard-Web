@@ -3,25 +3,25 @@ import firebase from "../../../configuration/firebase";
 export default async (req, res) => {
   let data = [];
 
-  await firebase
-    .collection("sessionsDetails")
+  const sessions = await firebase
+    .collection("sessions")
     .orderBy("date", "desc")
-    .get()
-    .then((snapshot) => {
-      snapshot.forEach((doc) => {
-        data.push(
-          Object.assign(
-            {
-              id: doc.id,
-            },
-            doc.data()
-          )
-        );
-      });
-    })
-    .catch((error) => {
-      res.json({ error });
-    });
+    .get();
+
+  for (const session of sessions.docs) {
+    let sessionDetail = await session.data().ref.get();
+
+    data.push(
+      Object.assign(
+        {
+          id: sessionDetail.id,
+          sessionDetailRef: sessionDetail.ref,
+          sessionRef: session.ref,
+        },
+        sessionDetail.data()
+      )
+    );
+  }
 
   return res.json(data);
 };
