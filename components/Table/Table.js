@@ -32,6 +32,7 @@ export default function CustomTable(props) {
         localization={localizationConfig}
         onRowClick={(event, rowData) => goToSessionDetail(rowData)}
         editable={{
+          isDeletable: () => false,
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
               setTimeout(async () => {
@@ -50,21 +51,6 @@ export default function CustomTable(props) {
                 const index = oldData.tableData.id;
                 dataUpdate[index] = newData;
                 setData([...dataUpdate]);
-
-                resolve();
-              }, 1000);
-            }),
-          onRowDelete: (oldData) =>
-            new Promise((resolve, reject) => {
-              setTimeout(async () => {
-                //Elimino de firebase
-                await deleteSession(oldData.id);
-
-                //Elimino de la tabla
-                const dataDelete = [...data];
-                const index = oldData.tableData.id;
-                dataDelete.splice(index, 1);
-                setData([...dataDelete]);
 
                 resolve();
               }, 1000);

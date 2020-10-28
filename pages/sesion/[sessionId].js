@@ -14,7 +14,7 @@ import DescriptionIcon from "@material-ui/icons/Description";
 import EventIcon from "@material-ui/icons/Event";
 import PersonIcon from "@material-ui/icons/Person";
 import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
-import SessionNoteModal from "../../components/Modal/SessionNoteModal";
+import SessionNoteModal from "../../components/Modal/SessionNoteModal/SessionNoteModal";
 import moment from "moment";
 import "moment/locale/es";
 import { getAllSessions, getSessionDetails } from "../../lib/db-admin";
@@ -114,7 +114,7 @@ function SessionDetail({ sessionDetails }) {
       return (
         <>
           {dataLotes.map((lote) => (
-            <LoteInfo {...lote} />
+            <LoteInfo key={lote.id} {...lote} />
           ))}
         </>
       );
@@ -192,13 +192,15 @@ function SessionDetail({ sessionDetails }) {
 
         {showNotes ? (
           <SessionNoteModal
-            onDelete={async (note) => {
-              await removeItemFromArrayByDescription(
-                "notes",
-                "sessionsDetails",
-                sessionDetailsJSON.id,
-                note
-              );
+            onSave={async (note) => {
+              console.log("SessionDetail -> note", note);
+
+              // await removeItemFromArrayByDescription(
+              //   "notes",
+              //   "sessionsDetails",
+              //   sessionDetailsJSON.id,
+              //   note
+              // );
             }}
             onCloseModal={async () => {
               setShowNotes(false);
