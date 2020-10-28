@@ -60,6 +60,7 @@ export default function SessionNoteModal(props) {
       {showNotesContent ? (
         <SweetAlert
           title={props.title}
+          onConfirm={""}
           onCancel={onCancel}
           custom
           showConfirm={false}

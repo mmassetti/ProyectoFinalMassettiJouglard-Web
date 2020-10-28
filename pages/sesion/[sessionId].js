@@ -114,7 +114,7 @@ function SessionDetail({ sessionDetails }) {
       return (
         <>
           {dataLotes.map((lote) => (
-            <LoteInfo {...lote} />
+            <LoteInfo key={lote.id} {...lote} />
           ))}
         </>
       );
