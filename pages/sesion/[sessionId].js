@@ -18,6 +18,7 @@ import SessionNoteModal from "../../components/Modal/SessionNoteModal";
 import moment from "moment";
 import "moment/locale/es";
 import { getAllSessions, getSessionDetails } from "../../lib/db-admin";
+import { removeItemFromArrayByDescription } from "../../lib/db-client";
 
 const styles = {
   cardCategoryWhite: {
@@ -191,6 +192,14 @@ function SessionDetail({ sessionDetails }) {
 
         {showNotes ? (
           <SessionNoteModal
+            onDelete={async (note) => {
+              await removeItemFromArrayByDescription(
+                "notes",
+                "sessionsDetails",
+                sessionDetailsJSON.id,
+                note
+              );
+            }}
             onCloseModal={async () => {
               setShowNotes(false);
             }}

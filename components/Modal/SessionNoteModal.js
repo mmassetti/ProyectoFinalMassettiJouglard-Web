@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "react-responsive-modal/styles.css";
-import { Modal } from "react-responsive-modal";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import { removeItemFromArrayByDescription } from "../../lib/db-client";
+import SweetAlert from "react-bootstrap-sweetalert";
+import Button from "components/CustomButtons/Button.js";
 
 const styles = {
   fontFamily: "sans-serif",
@@ -13,36 +12,13 @@ const styles = {
 
 export default function SessionNoteModal(props) {
   const [open, setOpen] = React.useState(true);
+  const [showNotesContent, setShowNotesContent] = React.useState(true);
+  const [note, setNote] = useState("");
 
   const onCloseModal = () => {
     setOpen(false);
     props.onCloseModal();
   };
-
-  async function deleteNote(note) {
-    onCloseModal();
-
-    return confirmAlert({
-      title: "Eliminar nota",
-      message: "¡Atención! Se eliminará esta nota.",
-      buttons: [
-        {
-          label: "Ok, eliminar",
-          onClick: async () =>
-            await removeItemFromArrayByDescription(
-              "notes",
-              "sessionsDetails",
-              props.sessionDetailsId,
-              note
-            ),
-        },
-        {
-          label: "No eliminar",
-          onClick: () => {},
-        },
-      ],
-    });
-  }
 
   const showNotes = () => {
     if (props.notes && props.notes.length > 0) {
@@ -58,7 +34,8 @@ export default function SessionNoteModal(props) {
 
             <DeleteIcon
               onClick={() => {
-                deleteNote(note);
+                setNote(note);
+                setShowNotesContent(false);
               }}
               color="error"
             />
@@ -70,12 +47,46 @@ export default function SessionNoteModal(props) {
     }
   };
 
+  const onConfirm = () => {
+    props.onDelete(note);
+    onCloseModal();
+  };
+  const onCancel = () => {
+    onCloseModal();
+  };
+
   return (
-    <div style={styles}>
-      <Modal open={open} onClose={() => onCloseModal()} center>
-        <h3>{props.title}</h3>
-        {showNotes()}
-      </Modal>
+    <div>
+      {showNotesContent ? (
+        <SweetAlert
+          title={props.title}
+          onCancel={onCancel}
+          custom
+          showConfirm={false}
+          showCancel={false}
+          showCloseButton
+        >
+          {showNotes()}
+        </SweetAlert>
+      ) : (
+        <SweetAlert
+          warning
+          showCancel
+          title="¡Atención! "
+          customButtons={
+            <>
+              <Button onClick={onCancel} color="info" round size="sm">
+                No eliminar
+              </Button>
+              <Button onClick={onConfirm} color="danger" round size="sm">
+                Sí, eliminar nota
+              </Button>
+            </>
+          }
+        >
+          Se eliminará esta nota, tanto aquí como en la aplicación móvil.
+        </SweetAlert>
+      )}
     </div>
   );
 }
