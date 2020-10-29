@@ -55,6 +55,7 @@ export default function LoteInfo(props) {
   async function handleEditLote(newLoteDescription) {
     setShowEditModal(false);
     await updateLote(loteDetailId, newLoteDescription);
+    //TODO: Spinner?
   }
 
   function showSideInfo(imageNumber, imageData) {
@@ -87,7 +88,11 @@ export default function LoteInfo(props) {
           </h4>
           {isMinimized ? (
             <div style={{ display: "flex" }}>
-              <EditIcon />
+              <EditIcon
+                onClick={() => {
+                  setShowEditModal(true);
+                }}
+              />
               <ArrowDownwardIcon onClick={() => setIsMinimized(false)} />
             </div>
           ) : (
@@ -109,6 +114,21 @@ export default function LoteInfo(props) {
     );
   };
 
+  const loteEditionModal = () => {
+    console.log("loteEditionModal -> showEditModal", showEditModal);
+
+    if (showEditModal) {
+      return (
+        <LoteModal
+          onCloseModal={async () => {
+            setShowEditModal(false);
+          }}
+          handleEditLote={handleEditLote}
+        />
+      );
+    }
+  };
+
   const showContent = () => {
     if (isMinimized) {
       return (
@@ -117,6 +137,7 @@ export default function LoteInfo(props) {
             <Card chart>{cardHeader()}</Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={6}></GridItem>
+          {loteEditionModal()}
         </>
       );
     } else {
@@ -196,16 +217,7 @@ export default function LoteInfo(props) {
               ""
             )}
 
-            {showEditModal ? (
-              <LoteModal
-                onCloseModal={async () => {
-                  setShowEditModal(false);
-                }}
-                handleEditLote={handleEditLote}
-              />
-            ) : (
-              ""
-            )}
+            {loteEditionModal()}
           </GridItem>
         </>
       );
