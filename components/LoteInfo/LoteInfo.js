@@ -3,24 +3,22 @@ import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import { makeStyles } from "@material-ui/core/styles";
 import LoteImages from "../LoteImages/LoteImages";
 import SideImageInfo from "./SideImageInfo";
 import LotePasturas from "../LotePasturas/LotePasturas";
-import MinimizeIcon from "@material-ui/icons/Minimize";
-import AddIcon from "@material-ui/icons/Add";
 import ImageIcon from "@material-ui/icons/Image";
 import ArtTrackIcon from "@material-ui/icons/ArtTrack";
 import AssessmentIcon from "@material-ui/icons/Assessment";
 import moment from "moment";
 import "moment/locale/es";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css";
-import { deleteLote } from "../../lib/db-client";
+import { updateLote } from "../../lib/db-client";
 import InfoAverage from "./InfoAverage";
+import EditIcon from "@material-ui/icons/Edit";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import LoteModal from "../Modal/LoteModal";
 
 const styles = {
   cardCategoryWhite: {
@@ -44,33 +42,19 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function LoteInfo(props) {
-  const { loteData, pasturasData } = props;
+  const { loteData, pasturasData, loteDetailId } = props;
   const [showSideImageInfo, setShowSideImageInfo] = useState(false);
   const [imageData, setImageData] = useState("");
   const [imageNumber, setImageNumber] = useState("");
   const [showHelp, setShowHelp] = useState(true);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const classes = useStyles();
 
-  async function handleDeleteLote(loteId) {
-    return confirmAlert({
-      title: "Eliminar lote",
-      message:
-        "¡Atención! Se eliminará este lote junto a sus imágenes y pasturas asociadas, tanto aquí como en la aplicación móvil.",
-      buttons: [
-        {
-          label: "Si, eliminar lote",
-          onClick: async () => {
-            await deleteLote(detailDocRef, loteId, pasturasDetails);
-          },
-        },
-        {
-          label: "No eliminar",
-          onClick: () => {},
-        },
-      ],
-    });
+  async function handleEditLote(newLoteDescription) {
+    setShowEditModal(false);
+    await updateLote(loteDetailId, newLoteDescription);
   }
 
   function showSideInfo(imageNumber, imageData) {
@@ -102,33 +86,26 @@ export default function LoteInfo(props) {
             hs
           </h4>
           {isMinimized ? (
-            <AddIcon onClick={() => setIsMinimized(false)} />
+            <div style={{ display: "flex" }}>
+              <EditIcon />
+              <ArrowDownwardIcon onClick={() => setIsMinimized(false)} />
+            </div>
           ) : (
-            <MinimizeIcon
-              onClick={() => {
-                setIsMinimized(true);
-              }}
-            />
+            <div style={{ display: "flex" }}>
+              <EditIcon
+                onClick={() => {
+                  setShowEditModal(true);
+                }}
+              />
+              <ArrowUpwardIcon
+                onClick={() => {
+                  setIsMinimized(true);
+                }}
+              />
+            </div>
           )}
         </div>
       </CardHeader>
-    );
-  };
-
-  const cardFooter = () => {
-    return (
-      <CardFooter chart>
-        <div>
-          <DeleteIcon
-            onClick={() => {
-              handleDeleteLote(data.id);
-            }}
-            color="error"
-            style={{ marginBottom: -2 }}
-          />{" "}
-          <strong>Eliminar lote</strong>
-        </div>
-      </CardFooter>
     );
   };
 
@@ -137,10 +114,7 @@ export default function LoteInfo(props) {
       return (
         <>
           <GridItem xs={12} sm={12} md={6}>
-            <Card chart>
-              {cardHeader()}
-              {cardFooter()}
-            </Card>
+            <Card chart>{cardHeader()}</Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={6}></GridItem>
         </>
@@ -200,7 +174,6 @@ export default function LoteInfo(props) {
                   ]}
                 />
               </CardBody>
-              {cardFooter()}
             </Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={6}>
@@ -218,6 +191,17 @@ export default function LoteInfo(props) {
                 imageNumber={imageNumber}
                 imageData={imageData}
                 loteInnerId={loteData.id}
+              />
+            ) : (
+              ""
+            )}
+
+            {showEditModal ? (
+              <LoteModal
+                onCloseModal={async () => {
+                  setShowEditModal(false);
+                }}
+                handleEditLote={handleEditLote}
               />
             ) : (
               ""

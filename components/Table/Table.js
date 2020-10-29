@@ -5,7 +5,7 @@ import styles from "assets/jss/nextjs-material-dashboard/components/tableStyle.j
 import MaterialTable from "material-table";
 import { optionsConfig, localizationConfig } from "./config/tableConfig";
 import router from "next/router";
-import { deleteSession, updateSession } from "../../lib/db-client";
+import { updateSession } from "../../lib/db-client";
 
 const useStyles = makeStyles(styles);
 
@@ -14,8 +14,6 @@ export default function CustomTable(props) {
   const { tableHead, tableData } = props;
 
   const [columns, setColumns] = useState(tableHead);
-
-  const [data, setData] = useState(tableData);
 
   const goToSessionDetail = (rowData) => {
     router.push("/sesion/[id]", `/sesion/${rowData.id}`, {
@@ -27,7 +25,7 @@ export default function CustomTable(props) {
     <div className={classes.tableResponsive}>
       <MaterialTable
         columns={columns}
-        data={props.tableData}
+        data={tableData}
         options={optionsConfig}
         localization={localizationConfig}
         onRowClick={(event, rowData) => goToSessionDetail(rowData)}
@@ -46,12 +44,7 @@ export default function CustomTable(props) {
                   );
                 }
 
-                //Actualizo la tabla
-                const dataUpdate = [...data];
-                const index = oldData.tableData.id;
-                dataUpdate[index] = newData;
-                setData([...dataUpdate]);
-
+                //La tabla se actualiza sola gracias a SWR
                 resolve();
               }, 1000);
             }),

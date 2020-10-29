@@ -17,7 +17,7 @@ export const localizationConfig = {
     },
   },
   header: {
-    actions: "Acciones",
+    actions: "Editar",
   },
   pagination: {
     labelDisplayedRows: "{from}-{to} de {count}",

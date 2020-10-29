@@ -18,7 +18,6 @@ import SessionNoteModal from "../../components/Modal/SessionNoteModal/SessionNot
 import moment from "moment";
 import "moment/locale/es";
 import { getAllSessions, getSessionDetails } from "../../lib/db-admin";
-import { removeItemFromArrayByDescription } from "../../lib/db-client";
 
 const styles = {
   cardCategoryWhite: {
@@ -88,7 +87,7 @@ function SessionDetail({ sessionDetails }) {
   //Only make request if sessionDetailsJson lotes length > 0 ?
   const { data: dataLotes, error: errorLotes } = useSWR(
     "/api/lotesDetails/" + router.query.sessionId,
-    { refreshInterval: 1000 }
+    !showNotes ? { refreshInterval: 1000 } : { refreshInterval: 200000 }
   );
 
   if (!dataLotes) {
@@ -192,16 +191,6 @@ function SessionDetail({ sessionDetails }) {
 
         {showNotes ? (
           <SessionNoteModal
-            onSave={async (note) => {
-              console.log("SessionDetail -> note", note);
-
-              // await removeItemFromArrayByDescription(
-              //   "notes",
-              //   "sessionsDetails",
-              //   sessionDetailsJSON.id,
-              //   note
-              // );
-            }}
             onCloseModal={async () => {
               setShowNotes(false);
             }}
