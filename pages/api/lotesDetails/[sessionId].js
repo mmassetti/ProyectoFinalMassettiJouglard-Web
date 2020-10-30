@@ -29,7 +29,12 @@ export default async (req, res) => {
 
     data.push(
       Object.assign({
-        // sessionData: sessionDetails.data(),
+        sessionData: {
+          description: sessionDetails.data().description,
+          user: sessionDetails.data().user,
+          creationDate: sessionDetails.data().date,
+          notes: sessionDetails.data().notes,
+        },
         loteDetailId: lotesDetails.ref.id,
         loteData: lotesDetails.data(),
         pasturasData: pasturasData,
