@@ -14,17 +14,19 @@ export default async (req, res) => {
       .doc(lote.ref.id)
       .get();
 
-    let pasturasData = [];
-    for (const pastura of lotesDetails.data().pasturas) {
-      let pasturasDetails = await firebase
-        .collection("pasturasDetails")
-        .doc(pastura.ref.id)
-        .get();
+    if (lotesDetails.data()) {
+      let pasturasData = [];
+      for (const pastura of lotesDetails.data().pasturas) {
+        let pasturasDetails = await firebase
+          .collection("pasturasDetails")
+          .doc(pastura.ref.id)
+          .get();
 
-      pasturasData.push({
-        data: pasturasDetails.data(),
-        pasturaDetailId: pasturasDetails.ref.id,
-      });
+        pasturasData.push({
+          data: pasturasDetails.data(),
+          pasturaDetailId: pasturasDetails.ref.id,
+        });
+      }
     }
 
     data.push(

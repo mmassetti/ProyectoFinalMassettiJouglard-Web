@@ -6,7 +6,7 @@ import GridContainer from "components/Grid/GridContainer.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import Button from "components/CustomButtons/Button.js";
-
+import SweetAlert from "react-bootstrap-sweetalert";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import LoteInfo from "../../components/LoteInfo/LoteInfo";
@@ -78,6 +78,7 @@ export async function getStaticProps(context) {
 function SessionDetail({ sessionDetails }) {
   const classes = useStyles();
   const [showNotes, setShowNotes] = useState(false);
+  const [showNoLotesAlert, setShowNoLotesAlert] = useState(false);
   const router = useRouter();
 
   if (router.isFallback) return <h3> Cargando... </h3>;
@@ -164,10 +165,33 @@ function SessionDetail({ sessionDetails }) {
                   ).format("HH:mm")}{" "}
                   hs
                 </h4>
-
-                <button onClick={() => generatePdf(dataLotes)}>
+                <button
+                  onClick={() => {
+                    dataLotes.length > 0
+                      ? generatePdf(dataLotes)
+                      : setShowNoLotesAlert(true);
+                  }}
+                >
                   Descargar info
                 </button>
+                {showNoLotesAlert ? (
+                  <SweetAlert
+                    title={
+                      <span style={{ color: "black" }}>
+                        Esta sesión no tiene lotes!
+                      </span>
+                    }
+                    onConfirm={() => setShowNoLotesAlert(false)}
+                    onCancel={() => setShowNoLotesAlert(false)}
+                    customButtons={
+                      <button onClick={() => setShowNoLotesAlert(false)}>
+                        OK
+                      </button>
+                    }
+                  />
+                ) : (
+                  ""
+                )}
               </div>
 
               <p className={classes.cardCategoryWhite}>
