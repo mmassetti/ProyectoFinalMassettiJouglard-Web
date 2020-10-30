@@ -5,15 +5,14 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import { makeStyles } from "@material-ui/core/styles";
 import LoteImages from "../LoteImages/LoteImages";
-import MinimizeIcon from "@material-ui/icons/Minimize";
-import AddIcon from "@material-ui/icons/Add";
 import CardFooter from "components/Card/CardFooter.js";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css";
-import { deletePastura } from "../../lib/db-client";
+import { updatePastura } from "../../lib/db-client";
 import AssessmentIcon from "@material-ui/icons/Assessment";
 import InfoAverage from "components/LoteInfo/InfoAverage";
+import EditIcon from "@material-ui/icons/Edit";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import EditionModal from "../Modal/EditionModal";
 import moment from "moment";
 import "moment/locale/es";
 
@@ -39,42 +38,18 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function PasturaInfo(props) {
-  const {
-    averageAfter,
-    averageBefore,
-    creationDate,
-    description,
-    id,
-    images,
-    totalImagesAfter,
-    totalImagesBefore,
-    onPasturaImageSelected,
-    loteInnerId,
-  } = props;
+  const { data, pasturaDetailId, onPasturaImageSelected } = props;
 
   const [isMinimized, setIsMinimized] = useState(false);
   const [showAverage, setShowAverage] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const classes = useStyles();
 
-  async function handleDeletePastura(pasturaId) {
-    return confirmAlert({
-      title: "Eliminar pastura",
-      message:
-        "¡Atención! Se eliminará esta pastura y sus imágenes asociadas, tanto aquí como en la aplicación móvil.",
-      buttons: [
-        {
-          label: "Si, eliminar pastura",
-          onClick: async () => {
-            await deletePastura(loteInnerId, pasturaId);
-          },
-        },
-        {
-          label: "No eliminar",
-          onClick: () => {},
-        },
-      ],
-    });
+  async function handleEditPastura(newPasturaDescription) {
+    setShowEditModal(false);
+    await updatePastura(pasturaDetailId, newPasturaDescription);
+    //TODO: Spinner?
   }
 
   const cardHeader = () => {
@@ -82,21 +57,28 @@ export default function PasturaInfo(props) {
       <CardHeader color="primary">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h4 className={classes.cardTitleWhite}>
-            {description} - Creada a las{" "}
+            {data.description} - Creada a las{" "}
             {moment(
-              new Date(creationDate._seconds * 1000),
+              new Date(data.creationDate._seconds * 1000),
               "dd/mm/yyyy"
             ).format("HH:mm")}{" "}
             hs{" "}
           </h4>
           {isMinimized ? (
-            <AddIcon onClick={() => setIsMinimized(false)} />
+            <ArrowDownwardIcon onClick={() => setIsMinimized(false)} />
           ) : (
-            <MinimizeIcon
-              onClick={() => {
-                setIsMinimized(true);
-              }}
-            />
+            <div style={{ display: "flex" }}>
+              <EditIcon
+                onClick={() => {
+                  setShowEditModal(true);
+                }}
+              />
+              <ArrowUpwardIcon
+                onClick={() => {
+                  setIsMinimized(true);
+                }}
+              />
+            </div>
           )}
         </div>
       </CardHeader>
@@ -106,28 +88,19 @@ export default function PasturaInfo(props) {
   const cardFooter = () => {
     return (
       <CardFooter chart>
-        <div>
-          <DeleteIcon
-            onClick={() => {
-              handleDeletePastura(id);
-            }}
-            color="error"
-            style={{ marginBottom: -2 }}
-          />{" "}
-          <strong>Eliminar pastura</strong>
-        </div>
+        <div>{showPasturaAverage()}</div>
       </CardFooter>
     );
   };
 
   const showTextNumberImages = () => {
-    if (images.length > 1) {
+    if (data.images.length > 1) {
       return (
         <h5>
-          Esta pastura tiene <strong>{images.length} imágenes</strong>
+          Esta pastura tiene <strong>{data.images.length} imágenes</strong>
         </h5>
       );
-    } else if (images.length === 1) {
+    } else if (data.images.length === 1) {
       return (
         <h5>
           Esta pastura tiene <strong> 1 imágen </strong>
@@ -167,16 +140,30 @@ export default function PasturaInfo(props) {
         {showAverage ? (
           <InfoAverage
             title={"Promedio de cubrimiento de la pastura"}
-            averageAfter={averageAfter}
-            averageBefore={averageBefore}
-            totalImagesAfter={totalImagesAfter}
-            totalImagesBefore={totalImagesBefore}
+            averageAfter={data.averageAfter}
+            averageBefore={data.averageBefore}
+            totalImagesAfter={data.totalImagesAfter}
+            totalImagesBefore={data.totalImagesBefore}
           />
         ) : (
           ""
         )}
       </GridItem>
     );
+  };
+
+  const pasturaEditionModal = () => {
+    if (showEditModal) {
+      return (
+        <EditionModal
+          title={"Editar pastura"}
+          onCloseModal={async () => {
+            setShowEditModal(false);
+          }}
+          handleEditPastura={handleEditPastura}
+        />
+      );
+    }
   };
 
   const showContent = () => {
@@ -189,6 +176,7 @@ export default function PasturaInfo(props) {
             </GridItem>
             {cardFooter()}
           </Card>
+          {pasturaEditionModal()}
         </GridItem>
       );
     } else {
@@ -203,13 +191,13 @@ export default function PasturaInfo(props) {
 
             <CardBody>
               <LoteImages
-                images={images}
+                images={data.images}
                 onImageSelected={onPasturaImageSelected}
               />
             </CardBody>
-            {showPasturaAverage()}
             {cardFooter()}
           </Card>
+          {pasturaEditionModal()}
         </GridItem>
       );
     }

@@ -18,7 +18,7 @@ import InfoAverage from "./InfoAverage";
 import EditIcon from "@material-ui/icons/Edit";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
-import LoteModal from "../Modal/LoteModal";
+import EditionModal from "../Modal/EditionModal";
 
 const styles = {
   cardCategoryWhite: {
@@ -115,11 +115,10 @@ export default function LoteInfo(props) {
   };
 
   const loteEditionModal = () => {
-    console.log("loteEditionModal -> showEditModal", showEditModal);
-
     if (showEditModal) {
       return (
-        <LoteModal
+        <EditionModal
+          title={"Editar lote"}
           onCloseModal={async () => {
             setShowEditModal(false);
           }}
@@ -174,7 +173,7 @@ export default function LoteInfo(props) {
                       tabIcon: ArtTrackIcon,
                       tabContent: (
                         <LotePasturas
-                          pasturas={pasturasData}
+                          pasturasData={pasturasData}
                           onPasturaImageSelected={showPasturaImageInfo}
                         />
                       ),

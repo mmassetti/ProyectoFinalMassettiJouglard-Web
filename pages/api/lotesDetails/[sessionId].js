@@ -21,7 +21,10 @@ export default async (req, res) => {
         .doc(pastura.ref.id)
         .get();
 
-      pasturasData.push(pasturasDetails.data());
+      pasturasData.push({
+        data: pasturasDetails.data(),
+        pasturaDetailId: pasturasDetails.ref.id,
+      });
     }
 
     data.push(
