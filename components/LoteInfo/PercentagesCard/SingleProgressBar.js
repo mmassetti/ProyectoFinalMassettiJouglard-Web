@@ -21,7 +21,7 @@ export default function SingleProgressBar(props) {
         <div
           style={{
             ...(isAverage ? { fontSize: 18 } : { fontSize: 22 }),
-            marginTop: -15,
+            // marginTop: 5,
             color: `#${color}`,
           }}
         >

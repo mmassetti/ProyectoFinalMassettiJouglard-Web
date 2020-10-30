@@ -115,7 +115,7 @@ function SessionDetail({ sessionDetails }) {
       return (
         <>
           {dataLotes.map((lote) => (
-            <LoteInfo key={lote.id} {...lote} />
+            <LoteInfo key={lote.loteDetailId} {...lote} />
           ))}
         </>
       );
@@ -165,15 +165,16 @@ function SessionDetail({ sessionDetails }) {
                   ).format("HH:mm")}{" "}
                   hs
                 </h4>
-                <button
+                <Button
+                  color="success"
                   onClick={() => {
                     dataLotes.length > 0
                       ? generatePdf(dataLotes)
                       : setShowNoLotesAlert(true);
                   }}
                 >
-                  Descargar info
-                </button>
+                  <strong>Descargar PDF</strong>
+                </Button>
                 {showNoLotesAlert ? (
                   <SweetAlert
                     title={
