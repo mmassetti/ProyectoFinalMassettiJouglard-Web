@@ -14,7 +14,7 @@ export default function LotePasturas({ pasturasData, onPasturaImageSelected }) {
           {pasturasData.map((pastura) => (
             <PasturaInfo
               {...pastura}
-              key={pastura.id}
+              key={pastura.pasturaDetailId}
               onPasturaImageSelected={onPasturaImageSelected}
             />
           ))}

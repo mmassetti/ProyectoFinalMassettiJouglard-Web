@@ -14,8 +14,8 @@ export default async (req, res) => {
       .doc(lote.ref.id)
       .get();
 
+    let pasturasData = [];
     if (lotesDetails.data()) {
-      let pasturasData = [];
       for (const pastura of lotesDetails.data().pasturas) {
         let pasturasDetails = await firebase
           .collection("pasturasDetails")
