@@ -4,6 +4,9 @@ export const optionsConfig = {
   draggable: false,
   exportButton: false,
   search: false,
+  showTitle: false,
+  paging: false,
+  toolbar: false,
 };
 
 export const localizationConfig = {
