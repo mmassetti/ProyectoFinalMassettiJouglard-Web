@@ -23,7 +23,6 @@ export const localizationConfig = {
     // exportCsvName: "Exportar como CSV"
   },
   body: {
-    deleteTooltip: "Eliminar",
     editTooltip: "Editar",
     emptyDataSourceMessage: "No hay ninguna sesión para mostrar",
     filterRow: {
@@ -31,7 +30,6 @@ export const localizationConfig = {
     },
     saveTooltip: "Guardar",
     editRow: {
-      deleteText: "Confirmá que querés eliminar la sesión",
       saveTooltip: "Confirmar",
       cancelTooltip: "Cancelar",
     },
