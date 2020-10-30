@@ -20,6 +20,8 @@
     "firebase": "^7.19.0",
     "firebase-admin": "^9.2.0",
     "history": "5.0.0",
+    "jspdf": "^2.1.1",
+    "jspdf-autotable": "^3.5.13",
     "material-auto-rotating-carousel": "^3.0.2",
     "material-table": "^1.68.1",
     "moment": "^2.27.0",

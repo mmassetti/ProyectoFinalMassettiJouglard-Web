@@ -18,6 +18,7 @@ import SessionNoteModal from "../../components/Modal/SessionNoteModal/SessionNot
 import moment from "moment";
 import "moment/locale/es";
 import { getAllSessions, getSessionDetails } from "../../lib/db-admin";
+import generatePdf from "../../lib/pdfGenerator";
 
 const styles = {
   cardCategoryWhite: {
@@ -148,20 +149,27 @@ function SessionDetail({ sessionDetails }) {
         <GridItem xs={12} sm={12} md={12} style={{ marginBottom: 20 }}>
           <Card plain>
             <CardHeader plain color="dark">
-              <h4 className={classes.cardTitleWhite}>
-                <EventIcon style={{ marginBottom: -5 }} /> Sesión creada el{" "}
-                <strong>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <h4 className={classes.cardTitleWhite}>
+                  <EventIcon style={{ marginBottom: -5 }} /> Sesión creada el{" "}
+                  <strong>
+                    {moment(
+                      new Date(sessionDetailsJSON.date._seconds * 1000)
+                    ).format("L")}
+                  </strong>{" "}
+                  a las{" "}
                   {moment(
-                    new Date(sessionDetailsJSON.date._seconds * 1000)
-                  ).format("L")}
-                </strong>{" "}
-                a las{" "}
-                {moment(
-                  new Date(sessionDetailsJSON.date._seconds * 1000),
-                  "dd/mm/yyyy"
-                ).format("HH:mm")}{" "}
-                hs
-              </h4>
+                    new Date(sessionDetailsJSON.date._seconds * 1000),
+                    "dd/mm/yyyy"
+                  ).format("HH:mm")}{" "}
+                  hs
+                </h4>
+
+                <button onClick={() => generatePdf(dataLotes)}>
+                  Descargar info
+                </button>
+              </div>
+
               <p className={classes.cardCategoryWhite}>
                 <PersonIcon style={{ marginBottom: -4 }} /> Creada por{" "}
                 <strong>{sessionDetailsJSON.user}</strong>
