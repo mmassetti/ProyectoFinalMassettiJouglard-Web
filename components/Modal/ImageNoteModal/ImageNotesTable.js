@@ -3,13 +3,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import styles from "assets/jss/nextjs-material-dashboard/components/tableStyle.js";
 import MaterialTable from "material-table";
 import { optionsConfig, localizationConfig } from "../config/tableConfig";
-import { editItemFromArrayByDescription } from "../../../lib/db-client";
+import { editNoteFromImage } from "../../../lib/db-client";
 
 const useStyles = makeStyles(styles);
 
-export default function SessionNotesTable(props) {
+export default function ImageNotesTable(props) {
   const classes = useStyles();
-  const { tableHead, tableData, sessionDetailsId } = props;
+  const { tableHead, tableData, loteDetailId, imageNumberInArray } = props;
   const [columns, setColumns] = useState(tableHead);
   const [data, setData] = useState(tableData);
 
@@ -27,13 +27,13 @@ export default function SessionNotesTable(props) {
               new Promise((resolve, reject) => {
                 setTimeout(async () => {
                   //Actualizo en firebase
-                  if (oldData.note !== newData.note) {
-                    await editItemFromArrayByDescription(
-                      "notes",
-                      "sessionsDetails",
-                      sessionDetailsId,
-                      oldData.note,
-                      newData.note
+                  if (oldData.noteToDisplay !== newData.noteToDisplay) {
+                    await editNoteFromImage(
+                      loteDetailId,
+                      oldData.originalNote,
+                      oldData.imageId,
+                      imageNumberInArray,
+                      newData.noteToDisplay
                     );
                   }
 

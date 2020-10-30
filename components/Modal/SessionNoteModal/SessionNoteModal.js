@@ -25,9 +25,6 @@ export default function SessionNoteModal(props) {
           tableHead={[{ title: "Nota", field: "note" }]}
           tableData={notesInfo}
           sessionDetailsId={props.sessionDetailsId}
-          onUpdate={() => {
-            onUpdate;
-          }}
         />
       );
     } else {

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Gallery from "react-grid-gallery";
 import Percentages from "./Percentages";
 import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
-import ImageNoteModal from "../Modal/ImageNoteModal";
+import ImageNoteModal from "../Modal/ImageNoteModal/ImageNoteModal";
 
 export default function SideImageInfo(props) {
-  const { imageNumber, imageData, loteInnerId } = props;
+  const { imageNumber, imageData, loteDetailId } = props;
 
   const [showNotes, setShowNotes] = useState(false);
 
@@ -88,7 +88,7 @@ export default function SideImageInfo(props) {
           }}
           title="Notas de la imágen"
           notes={notes}
-          loteInnerId={loteInnerId}
+          loteDetailId={loteDetailId}
           imageNumberInArray={imageNumber - 1}
         />
       ) : (

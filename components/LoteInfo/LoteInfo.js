@@ -210,7 +210,7 @@ export default function LoteInfo(props) {
               <SideImageInfo
                 imageNumber={imageNumber}
                 imageData={imageData}
-                loteInnerId={loteData.id}
+                loteDetailId={loteDetailId}
               />
             ) : (
               ""
