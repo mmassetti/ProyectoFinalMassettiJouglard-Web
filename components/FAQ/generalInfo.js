@@ -42,9 +42,10 @@ const dataGeneralInfo = {
       content: (
         <p>
           En la parte superior derecha en esta web hay un botón con el símbolo
-          de una rueda, al presionarlo encontrarás la opción 'Dar feedback'.
-          También podés comunicarte por mail, escribiendo a las siguientes
-          direcciones: jouglardjuan@gmail.com / matiasmassetti@gmail.com .
+          de una rueda, al presionarlo encontrarás la opción{" "}
+          <strong>'Dar feedback'</strong>. También podés comunicarte por mail,
+          escribiendo a las siguientes direcciones: jouglardjuan@gmail.com /
+          matiasmassetti@gmail.com .
         </p>
       ),
     },
