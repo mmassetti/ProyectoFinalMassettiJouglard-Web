@@ -1,8 +1,27 @@
 const dataWebInfo = {
   rows: [
     {
-      title: "¿Qué información puedo ver en esta web?",
-      content: "Lorem ipsum dolor sit amet, consectetur ",
+      title: (
+        <p>
+          <strong>¿Qué información puedo ver en esta web?</strong>
+        </p>
+      ),
+      content: <p>Lorem ipsum dolor sit amet, consectetur.</p>,
+    },
+    {
+      title: (
+        <p>
+          <strong>¿Puedo modificar contenido en esta web?</strong>
+        </p>
+      ),
+      content: (
+        <p>
+          Podés editar la descripción de una sesión, lote o pastura. A
+          diferencia de la aplicación móvil, en la web no permitiremos eliminar
+          sesiones, lotes, pasturas, imágenes o notas, hasta que no se
+          implemente el sistema de Registro/Logueo de usuarios.
+        </p>
+      ),
     },
   ],
 };
@@ -13,10 +32,8 @@ const styleWebInfo = {
   rowTitleTextSize: "large",
   rowContentColor: "1D1D1D",
   rowContentTextSize: "18px",
-  rowContentPaddingTop: "10px",
-  rowContentPaddingBottom: "10px",
   rowContentPaddingLeft: "50px",
-  rowContentPaddingRight: "150px",
+  rowContentPaddingRight: "50px",
   arrowColor: "black",
 };
 

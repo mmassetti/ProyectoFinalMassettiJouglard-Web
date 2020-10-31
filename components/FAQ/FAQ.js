@@ -33,7 +33,9 @@ export default function FAQ() {
         <Card chart>
           <CardHeader color="primary">
             <div style={{ display: "flex" }}>
-              <h4 className={classes.cardTitleWhite}>Generales</h4>
+              <h4 className={classes.cardTitleWhite}>
+                <strong>Generales</strong>
+              </h4>
             </div>
           </CardHeader>
 
@@ -48,7 +50,9 @@ export default function FAQ() {
         <Card chart>
           <CardHeader color="dark">
             <div style={{ display: "flex" }}>
-              <h4 className={classes.cardTitleWhite}>Aplicación Android</h4>
+              <h4 className={classes.cardTitleWhite}>
+                <strong>Aplicación Android</strong>
+              </h4>
             </div>
           </CardHeader>
 
@@ -63,7 +67,9 @@ export default function FAQ() {
         <Card chart>
           <CardHeader color="danger">
             <div style={{ display: "flex" }}>
-              <h4 className={classes.cardTitleWhite}>Web</h4>
+              <h4 className={classes.cardTitleWhite}>
+                <strong>Web</strong>
+              </h4>
             </div>
           </CardHeader>
 
