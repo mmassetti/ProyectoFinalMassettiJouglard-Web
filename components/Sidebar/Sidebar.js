@@ -81,8 +81,6 @@ export default function Sidebar(props) {
         </div>
         {logoText}
       </a>
-
-      <p style={{ color: "white" }}>Usuario: NombreUsuario</p>
     </div>
   );
   return (
@@ -102,7 +100,7 @@ export default function Sidebar(props) {
         >
           {brand}
           <div className={classes.sidebarWrapper}>
-            {<AdminNavbarLinks />}
+            {/* {<AdminNavbarLinks />} */}
             {links}
           </div>
           {image !== undefined ? (
