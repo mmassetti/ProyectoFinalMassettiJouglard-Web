@@ -1,49 +1,77 @@
 import React from "react";
 import Faq from "react-faq-component";
+import GridItem from "components/Grid/GridItem.js";
+import Card from "components/Card/Card.js";
+import CardBody from "components/Card/CardBody.js";
+import CardHeader from "components/Card/CardHeader.js";
+import { makeStyles } from "@material-ui/core/styles";
+import { dataGeneralInfo, styleGeneralInfo } from "./generalInfo";
+import { dataAppInfo, styleAppInfo } from "./mobileAppInfo";
+import { dataWebInfo, styleWebInfo } from "./webInfo";
 
-const data = {
-  title: "Preguntas frecuentes",
-  rows: [
-    {
-      title: "Lorem ipsum dolor sit amet,",
-      content: "Lorem ipsum dolor sit amet, consectetur ",
-    },
-    {
-      title: "Nunc maximus, magna at ultricies elementum",
-      content:
-        "Nunc maximus, magna at ultricies elementum, risus turpis vulputate quam.",
-    },
-    {
-      title: "Curabitur laoreet, mauris vel blandit fringilla",
-      content:
-        "Curabitur laoreet, mauris vel blandit fringilla, leo elit rhoncus nunc",
-    },
-    {
-      title: "What is the package version",
-      content: "v1.0.5",
-    },
-  ],
+const styles = {
+  cardTitleWhite: {
+    color: "#FFFFFF",
+    marginTop: "0px",
+    minHeight: "auto",
+    fontWeight: "300",
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    marginBottom: "3px",
+    textDecoration: "none",
+  },
 };
 
+const useStyles = makeStyles(styles);
+
 export default function FAQ() {
+  const classes = useStyles();
+
   return (
-    <div>
-      <Faq
-        data={data}
-        styles={{
-          bgColor: "EEEEE",
-          titleTextColor: "#48482a",
-          rowTitleColor: "#8a2887",
-          rowTitleTextSize: "large",
-          rowContentColor: "1D1D1D",
-          rowContentTextSize: "16px",
-          rowContentPaddingTop: "10px",
-          rowContentPaddingBottom: "10px",
-          rowContentPaddingLeft: "50px",
-          rowContentPaddingRight: "150px",
-          arrowColor: "black",
-        }}
-      />
-    </div>
+    <>
+      {/* Preguntas GENERALES */}
+      <GridItem xs={12} sm={12} md={12}>
+        <Card chart>
+          <CardHeader color="primary">
+            <div style={{ display: "flex" }}>
+              <h4 className={classes.cardTitleWhite}>Generales</h4>
+            </div>
+          </CardHeader>
+
+          <CardBody>
+            <Faq data={dataGeneralInfo} styles={styleGeneralInfo} />
+          </CardBody>
+        </Card>
+      </GridItem>
+
+      {/* Preguntas APP MOBILE*/}
+      <GridItem xs={12} sm={12} md={12}>
+        <Card chart>
+          <CardHeader color="dark">
+            <div style={{ display: "flex" }}>
+              <h4 className={classes.cardTitleWhite}>Aplicación Android</h4>
+            </div>
+          </CardHeader>
+
+          <CardBody>
+            <Faq data={dataAppInfo} styles={styleAppInfo} />
+          </CardBody>
+        </Card>
+      </GridItem>
+
+      {/* Preguntas WEB */}
+      <GridItem xs={12} sm={12} md={12}>
+        <Card chart>
+          <CardHeader color="danger">
+            <div style={{ display: "flex" }}>
+              <h4 className={classes.cardTitleWhite}>Web</h4>
+            </div>
+          </CardHeader>
+
+          <CardBody>
+            <Faq data={dataWebInfo} styles={styleWebInfo} />
+          </CardBody>
+        </Card>
+      </GridItem>
+    </>
   );
 }
