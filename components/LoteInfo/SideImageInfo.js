@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Gallery from "react-grid-gallery";
 import Percentages from "./Percentages";
 import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
-import ImageNoteModal from "../Modal/ImageNoteModal";
+import ImageNoteModal from "../Modal/ImageNoteModal/ImageNoteModal";
 
 export default function SideImageInfo(props) {
-  const { imageNumber, imageData, loteInnerId } = props;
+  const { imageNumber, imageData, loteDetailId } = props;
 
   const [showNotes, setShowNotes] = useState(false);
 
@@ -88,7 +88,7 @@ export default function SideImageInfo(props) {
           }}
           title="Notas de la imágen"
           notes={notes}
-          loteInnerId={loteInnerId}
+          loteDetailId={loteDetailId}
           imageNumberInArray={imageNumber - 1}
         />
       ) : (
@@ -101,7 +101,12 @@ export default function SideImageInfo(props) {
 function transformImageNotes(imageData) {
   let notesInfo = [];
   if (imageData.before && imageData.after) {
-    if (imageData.before.note !== "" && imageData.after.note !== "") {
+    if (
+      imageData.before.note !== "" &&
+      imageData.before.note !== null &&
+      imageData.after.note !== "" &&
+      imageData.after.note !== null
+    ) {
       notesInfo = [
         {
           originalNote: imageData.before.note,
@@ -114,7 +119,7 @@ function transformImageNotes(imageData) {
           imageId: imageData.after.id,
         },
       ];
-    } else if (imageData.before.note !== "") {
+    } else if (imageData.before.note !== "" && imageData.before.note !== null) {
       notesInfo = [
         {
           originalNote: imageData.before.note,
@@ -122,7 +127,7 @@ function transformImageNotes(imageData) {
           imageId: imageData.before.id,
         },
       ];
-    } else if (imageData.after.note !== "") {
+    } else if (imageData.after.note !== "" && imageData.after.note !== null) {
       notesInfo = [
         {
           originalNote: imageData.after.note,
@@ -133,7 +138,7 @@ function transformImageNotes(imageData) {
     }
   } else {
     //no tiene una imágen del "despues"
-    if (imageData.before.note !== "") {
+    if (imageData.before.note !== "" && imageData.before.note !== null) {
       notesInfo = [
         {
           originalNote: imageData.before.note,

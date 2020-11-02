@@ -15,18 +15,29 @@ export default async (req, res) => {
       .get();
 
     let pasturasData = [];
-    for (const pastura of lotesDetails.data().pasturas) {
-      let pasturasDetails = await firebase
-        .collection("pasturasDetails")
-        .doc(pastura.ref.id)
-        .get();
+    if (lotesDetails.data()) {
+      for (const pastura of lotesDetails.data().pasturas) {
+        let pasturasDetails = await firebase
+          .collection("pasturasDetails")
+          .doc(pastura.ref.id)
+          .get();
 
-      pasturasData.push(pasturasDetails.data());
+        pasturasData.push({
+          data: pasturasDetails.data(),
+          pasturaDetailId: pasturasDetails.ref.id,
+        });
+      }
     }
 
     data.push(
       Object.assign({
-        // sessionData: sessionDetails.data(),
+        sessionData: {
+          description: sessionDetails.data().description,
+          user: sessionDetails.data().user,
+          creationDate: sessionDetails.data().date,
+          notes: sessionDetails.data().notes,
+        },
+        loteDetailId: lotesDetails.ref.id,
         loteData: lotesDetails.data(),
         pasturasData: pasturasData,
       })

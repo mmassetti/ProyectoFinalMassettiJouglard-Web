@@ -39,7 +39,7 @@ export default function FixedPlugin(props) {
               </Button>
             </div>
           </li>
-          <li className="button-container">
+          {/* <li className="button-container">
             <Button
               color="info"
               fullWidth
@@ -48,7 +48,7 @@ export default function FixedPlugin(props) {
             >
               Ver Demo Youtube
             </Button>
-          </li>
+          </li> */}
 
           <li className="adjustments-line" />
         </ul>

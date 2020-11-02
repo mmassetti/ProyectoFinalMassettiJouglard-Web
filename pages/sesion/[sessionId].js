@@ -6,7 +6,7 @@ import GridContainer from "components/Grid/GridContainer.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import Button from "components/CustomButtons/Button.js";
-
+import SweetAlert from "react-bootstrap-sweetalert";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import LoteInfo from "../../components/LoteInfo/LoteInfo";
@@ -14,10 +14,11 @@ import DescriptionIcon from "@material-ui/icons/Description";
 import EventIcon from "@material-ui/icons/Event";
 import PersonIcon from "@material-ui/icons/Person";
 import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
-import SessionNoteModal from "../../components/Modal/SessionNoteModal";
+import SessionNoteModal from "../../components/Modal/SessionNoteModal/SessionNoteModal";
 import moment from "moment";
 import "moment/locale/es";
 import { getAllSessions, getSessionDetails } from "../../lib/db-admin";
+import generatePdf from "../../lib/pdfGenerator";
 
 const styles = {
   cardCategoryWhite: {
@@ -77,6 +78,7 @@ export async function getStaticProps(context) {
 function SessionDetail({ sessionDetails }) {
   const classes = useStyles();
   const [showNotes, setShowNotes] = useState(false);
+  const [showNoLotesAlert, setShowNoLotesAlert] = useState(false);
   const router = useRouter();
 
   if (router.isFallback) return <h3> Cargando... </h3>;
@@ -87,7 +89,7 @@ function SessionDetail({ sessionDetails }) {
   //Only make request if sessionDetailsJson lotes length > 0 ?
   const { data: dataLotes, error: errorLotes } = useSWR(
     "/api/lotesDetails/" + router.query.sessionId,
-    { refreshInterval: 1000 }
+    !showNotes ? { refreshInterval: 1000 } : { refreshInterval: 200000 }
   );
 
   if (!dataLotes) {
@@ -113,7 +115,7 @@ function SessionDetail({ sessionDetails }) {
       return (
         <>
           {dataLotes.map((lote) => (
-            <LoteInfo {...lote} />
+            <LoteInfo key={lote.loteDetailId} {...lote} />
           ))}
         </>
       );
@@ -148,20 +150,51 @@ function SessionDetail({ sessionDetails }) {
         <GridItem xs={12} sm={12} md={12} style={{ marginBottom: 20 }}>
           <Card plain>
             <CardHeader plain color="dark">
-              <h4 className={classes.cardTitleWhite}>
-                <EventIcon style={{ marginBottom: -5 }} /> Sesión creada el{" "}
-                <strong>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <h4 className={classes.cardTitleWhite}>
+                  <EventIcon style={{ marginBottom: -5 }} /> Sesión creada el{" "}
+                  <strong>
+                    {moment(
+                      new Date(sessionDetailsJSON.date._seconds * 1000)
+                    ).format("L")}
+                  </strong>{" "}
+                  a las{" "}
                   {moment(
-                    new Date(sessionDetailsJSON.date._seconds * 1000)
-                  ).format("L")}
-                </strong>{" "}
-                a las{" "}
-                {moment(
-                  new Date(sessionDetailsJSON.date._seconds * 1000),
-                  "dd/mm/yyyy"
-                ).format("HH:mm")}{" "}
-                hs
-              </h4>
+                    new Date(sessionDetailsJSON.date._seconds * 1000),
+                    "dd/mm/yyyy"
+                  ).format("HH:mm")}{" "}
+                  hs
+                </h4>
+                <Button
+                  color="success"
+                  onClick={() => {
+                    dataLotes.length > 0
+                      ? generatePdf(dataLotes)
+                      : setShowNoLotesAlert(true);
+                  }}
+                >
+                  <strong>Descargar PDF</strong>
+                </Button>
+                {showNoLotesAlert ? (
+                  <SweetAlert
+                    title={
+                      <span style={{ color: "black" }}>
+                        Esta sesión no tiene lotes!
+                      </span>
+                    }
+                    onConfirm={() => setShowNoLotesAlert(false)}
+                    onCancel={() => setShowNoLotesAlert(false)}
+                    customButtons={
+                      <button onClick={() => setShowNoLotesAlert(false)}>
+                        OK
+                      </button>
+                    }
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
+
               <p className={classes.cardCategoryWhite}>
                 <PersonIcon style={{ marginBottom: -4 }} /> Creada por{" "}
                 <strong>{sessionDetailsJSON.user}</strong>

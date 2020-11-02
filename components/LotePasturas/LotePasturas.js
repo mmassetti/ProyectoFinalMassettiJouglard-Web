@@ -1,20 +1,20 @@
 import React from "react";
 import PasturaInfo from "./PasturaInfo";
 
-export default function LotePasturas({ pasturas, onPasturaImageSelected }) {
+export default function LotePasturas({ pasturasData, onPasturaImageSelected }) {
   const lotesInfo = () => {
-    pasturas.sort(
-      (a, b) =>
-        new Date(b.creationDate._seconds * 1000).getTime() -
-        new Date(a.creationDate._seconds * 1000).getTime()
+    pasturasData.sort(
+      (dataA, dataB) =>
+        new Date(dataB.data.creationDate._seconds * 1000).getTime() -
+        new Date(dataA.data.creationDate._seconds * 1000).getTime()
     );
-    if (pasturas.length > 0) {
+    if (pasturasData.length > 0) {
       return (
         <>
-          {pasturas.map((pastura) => (
+          {pasturasData.map((pastura) => (
             <PasturaInfo
               {...pastura}
-              key={pastura.id}
+              key={pastura.pasturaDetailId}
               onPasturaImageSelected={onPasturaImageSelected}
             />
           ))}
