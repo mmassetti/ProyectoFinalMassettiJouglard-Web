@@ -183,7 +183,7 @@ export default function LoteInfo(props) {
                       tabIcon: AssessmentIcon,
                       tabContent: (
                         <InfoAverage
-                          title={"Promedio de cubrimiento del lote"}
+                          title={"Promedio de cobertura del lote"}
                           averageAfter={loteData.averageAfter}
                           averageBefore={loteData.averageBefore}
                           totalImagesAfter={loteData.totalImagesAfter}
