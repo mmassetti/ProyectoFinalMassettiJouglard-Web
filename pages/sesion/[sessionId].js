@@ -19,6 +19,8 @@ import moment from "moment";
 import "moment/locale/es";
 import { getAllSessions, getSessionDetails } from "../../lib/db-admin";
 import generatePdf from "../../lib/pdfGenerator";
+import formatCsvData from "../../lib/formatCsvData";
+import { CSVLink } from "react-csv";
 
 const styles = {
   cardCategoryWhite: {
@@ -165,16 +167,26 @@ function SessionDetail({ sessionDetails }) {
                   ).format("HH:mm")}{" "}
                   hs
                 </h4>
-                <Button
-                  color="success"
-                  onClick={() => {
-                    dataLotes.length > 0
-                      ? generatePdf(dataLotes)
-                      : setShowNoLotesAlert(true);
-                  }}
-                >
-                  <strong>Descargar PDF</strong>
-                </Button>
+                <div style={{ display: "flex" }}>
+                  <CSVLink {...formatCsvData(dataLotes)}>
+                    <Button color="rose">
+                      <strong>Descargar CSV</strong>
+                    </Button>
+                  </CSVLink>
+
+                  <Button
+                    color="success"
+                    onClick={() => {
+                      dataLotes.length > 0
+                        ? generatePdf(dataLotes)
+                        : setShowNoLotesAlert(true);
+                    }}
+                    style={{ marginLeft: 10 }}
+                  >
+                    <strong>Descargar PDF</strong>
+                  </Button>
+                </div>
+
                 {showNoLotesAlert ? (
                   <SweetAlert
                     title={
