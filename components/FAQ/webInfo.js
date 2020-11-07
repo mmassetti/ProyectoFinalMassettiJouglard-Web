@@ -23,6 +23,14 @@ const dataWebInfo = {
         </p>
       ),
     },
+    {
+      title: (
+        <p>
+          <strong>¿Cómo se utiliza un archivo CSV?</strong>
+        </p>
+      ),
+      content: <p>Lorem ipsum dolor sit amet, consectetur.</p>,
+    },
   ],
 };
 
