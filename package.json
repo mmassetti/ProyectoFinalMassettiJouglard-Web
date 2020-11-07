@@ -39,6 +39,7 @@
     "react-dom": "16.13.1",
     "react-faq-component": "^1.2.1",
     "react-grid-gallery": "^0.5.5",
+    "react-player": "^2.6.2",
     "react-responsive-modal": "^5.1.1",
     "react-swipeable-views": "^0.13.9",
     "swr": "^0.3.5",
