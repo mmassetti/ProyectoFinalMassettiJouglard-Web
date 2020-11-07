@@ -95,16 +95,6 @@ function Sesiones() {
                         field: "numberOfLotes",
                         editable: "never",
                       },
-                      {
-                        title: "Cantidad de pasturas",
-                        field: "pasturas",
-                        editable: "never",
-                      },
-                      {
-                        title: "Total de imágenes",
-                        field: "totalImages",
-                        editable: "never",
-                      },
                     ]}
                     tableData={tableData}
                   />
