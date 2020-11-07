@@ -38,7 +38,6 @@ export default async (req, res) => {
         Object.assign({
           loteDetailId: lotesDetails.ref.id,
           loteData: lotesDetails.data(),
-          pasturasData: pasturasData,
         })
       );
     }

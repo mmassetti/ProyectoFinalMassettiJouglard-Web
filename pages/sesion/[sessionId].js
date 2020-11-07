@@ -19,7 +19,7 @@ import moment from "moment";
 import "moment/locale/es";
 import { getAllSessions, getSessionDetails } from "../../lib/db-admin";
 import generatePdf from "../../lib/pdfGenerator";
-import formatCsvData from "../../lib/formatCsvData";
+import formatCsvDataSingleSession from "../../lib/formatCsvDataSingleSession";
 import { CSVLink } from "react-csv";
 
 const styles = {
@@ -168,7 +168,7 @@ function SessionDetail({ sessionDetails }) {
                   hs
                 </h4>
                 <div style={{ display: "flex" }}>
-                  <CSVLink {...formatCsvData(dataLotes)}>
+                  <CSVLink {...formatCsvDataSingleSession(dataLotes)}>
                     <Button color="rose">
                       <strong>Descargar CSV</strong>
                     </Button>
