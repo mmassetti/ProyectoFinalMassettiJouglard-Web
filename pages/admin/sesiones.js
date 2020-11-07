@@ -12,6 +12,7 @@ import "moment/locale/es";
 import { CSVLink } from "react-csv";
 import Button from "components/CustomButtons/Button.js";
 import formatCsvDataAllSessions from "../../lib/formatCsvDataAllSessions";
+import generatePdf from "../../lib/pdfGeneratorAllSessions";
 
 const styles = {
   cardCategoryWhite: {
@@ -86,20 +87,42 @@ function Sesiones() {
                       </h4>
                       {tableData.length == 1 ? (
                         <p className={classes.cardCategoryWhite}>
-                          Hay 1 sesión creada.
+                          Hay{" "}
+                          <span style={{ color: "yellow" }}>
+                            1 sesión creada.
+                          </span>
                         </p>
                       ) : (
                         <p className={classes.cardCategoryWhite}>
-                          Hay {tableData.length} sesiones creadas.
+                          Hay{" "}
+                          <span style={{ color: "yellow" }}>
+                            {tableData.length} sesiones creadas.
+                          </span>
                         </p>
                       )}
                     </div>
                     {csvData && csvData.data ? (
-                      <CSVLink {...csvData}>
-                        <Button color="rose">
-                          <strong>Descargar info</strong>
+                      <div
+                        style={{
+                          display: "flex",
+                        }}
+                      >
+                        <CSVLink {...csvData}>
+                          <Button color="rose">
+                            <strong>Descargar CSV</strong>
+                          </Button>
+                        </CSVLink>
+
+                        <Button
+                          color="success"
+                          onClick={() => {
+                            generatePdf(allInfo);
+                          }}
+                          style={{ marginLeft: 10 }}
+                        >
+                          <strong>Descargar PDF</strong>
                         </Button>
-                      </CSVLink>
+                      </div>
                     ) : (
                       ""
                     )}
