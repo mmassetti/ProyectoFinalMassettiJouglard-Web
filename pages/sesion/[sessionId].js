@@ -166,16 +166,20 @@ function SessionDetail({ sessionDetails }) {
                   hs
                 </h4>
                 {dataLotes && dataLotes.length > 0 ? (
-                  <div style={{ display: "flex" }}>
+                  <div
+                    style={{
+                      display: "inline-block",
+                    }}
+                  >
                     <CSVLink {...formatCsvDataSingleSession(dataLotes)}>
-                      <Button color="rose">
+                      <Button color="rose" style={{ textAlign: "center" }}>
                         <strong>Descargar CSV</strong>
                       </Button>
                     </CSVLink>
                     <Button
                       color="success"
                       onClick={() => generatePdf(dataLotes)}
-                      style={{ marginLeft: 10 }}
+                      style={{ marginLeft: 10, textAlign: "center" }}
                     >
                       <strong>Descargar PDF</strong>
                     </Button>

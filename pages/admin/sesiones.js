@@ -104,11 +104,11 @@ function Sesiones() {
                     {csvData && csvData.data ? (
                       <div
                         style={{
-                          display: "flex",
+                          display: "inline-block",
                         }}
                       >
                         <CSVLink {...csvData}>
-                          <Button color="rose">
+                          <Button color="rose" style={{ textAlign: "center" }}>
                             <strong>Descargar CSV</strong>
                           </Button>
                         </CSVLink>
@@ -118,7 +118,7 @@ function Sesiones() {
                           onClick={() => {
                             generatePdf(allInfo);
                           }}
-                          style={{ marginLeft: 10 }}
+                          style={{ textAlign: "center", marginLeft: "10px" }}
                         >
                           <strong>Descargar PDF</strong>
                         </Button>

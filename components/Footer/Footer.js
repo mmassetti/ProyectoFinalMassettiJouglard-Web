@@ -30,11 +30,27 @@ export default function Footer(props) {
           <span>
             &copy; {1900 + new Date().getYear()}{" "}
             <a
-              href="https://collectednotes.com/cobertura-suelos-inta-uns"
+              href="https://cs.uns.edu.ar/home/"
               target="_blank"
               className={classes.a}
             >
-              INTA/UNS
+              DCIC
+            </a>{" "}
+            /{" "}
+            <a
+              href="https://www.uns.edu.ar/"
+              target="_blank"
+              className={classes.a}
+            >
+              UNS
+            </a>{" "}
+            /{" "}
+            <a
+              href="https://www.argentina.gob.ar/inta"
+              target="_blank"
+              className={classes.a}
+            >
+              INTA
             </a>
           </span>
         </p>
