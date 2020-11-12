@@ -9,6 +9,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import useSWR from "swr";
 import moment from "moment";
 import "moment/locale/es";
+import { CSVLink } from "react-csv";
+import Button from "components/CustomButtons/Button.js";
+import formatCsvDataAllSessions from "../../lib/formatCsvDataAllSessions";
+import generatePdf from "../../lib/pdfGeneratorAllSessions";
 
 const styles = {
   cardCategoryWhite: {
@@ -44,6 +48,15 @@ const useStyles = makeStyles(styles);
 
 function Sesiones() {
   const classes = useStyles();
+  let csvData;
+
+  const { data: allInfo, error: allInfoError } = useSWR(`/api/all`, {
+    refreshInterval: 1000,
+  });
+
+  if (allInfo) {
+    csvData = { ...formatCsvDataAllSessions(allInfo) };
+  }
 
   const { data, error } = useSWR(`/api/sessions`, {
     refreshInterval: 1000,
@@ -64,20 +77,56 @@ function Sesiones() {
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="dark">
-                  <h4 className={classes.cardTitleWhite}>
-                    {" "}
-                    Lista de sesiones creadas en la aplicación móvil.
-                  </h4>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <div>
+                      <h4 className={classes.cardTitleWhite}>
+                        {" "}
+                        Lista de sesiones creadas en la aplicación móvil.
+                      </h4>
+                      {tableData.length == 1 ? (
+                        <p className={classes.cardCategoryWhite}>
+                          Hay{" "}
+                          <span style={{ color: "yellow" }}>
+                            1 sesión creada.
+                          </span>
+                        </p>
+                      ) : (
+                        <p className={classes.cardCategoryWhite}>
+                          Hay{" "}
+                          <span style={{ color: "yellow" }}>
+                            {tableData.length} sesiones creadas.
+                          </span>
+                        </p>
+                      )}
+                    </div>
+                    {csvData && csvData.data ? (
+                      <div
+                        style={{
+                          display: "inline-block",
+                        }}
+                      >
+                        <CSVLink {...csvData}>
+                          <Button color="rose" style={{ textAlign: "center" }}>
+                            <strong>Descargar CSV</strong>
+                          </Button>
+                        </CSVLink>
 
-                  {tableData.length == 1 ? (
-                    <p className={classes.cardCategoryWhite}>
-                      Hay 1 sesión creada.
-                    </p>
-                  ) : (
-                    <p className={classes.cardCategoryWhite}>
-                      Hay {tableData.length} sesiones creadas.
-                    </p>
-                  )}
+                        <Button
+                          color="success"
+                          onClick={() => {
+                            generatePdf(allInfo);
+                          }}
+                          style={{ textAlign: "center", marginLeft: "10px" }}
+                        >
+                          <strong>Descargar PDF</strong>
+                        </Button>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </CardHeader>
                 <CardBody>
                   <Table
@@ -93,16 +142,6 @@ function Sesiones() {
                       {
                         title: "Cantidad de lotes",
                         field: "numberOfLotes",
-                        editable: "never",
-                      },
-                      {
-                        title: "Cantidad de pasturas",
-                        field: "pasturas",
-                        editable: "never",
-                      },
-                      {
-                        title: "Total de imágenes",
-                        field: "totalImages",
                         editable: "never",
                       },
                     ]}

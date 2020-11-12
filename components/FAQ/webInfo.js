@@ -1,3 +1,6 @@
+import ReactPlayer from "react-player";
+import React from "react";
+
 const dataWebInfo = {
   rows: [
     {
@@ -6,7 +9,13 @@ const dataWebInfo = {
           <strong>¿Qué información puedo ver en esta web?</strong>
         </p>
       ),
-      content: <p>Lorem ipsum dolor sit amet, consectetur.</p>,
+      content: (
+        <p>
+          Podés ver toda la información que fue cargada en la aplicación móvil:
+          sesiones, lotes, imágenes, pasturas, promedios y notas. Además, podes
+          descargar la información en dos formatos: CSV y PDF
+        </p>
+      ),
     },
     {
       title: (
@@ -21,6 +30,37 @@ const dataWebInfo = {
           sesiones, lotes, pasturas, imágenes o notas, hasta que no se
           implemente el sistema de Registro/Logueo de usuarios.
         </p>
+      ),
+    },
+    {
+      title: (
+        <p>
+          <strong>¿Cómo se utiliza un archivo CSV?</strong>
+        </p>
+      ),
+      content: (
+        <>
+          <div>
+            <p>
+              Si trabajaste con Excel quizas alguna vez te tocó usar un archivo
+              con formato CSV. Es un archivo de valores separados por comas.
+              Permite almacenar los datos en forma de tabla separando cada
+              columna con comas.
+              <br />
+              <br />
+              Hicimos un video muy breve mostrando los pasos para obtener una
+              tabla desde el archivo CSV:
+            </p>
+            <ReactPlayer url="https://www.youtube.com/watch?v=JYWMkSlTdUQ" />
+            <br />
+            <p>
+              <strong>Resumiendo: </strong> 1) Crear nuevo libro en Excel - 2)
+              Ir a "Datos" y elegir "Datos desde un archivo" - 3) Seleccionar el
+              archivo que descargaste - 4) Elegir "Delimitados" - 5) Destildar
+              "Tabulación" y tildar "Coma" - 6) Siguiente y Finalizar
+            </p>
+          </div>
+        </>
       ),
     },
   ],

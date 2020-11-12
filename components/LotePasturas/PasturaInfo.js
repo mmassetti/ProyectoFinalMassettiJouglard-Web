@@ -139,7 +139,7 @@ export default function PasturaInfo(props) {
 
         {showAverage ? (
           <InfoAverage
-            title={"Promedio de cubrimiento de la pastura"}
+            title={"Promedio de cobertura de la pastura"}
             averageAfter={data.averageAfter}
             averageBefore={data.averageBefore}
             totalImagesAfter={data.totalImagesAfter}

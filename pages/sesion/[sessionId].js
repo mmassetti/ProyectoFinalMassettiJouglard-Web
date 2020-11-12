@@ -6,7 +6,6 @@ import GridContainer from "components/Grid/GridContainer.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import Button from "components/CustomButtons/Button.js";
-import SweetAlert from "react-bootstrap-sweetalert";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import LoteInfo from "../../components/LoteInfo/LoteInfo";
@@ -18,7 +17,9 @@ import SessionNoteModal from "../../components/Modal/SessionNoteModal/SessionNot
 import moment from "moment";
 import "moment/locale/es";
 import { getAllSessions, getSessionDetails } from "../../lib/db-admin";
-import generatePdf from "../../lib/pdfGenerator";
+import generatePdf from "../../lib/pdfGeneratorSingleSession";
+import formatCsvDataSingleSession from "../../lib/formatCsvDataSingleSession";
+import { CSVLink } from "react-csv";
 
 const styles = {
   cardCategoryWhite: {
@@ -78,7 +79,6 @@ export async function getStaticProps(context) {
 function SessionDetail({ sessionDetails }) {
   const classes = useStyles();
   const [showNotes, setShowNotes] = useState(false);
-  const [showNoLotesAlert, setShowNoLotesAlert] = useState(false);
   const router = useRouter();
 
   if (router.isFallback) return <h3> Cargando... </h3>;
@@ -165,31 +165,25 @@ function SessionDetail({ sessionDetails }) {
                   ).format("HH:mm")}{" "}
                   hs
                 </h4>
-                <Button
-                  color="success"
-                  onClick={() => {
-                    dataLotes.length > 0
-                      ? generatePdf(dataLotes)
-                      : setShowNoLotesAlert(true);
-                  }}
-                >
-                  <strong>Descargar PDF</strong>
-                </Button>
-                {showNoLotesAlert ? (
-                  <SweetAlert
-                    title={
-                      <span style={{ color: "black" }}>
-                        Esta sesión no tiene lotes!
-                      </span>
-                    }
-                    onConfirm={() => setShowNoLotesAlert(false)}
-                    onCancel={() => setShowNoLotesAlert(false)}
-                    customButtons={
-                      <button onClick={() => setShowNoLotesAlert(false)}>
-                        OK
-                      </button>
-                    }
-                  />
+                {dataLotes && dataLotes.length > 0 ? (
+                  <div
+                    style={{
+                      display: "inline-block",
+                    }}
+                  >
+                    <CSVLink {...formatCsvDataSingleSession(dataLotes)}>
+                      <Button color="rose" style={{ textAlign: "center" }}>
+                        <strong>Descargar CSV</strong>
+                      </Button>
+                    </CSVLink>
+                    <Button
+                      color="success"
+                      onClick={() => generatePdf(dataLotes)}
+                      style={{ marginLeft: 10, textAlign: "center" }}
+                    >
+                      <strong>Descargar PDF</strong>
+                    </Button>
+                  </div>
                 ) : (
                   ""
                 )}

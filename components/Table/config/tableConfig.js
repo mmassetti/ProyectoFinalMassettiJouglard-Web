@@ -5,10 +5,6 @@ export const optionsConfig = {
   filtering: true,
   showTitle: false,
   draggable: false,
-  exportButton: true,
-  //TODO: Decidir si dejamos el exportAllData como true o false
-  exportAllData: true,
-  exportFileName: "Cobertura de suelos - Sesiones al " + moment().format("LL"),
 };
 
 export const localizationConfig = {
@@ -16,11 +12,6 @@ export const localizationConfig = {
     searchPlaceholder: "Búsqueda...",
     nRowsSelected: "{0} fila(s) seleccionadas",
     searchTooltip: "Buscar",
-    exportTitle: "Exportar",
-    exportArialLabel: "Exportar",
-    //TODO: para poder usar estas dos hay que esperar al neuvo release de material-table, chequear si se agregaron en https://github.com/mbrn/material-table/releases  (release actual es v1.69.0 y todavia no están)
-    // exportPdfName: "Exportar como PDF",
-    // exportCsvName: "Exportar como CSV"
   },
   body: {
     editTooltip: "Editar",
