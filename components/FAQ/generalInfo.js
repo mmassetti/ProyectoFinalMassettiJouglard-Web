@@ -3,30 +3,36 @@ const dataGeneralInfo = {
     {
       title: (
         <p>
-          <strong>¿Qué es NOMBRE DEL PROYECTO KJJJJJJJJJJJJJJ?</strong>
+          <strong>¿Qué es CGS?</strong>
         </p>
       ),
       content: (
         <p>
-          NOMBRE DEL PROYECTO KJJJJJJJJJJJJJJ consiste en una aplicación para
-          dispositivos Android y de esta página web. Ambas herramientas en
-          conjunto le ayudarán a ... .
+          CGS es la sigla para <strong>"Cobertura y gestión de suelos"</strong>{" "}
+          y consiste en una aplicación para dispositivos Android en conjunto con
+          esta página web. Ambas herramientas te ayudarán a llevar un registro
+          del cubrimiento de vegetación presente en una imagen. Este
+          procesamiento se lleva a cabo identificando en qué proporción aparecen
+          los colores de las gamas del verde, amarillo/gris y marrón en las
+          distintas fotos analizadas. El resultado final que obtendrás para cada
+          imagen será un porcentaje de "Vivo", otro de "Seco" y otro de
+          "Desnudo". Estas imágenes las podrás asociar a distintas pasturas,
+          lotes y sesiones, para poder accederlas en cualquier momento desde
+          esta web o desde la aplicación móvil.
         </p>
       ),
     },
     {
       title: (
         <p>
-          <strong>
-            ¿Cómo se llegó a desarrollar NOMBRE DEL PROYECTO KJJJJJJ?
-          </strong>
+          <strong>¿Cómo se llegó a desarrollar CGS?</strong>
         </p>
       ),
       content: (
         <p>
-          NOMBRE DEL PROYECTO KJJJJJJ nace de la colaboración entre el INTA y el
-          Departamento de Ciencias e Ingeniería de la Computación de la
-          Universidad Nacional del Sur, Bahía Blanca. .............., .
+          CGS nace de la colaboración entre el INTA y el Departamento de
+          Ciencias e Ingeniería de la Computación de la Universidad Nacional del
+          Sur, Bahía Blanca. .............., .
         </p>
       ),
     },
