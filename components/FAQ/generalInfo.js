@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const dataGeneralInfo = {
   rows: [
     {
@@ -7,19 +9,40 @@ const dataGeneralInfo = {
         </p>
       ),
       content: (
-        <p>
-          CGS es la sigla para <strong>"Cobertura y gestión de suelos"</strong>{" "}
-          y consiste en una aplicación para dispositivos Android en conjunto con
-          esta página web. Ambas herramientas te ayudarán a llevar un registro
-          del cubrimiento de vegetación presente en un suelo. Este procesamiento
-          se lleva a cabo identificando en qué proporción aparecen los colores
-          de las gamas del verde, amarillo/gris y marrón en las distintas
-          imágenes analizadas. El resultado final que obtendrás para cada imagen
-          será un porcentaje de "Vivo", otro de "Seco" y otro de "Desnudo".
-          Estas imágenes las podrás asociar a distintas pasturas, lotes y
-          sesiones, para poder accederlas en cualquier momento desde esta web o
-          desde la aplicación móvil.
-        </p>
+        <>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              src="/cgs-logo-full.png"
+              alt="Picture of the author"
+              width={500}
+              height={500}
+              style={{
+                width: "60%",
+              }}
+            />
+          </div>
+
+          <p>
+            CGS es la sigla para{" "}
+            <strong>"Cobertura y gestión de suelos"</strong> y consiste en una
+            aplicación para dispositivos Android en conjunto con esta página
+            web. Ambas herramientas te ayudarán a llevar un registro del
+            cubrimiento de vegetación presente en un suelo. Este procesamiento
+            se lleva a cabo identificando en qué proporción aparecen los colores
+            de las gamas del verde, amarillo/gris y marrón en las distintas
+            imágenes analizadas. El resultado final que obtendrás para cada
+            imagen será un porcentaje de "Vivo", otro de "Seco" y otro de
+            "Desnudo". Estas imágenes las podrás asociar a distintas pasturas,
+            lotes y sesiones, para poder accederlas en cualquier momento desde
+            esta web o desde la aplicación móvil.
+          </p>
+        </>
       ),
     },
     {
