@@ -11,14 +11,14 @@ const dataGeneralInfo = {
           CGS es la sigla para <strong>"Cobertura y gestión de suelos"</strong>{" "}
           y consiste en una aplicación para dispositivos Android en conjunto con
           esta página web. Ambas herramientas te ayudarán a llevar un registro
-          del cubrimiento de vegetación presente en una imagen. Este
-          procesamiento se lleva a cabo identificando en qué proporción aparecen
-          los colores de las gamas del verde, amarillo/gris y marrón en las
-          distintas fotos analizadas. El resultado final que obtendrás para cada
-          imagen será un porcentaje de "Vivo", otro de "Seco" y otro de
-          "Desnudo". Estas imágenes las podrás asociar a distintas pasturas,
-          lotes y sesiones, para poder accederlas en cualquier momento desde
-          esta web o desde la aplicación móvil.
+          del cubrimiento de vegetación presente en un suelo. Este procesamiento
+          se lleva a cabo identificando en qué proporción aparecen los colores
+          de las gamas del verde, amarillo/gris y marrón en las distintas
+          imágenes analizadas. El resultado final que obtendrás para cada imagen
+          será un porcentaje de "Vivo", otro de "Seco" y otro de "Desnudo".
+          Estas imágenes las podrás asociar a distintas pasturas, lotes y
+          sesiones, para poder accederlas en cualquier momento desde esta web o
+          desde la aplicación móvil.
         </p>
       ),
     },
@@ -30,9 +30,31 @@ const dataGeneralInfo = {
       ),
       content: (
         <p>
-          CGS nace de la colaboración entre el INTA y el Departamento de
-          Ciencias e Ingeniería de la Computación de la Universidad Nacional del
-          Sur, Bahía Blanca. .............., .
+          CGS nace de la colaboración entre el{" "}
+          <a href="https://www.argentina.gob.ar/inta" target="_blank">
+            INTA
+          </a>{" "}
+          y el{" "}
+          <a href="https://cs.uns.edu.ar/home/">
+            Departamento de Ciencias e Ingeniería de la Computación
+          </a>{" "}
+          de la Universidad Nacional del Sur, Bahía Blanca. La idea original del
+          proyecto es de{" "}
+          <a href="http://cs.uns.edu.ar/~mll/web/" target="_blank">
+            Martin Larrea
+          </a>
+          , en representación del Departamento de Ciencias e Ingeniería de la
+          Computación y de{" "}
+          <a
+            href="https://www.researchgate.net/profile/Geronimo_De_Leo"
+            target="_blank"
+          >
+            Gerónimo De Leo
+          </a>
+          , en representación del INTA, extensión Bahía Blanca. Esta idea fue
+          implementada como Proyecto Final de carrera de la carrera Ingeniería
+          en Sistemas de Información por los alumnos Juan Jouglard y Matias
+          Massetti.
         </p>
       ),
     },
