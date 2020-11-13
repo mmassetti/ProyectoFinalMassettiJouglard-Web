@@ -12,8 +12,10 @@ const dataWebInfo = {
       content: (
         <p>
           Podés ver toda la información que fue cargada en la aplicación móvil:
-          sesiones, lotes, imágenes, pasturas, promedios y notas. Además, podes
-          descargar la información en dos formatos: CSV y PDF
+          sesiones, lotes, imágenes, pasturas, promedios y notas. Tendrás la
+          posibilidad de buscar, filtrar y ordenar las sesiones por descripción,
+          nombre del creador o creadora, fecha, etc. Además, podes descargar la
+          información en dos formatos: CSV y PDF
         </p>
       ),
     },
