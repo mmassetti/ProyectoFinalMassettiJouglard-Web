@@ -75,6 +75,19 @@ function Sesiones() {
         <>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
+              <h3 style={{ color: "red" }}>
+                <strong>Atención:</strong> Estás viendo la información asociada
+                a la app Android en modo TEST.{" "}
+              </h3>
+              <h6>
+                <strong>
+                  Esta información no es la que está en producción para el uso
+                  de la gente del INTA, como asi también cualquier cambio
+                  realizado aquí no se verá reflejado en la app/web que ellos
+                  utilizan. La idea es poder hacer pruebas sin intervenir en sus
+                  datos
+                </strong>
+              </h6>
               <Card>
                 <CardHeader color="dark">
                   <div
