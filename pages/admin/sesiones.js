@@ -79,15 +79,14 @@ function Sesiones() {
                 <strong>Atención:</strong> Estás viendo la información asociada
                 a la app Android en modo TEST.{" "}
               </h3>
-              <h6>
+              <h5 style={{ color: "blue", paddingBottom: 20 }}>
                 <strong>
                   Esta información no es la que está en producción para el uso
-                  de la gente del INTA, como asi también cualquier cambio
-                  realizado aquí no se verá reflejado en la app/web que ellos
-                  utilizan. La idea es poder hacer pruebas sin intervenir en sus
-                  datos
+                  de la gente del INTA. Asimismo, cualquier cambio realizado
+                  aquí no se verá reflejado en la app/web que ellos utilizan. La
+                  idea es poder hacer pruebas sin intervenir en sus datos.
                 </strong>
-              </h6>
+              </h5>
               <Card>
                 <CardHeader color="dark">
                   <div
