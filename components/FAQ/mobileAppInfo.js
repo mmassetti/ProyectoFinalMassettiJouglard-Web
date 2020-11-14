@@ -8,11 +8,12 @@ const dataAppInfo = {
       ),
       content: (
         <p>
-          En la parte superior derecha en esta web hay un botón con el símbolo
-          de una rueda, al presionarlo encontrarás la opción{" "}
-          <strong>'Descargar App Android'</strong>, desde donde podrás bajar el
-          archivo .apk que instalará la aplicación en tu celular. Al querer
-          instalarla, posiblemente se te pida que{" "}
+          Podés descargar el archivo .apk que instalará la aplicación en tu
+          celular{" "}
+          <a href="link-a-google-drive" target="_blank">
+            <strong>acá</strong>
+          </a>
+          . Al querer instalarla, posiblemente se te pida que{" "}
           <a
             href="https://miracomosehace.com/instalar-aplicaciones-externas-origen-desconocido-android/"
             target="blank"
