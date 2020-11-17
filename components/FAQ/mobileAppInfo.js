@@ -10,7 +10,10 @@ const dataAppInfo = {
         <p>
           Podés descargar el archivo .apk que instalará la aplicación en tu
           celular{" "}
-          <a href="link-a-google-drive" target="_blank">
+          <a
+            href="https://drive.google.com/file/d/1MCRqb2NhgA-TdGfLy9EfepoU1uPrBMWl/view?usp=sharing"
+            target="_blank"
+          >
             <strong>acá</strong>
           </a>
           . Al querer instalarla, posiblemente se te pida que{" "}
