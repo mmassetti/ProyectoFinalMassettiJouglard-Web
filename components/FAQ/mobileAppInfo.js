@@ -14,7 +14,7 @@ const dataAppInfo = {
           archivo .apk que instalará la aplicación en tu celular. Al querer
           instalarla, posiblemente se te pida que{" "}
           <a
-            href="https://miracomosehace.com/instalar-aplicaciones-externas-origen-desconocido-android/"
+            href="https://drive.google.com/file/d/1R1gTdAKPZS6O2zv4WeTZM3sDXDmmssq3/view?usp=sharing"
             target="blank"
             style={{ color: "blue" }}
           >

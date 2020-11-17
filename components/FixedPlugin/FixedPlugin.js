@@ -22,7 +22,7 @@ export default function FixedPlugin(props) {
             <div className="button-container">
               <Button
                 color="success"
-                href="https://www.creative-tim.com/product/nextjs-material-dashboard?ref=njsmd-fixed-plugin"
+                href="https://drive.google.com/file/d/1R1gTdAKPZS6O2zv4WeTZM3sDXDmmssq3/view?usp=sharing"
                 target="_blank"
                 fullWidth
               >

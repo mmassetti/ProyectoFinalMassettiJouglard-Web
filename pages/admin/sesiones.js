@@ -162,8 +162,7 @@ function Sesiones() {
             {" "}
             ¡Bajá la{" "}
             <a
-              //TODO: Poner link a a la app en el href
-              href=""
+              href="https://drive.google.com/file/d/1R1gTdAKPZS6O2zv4WeTZM3sDXDmmssq3/view?usp=sharing"
               target="_blank"
             >
               app
