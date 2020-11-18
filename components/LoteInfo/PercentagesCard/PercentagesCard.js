@@ -49,15 +49,37 @@ export default function PercentagesCard(props) {
         </div>
         <div
           style={{
-            marginTop: -25,
             display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-around",
           }}
         >
-          <p style={{ color: "#32CD32", fontSize: 22, marginLeft: 15 }}>Vivo</p>
-          <p style={{ color: "#fce303", fontSize: 22, marginLeft: 35 }}>Seco</p>
-          <p style={{ color: "#f5f7f7", fontSize: 22, marginLeft: 15 }}>
+          <p
+            style={{
+              color: "#32CD32",
+              fontSize: 22,
+              flexGrow: 1,
+              marginLeft: "2%",
+            }}
+          >
+            Vivo
+          </p>
+          <p
+            style={{
+              color: "#fce303",
+              fontSize: 22,
+              flexGrow: 1,
+              marginLeft: "5%",
+            }}
+          >
+            Seco
+          </p>
+          <p
+            style={{
+              color: "#f5f7f7",
+              fontSize: 22,
+              flexGrow: 1,
+              marginLeft: "5%",
+            }}
+          >
             Desnudo
           </p>
         </div>
