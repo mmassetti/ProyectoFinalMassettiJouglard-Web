@@ -77,7 +77,7 @@ const dataGeneralInfo = {
           , en representación del INTA, extensión Bahía Blanca. Esta idea fue
           implementada como Proyecto Final de carrera de la carrera Ingeniería
           en Sistemas de Información por los alumnos Juan Jouglard y Matias
-          Massetti.
+          Massetti, bajo la dirección de Martin Larrea y Dana Uribarri.
         </p>
       ),
     },
