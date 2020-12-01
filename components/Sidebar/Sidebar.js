@@ -14,6 +14,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
 // core components
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
+import Image from "next/image";
 
 import styles from "assets/jss/nextjs-material-dashboard/components/sidebarStyle.js";
 
@@ -81,6 +82,40 @@ export default function Sidebar(props) {
         </div>
         {logoText}
       </a>
+      <div style={{ display: "flex", marginTop: 20 }}>
+        <Image
+          src="/inta-logo.png"
+          alt="logo inta"
+          width={120}
+          height={64}
+          style={{
+            flex: "auto",
+          }}
+          onClick={() =>
+            window.open("https://www.argentina.gob.ar/inta", "_blank")
+          }
+        />
+        <Image
+          src="/dcic-logo.png"
+          alt="logo dcic"
+          width={121}
+          height={64}
+          style={{
+            flex: "auto",
+          }}
+          onClick={() => window.open("https://cs.uns.edu.ar/home/", "_blank")}
+        />
+        <Image
+          src="/uns-logo.png"
+          alt="logo uns"
+          width={121}
+          height={64}
+          style={{
+            flex: "auto",
+          }}
+          onClick={() => window.open("https://www.uns.edu.ar/", "_blank")}
+        />
+      </div>
     </div>
   );
   return (

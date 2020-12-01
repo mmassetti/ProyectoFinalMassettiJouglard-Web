@@ -19,7 +19,7 @@ const dataGeneralInfo = {
           >
             <Image
               src="/cgs-logo-full.png"
-              alt="Picture of the author"
+              alt="logo cgs"
               width={500}
               height={500}
               style={{
