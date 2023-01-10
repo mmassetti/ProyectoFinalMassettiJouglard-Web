@@ -18,7 +18,7 @@
     "chartist": "0.10.1",
     "classnames": "2.2.6",
     "firebase": "^7.19.0",
-    "firebase-admin": "^9.2.0",
+    "firebase-admin": "^11.4.1",
     "history": "5.0.0",
     "jspdf": "^2.1.1",
     "jspdf-autotable": "^3.5.13",
